@@ -1,31 +1,35 @@
 const Product = require('../models/products')
+const asyncHandler = require('express-async-handler')
 
+const createProduct =asyncHandler( async (req,res,next) =>{
+    try {
+        const {name,description,discountPrice,originalPrice,stock,category} = req.body
 
-const createProduct = async (req,res) =>{
-    const {name,description,discountPrice,originalPrice,stock,category} = req.body
-
-   const files = req.files;
-        const imageUrls = files.map((file) => `${file.filename}`);
-    //    const imageUrls = [];
-    //    for (const file of files) {
-          // Upload each image file to Cloudinary
-      //    const result = await cloudinary.uploader.upload(file.path);
-      //    const urls = result.secure_url
-      //    imageUrls.push(urls);
-      //  }
-
-        const productData = req.body;
-      productData.images = imageUrls;
-
-        const product = await Product.create(productData); 
-
-        res.status(201).json({
-          success: true,
-          imageUrls,
-          product,
-        });
-}
-const getAllProducts = async (req,res)=>{
+        const files = req.files;
+             const imageUrls = files.map((file) => `${file.filename}`);
+         //    const imageUrls = [];
+         //    for (const file of files) {
+               // Upload each image file to Cloudinary
+           //    const result = await cloudinary.uploader.upload(file.path);
+           //    const urls = result.secure_url
+           //    imageUrls.push(urls);
+           //  }
+     
+             const productData = req.body;
+           productData.images = imageUrls;
+     
+             const product = await Product.create(productData); 
+     
+             res.status(201).json({
+               success: true,
+               imageUrls,
+               product,
+             });
+    } catch (error) {
+        next(res.status(500).send({message:'Error in create product'}))
+    }
+})
+const getAllProducts = asyncHandler(async (req,res,next)=>{
     try {
         const products = await Product.find({}).sort({createdAt:-1})
 
@@ -34,14 +38,14 @@ const getAllProducts = async (req,res)=>{
             products
         })
     } catch (error) {
-        res.status(500).send({
+        next( res.status(500).send({
             success:false,
             message:"Error in getAllProducts controller"
         })
-        console.log(error)
+        )  
     }
-}
-const updateProduct = async (req,res)=>{
+}) 
+const updateProduct = asyncHandler(async (req,res,next)=>{
     try {
 
         const {name,description,stock,discountPrice,originalPrice,category} = req.body
@@ -55,10 +59,10 @@ const updateProduct = async (req,res)=>{
             product
         })
     } catch (error) {
-        res.status(400).send({
+        next( res.status(400).send({
             message:'Error in update product controller'
-        })
-        console.log(error)
+        }))
+       
     }
-}
+}) 
 module.exports = {getAllProducts,createProduct,updateProduct}

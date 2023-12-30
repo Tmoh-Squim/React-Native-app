@@ -1,13 +1,14 @@
 const User = require('../models/users')
 const {hashPassword,comparePassword} = require('../helpers/hashPassword')
 const JWT = require('jsonwebtoken')
+const asyncHandler = require('express-async-handler')
 const textflow = require('textflow.js')
 
-const createUser = async(req,res)=>{
+const createUser = asyncHandler(async(req,res,next)=>{
     try {
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({email,phone})
+        const check = await User.findOne({phone,email})
         if(check){
             res.status(200).send({
                 success:false,
@@ -26,14 +27,15 @@ const createUser = async(req,res)=>{
             user
         })
     } catch (error) {
-        res.status(500).send({
+        next(  res.status(500).send({
             success:false,
             message:'Error in register controller'
-        })
+        }))
+      
     }
 }
-
-const Login = async (req,res) =>{
+) 
+const Login = asyncHandler(async (req,res,next) =>{
     try {
         const {phone,password} = req.body;
 
@@ -56,12 +58,13 @@ const Login = async (req,res) =>{
             token
         })
     } catch (error) {
-        res.status(500).send({
+        next(res.status(500).send({
             success:false,
             message:'Error in login controller'
-        })
+        }))
+
     }
-}
+}) 
 //verification code
 
 textflow.useKey("cFhZuo71n23TstL7fGpBFPVhWP3dv5a9cUxGm9eVviydEZlYjItfA1EXkudAc6Tz")
@@ -89,7 +92,7 @@ const Protected = async (req,res)=>{
     res.send('This is protected route')
 }
 //load User
- const LoadUser=async(req,res,next)=>{
+ const LoadUser= asyncHandler(async(req,res,next)=>{
     try {
       const user = await User.findById(req.user._id);
   
@@ -105,11 +108,42 @@ const Protected = async (req,res)=>{
         user,
       });
     } catch (error) {
-      res.status(500).send({
-        success:false,
-        message:"error when loading user"
-      })
+        next(  res.status(500).send({
+            success:false,
+            message:"error when loading user"
+          }))
+    
     }
-  }
-
-module.exports = {createUser,Login,Protected,LoadUser,Verify}
+  }) 
+//admin get all-users
+const getUsers = asyncHandler(async(req,res,next)=>{
+    try {
+        const users = await User.find({}).sort({createdAt:-1})
+        res.status(200).send({
+            success:true,
+            message:'All users fetched sucessfully',
+            users,
+        })
+    } catch (error) {
+        next(res.status(500).send({message:'internal server error'}))
+    }
+})
+//admin delete-user
+const deleteUser = asyncHandler(async(req,res,next)=>{
+    try {
+        const id = req.params.pid
+        const check = await User.findById(id)
+        if(!check){
+            next(res.send({message:'user with this id not found'}))
+        }else{
+            await User.findByIdAndDelete(id)
+            res.status(200).send({
+                success:true,
+                message:'User deleted successfully'
+            })
+        }
+    } catch (error) {
+        next(res.status(500).send({message:'internal server error'}))
+    }
+})
+module.exports = {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser}
