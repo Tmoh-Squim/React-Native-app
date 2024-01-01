@@ -10,6 +10,7 @@ import Deals from '../components/Deals';
 import Brands from '../components/Brands';
 import ProductScreen from '../screens/ProductScreen';
 import Navbar from "./Navbar"
+import Slider from "../components/Slider"
 
 
 const Home = () => {
@@ -21,7 +22,7 @@ const Home = () => {
       <SubHeader />
       <Category />
       <Carousel />
-      <Services />
+      <Slider />
       <Deals />
       <Brands />
       <ProductScreen /> 
