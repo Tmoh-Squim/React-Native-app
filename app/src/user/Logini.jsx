@@ -7,10 +7,9 @@ import {EyeSlashIcon, EyeIcon} from 'react-native-heroicons/outline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ChevronLeftIcon} from "react-native-heroicons/outline"
 export default function Logini() {
-  const [email, setPhone] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
-  const [reload, setReload] = useState(false);
 
 
   const navigation = useNavigation();
@@ -23,23 +22,23 @@ export default function Logini() {
 
   const handleSubmit = async () => {
     try {
-      const data = {email, password};
-      if (password.length < 3 || password.length === '') {
-        Alert.alert('password must be at least 3 characters');
-      }
+      const data = {phone, password};
       const response = await axios.post(
-        'https://mern-web-yn5l.onrender.com/api/v2/user/login-user',
+        '/ap1/v1/auth/login',
         data,
       );
       console.log('res', response.data);
       const {token} = response.data;
       await AsyncStorage.setItem('token', token);
-      navigation.navigate('HomeScreen');
-      setReload(true);
+      navigation.navigate('HomeScreen')
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    handleSubmit()
+  }, []);
+  
   return (
     <SafeAreaView className="px-3 h-screen bg-neutral-200">
         <TouchableOpacity className="mt-3" onPress={()=>navigation.goBack()}>
@@ -48,16 +47,17 @@ export default function Logini() {
       <View className="mt-20">
         <View className="my-5">
           <Text className="text-black text-2xl font-bold text-center ">
-            Welcome Backnn!{' '}
+            Welcome Back!{' '}
           </Text>
         </View>
         <View>
-            <Text className="text-black my-2">Input email address:</Text>
+            <Text className="text-black my-2">Input phone number:</Text>
           <TextInput
             className="text-black border px-3 rounded-xl"
-            value={email}
+            value={phone}
             onChangeText={handlePhone}
-            placeholder="Enter your email number"
+            keyboardType="numeric"
+            placeholder="Enter your phone number"
             placeholderTextColor="green"
           />
         </View>
@@ -94,11 +94,14 @@ export default function Logini() {
         <TouchableOpacity className="mt-2 mb-5">
             <Text className="text-neutral-600">Forgot password?</Text>
         </TouchableOpacity>
+        <TouchableOpacity className=" mb-5" onPress={()=>navigation.navigate('register-user')}>
+            <Text className="text-neutral-600">Don't have an account?</Text>
+        </TouchableOpacity>
         <View className="mx-auto w-full">
         <TouchableOpacity
-          className="p-2.5 mx-auto bg-red-600 w-[87%] items-center rounded-xl mt-10"
+          className="p-2 mx-auto bg-red-600 w-[95%] items-center rounded-xl mt-10"
           onPress={handleSubmit}>
-          <Text className="text-white tracking-[1px] text-xl font-bold">Login</Text>
+          <Text className="text-black tracking-[1px] text-2xl ">Login</Text>
         </TouchableOpacity>
         </View>
       </View>

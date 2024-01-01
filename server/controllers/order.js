@@ -1,6 +1,6 @@
 const Order = require("../models/orders");
-
-const createOrder = async (req, res) => {
+const asyncHandler = require('express-async-handler')
+const createOrder = asyncHandler( async (req, res,next) => {
   try {
     const { cart, shippingAddress, user, paymentInfo, totalPrice } = req.body;
 
@@ -17,29 +17,31 @@ const createOrder = async (req, res) => {
       order,
     });
   } catch (error) {
-    res.status(500).send({
+    next(  res.status(500).send({
       success: false,
       message: "Error in create order controller",
-    });
+    }))
+  
     console.log(error);
   }
-};
+})
 //get all orders for a user
-const userOrders = async (req, res) => {
+const userOrders = asyncHandler(async (req, res,next) => {
   try {
     const orders =await Order.find({ "user._id": req.params.pid }).sort({
       createdAt: -1,
     });
     res.status(200).send({
       success: true,
-      message: "Order created successfully",
+      message: "Order fetched successfully",
       orders,
     });
   } catch (error) {
-    res.status(500).send({
+    next(res.status(500).send({
       success: false,
       message: "Error in userOrders controller",
-    });
+    }))
+    
   }
-};
+})
 module.exports = { createOrder, userOrders };

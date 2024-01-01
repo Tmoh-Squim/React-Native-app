@@ -8,7 +8,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
     try {
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({phone,email})
+        const check = await User.findOne({phone})
         if(check){
             res.status(200).send({
                 success:false,

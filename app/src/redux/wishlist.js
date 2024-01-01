@@ -12,12 +12,8 @@ const getInitialCartItems = async () => {
   }
 };
 
-
-
 const initialState = {
-  wishlistItem: [],
-  cartTotalQuantity: 0,
-  cartTotalAmount: 0,
+  wishlist: [],
 };
 
 const wishlistSlice = createSlice({
@@ -25,29 +21,30 @@ const wishlistSlice = createSlice({
   initialState,
     reducers: {
       addToWishlist(state, action) {
-        console.log(action.payload)
-        const itemIndex = state.wishlistItem.findIndex((item)=>item._id === action.payload._id)
+        const itemIndex = state.wishlist.findIndex((item)=>item._id === action.payload._id)
 
         if (itemIndex >= 0){
-          state.wishlistItem[itemIndex].cartQuantity += 1
+          return {
+            ...state
+          }
         }
         else{
-          const tempProducts = {...action.payload,cartQuantity:1}
-          state.wishlistItem.push(tempProducts)
+          const tempProducts = {...action.payload}
+          state.wishlist.push(tempProducts)
         }
         
 
 
       },
       removeFromWishlist(state,action){
-       const newState= state.wishlistItem.filter((item)=>item._id !== action.payload._id)
+       const newState= state.wishlist.filter((item)=>item._id !== action.payload._id)
 
-       state.wishlistItem = newState
+       state.wishlist = newState
       },
       
     },
     
 });
 
-export const { addToWishList,removeFromCart } = wishlistSlice.actions;
+export const { addToWishList,removeFromWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

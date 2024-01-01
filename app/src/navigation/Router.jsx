@@ -15,6 +15,7 @@ import AdminDashboard from "../screens/AdminDashboard"
 import CreateProductScreen from "../components/Admin/CreateProductScreen"
 import DeliveryScreen from "../screens/DeliverySceen"
 import Login from "../auth/Login"
+import RegisterUser from "../auth/RegisterUser"
 import Orders from "../user/Orders"
 import UpdateProduct from "../components/Admin/ProductUpdate"
 import {useSelector} from "react-redux"
@@ -52,6 +53,7 @@ const Router = () => {
         <Stack.Screen name="create-product" component={CreateProductScreen} />
         <Stack.Screen name="delivery" component={DeliveryScreen} />
         <Stack.Screen name="login" component={user?.user ? HomeScreen : Login} />
+        <Stack.Screen name="register-user" component={user?.user ? HomeScreen : RegisterUser} />
         <Stack.Screen name="user-orders" component={user?.user? Orders : Login} />
         <Stack.Screen name="product-update" component={user?.user?.role === "Admin" ? UpdateProduct : HomeScreen} />
       </Stack.Navigator>

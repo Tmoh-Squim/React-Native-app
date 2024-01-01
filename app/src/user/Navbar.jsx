@@ -16,7 +16,7 @@ export default function Navbar() {
   const {user} = useSelector((state)=>state.user)
   const navigation = useNavigation();
   return (
-    <View className={`${active===true?'absolute  right-0 left-0 items-center flex flex-row px-2 justify-between w-full bg-white z-30 shadow-md h-[60px]':'hidden'} `}>
+    <View className={`${active===true?'absolute bottom-0  right-0 left-0 items-center flex flex-row px-2 justify-between w-full bg-white z-30 shadow-md h-[60px]':'hidden'} `}>
       <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
         <HomeIcon size={30} color="black" />
       </TouchableOpacity>
@@ -34,17 +34,27 @@ export default function Navbar() {
         </TouchableOpacity>
         )
       }
-      <TouchableOpacity onPress={() => navigation.navigate('admin')}>
-        <Bars3Icon size={30} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('login')}>
+      {
+user?.user && user?.user?.role === 'Admin' &&(
+  <TouchableOpacity onPress={() => navigation.navigate('admin')}>
+  <Bars3Icon size={30} color="black" />
+</TouchableOpacity>
+)
+      }
+     
+     <TouchableOpacity onPress={() => navigation.navigate('wishlist')}>
+        <View className="relative">
         <HeartIcon size={30} color="black" />
+        </View>
+        <View className="absolute bottom-3 left-3 w-[17px] h-[17px] bg-red-600 items-center rounded-full">
+          <Text className="text-white text-center">{cart?.cartItem?.length > 0? cart?.cartItem?.length : 0}</Text>
+        </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('cart')}>
         <View className="relative">
         <ShoppingCartIcon size={30} color="black" />
         </View>
-        <View className="absolute top-0 right-0 w-[20px] h-[20px] bg-green-600 items-center rounded-full">
+        <View className="absolute bottom-3 left-3 w-[17px] h-[17px] bg-green-600 items-center rounded-full">
           <Text className="text-white text-center">{cart?.cartItem?.length > 0? cart?.cartItem?.length : 0}</Text>
         </View>
       </TouchableOpacity>

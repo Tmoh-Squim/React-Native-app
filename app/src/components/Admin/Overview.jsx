@@ -72,14 +72,15 @@ export default function Overview() {
         <Text className="text-black text-2xl tracking-[2px] text-center ">Latest Orders</Text>
         <View style={styles.container}>
       <View style={styles.tableHeader}>
-        <Text style={styles.headerCell}>Name</Text>
-        <Text style={styles.headerCell}>Quantity</Text>
-        <Text style={styles.headerCell}>Price</Text>
+        <Text style={styles.headerCell} className="text-black">Name</Text>
+        <Text style={styles.headerCell} className="text-black">Quantity</Text>
+        <Text style={styles.headerCell} className="text-black">Price</Text>
       </View>
       <FlatList
         data={data}
         renderItem={renderTableRow}
         keyExtractor={(item) => item.id}
+        className="text-black"
       />
     </View>
       </View>

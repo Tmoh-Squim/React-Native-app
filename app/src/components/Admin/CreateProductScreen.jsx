@@ -10,22 +10,24 @@ import {
 } from 'react-native';
 import React,{useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ArrowLongLeftIcon} from 'react-native-heroicons/outline';
+import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {Categories} from '../../data/Categories.js';
-
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from "react-native-document-picker"
-
+import {useDispatch,useSelector} from "react-redux"
+import {createProduct} from "../../redux/Products"
 export default function CreateProductScreen() {
   console.log(Categories);
   const [name,setName] = useState('')
   const [description,setDescription] = useState('')
-  const [price,setPrice] = useState('')
+  const [discountPrice,setDiscountPrice] = useState('')
+  const [originalPrice,setOriginalPrice] = useState('')
   const [quantity,setQuantity] = useState('')
   const [category,setCategory] = useState('')
   const [images,setImages] = useState([])
   const navigation = useNavigation();
+  const dispatch = useDispatch()
 
   const selectImages = async ()=>{
     try {
@@ -49,14 +51,16 @@ export default function CreateProductScreen() {
   const handleDescription=(text)=>{setDescription(text)}
   const handleCategory=(name)=>{setCategory(name)}
   const handleQuantity=(name)=>{setQuantity(name)}
-  const handlePrice=(name)=>{setPrice(name)}
+  const handlePrice=(name)=>{setDiscountPrice(name)}
+  const handleoriginalPrice =(name)=>{setOriginalPrice(name)}
 
-  const json={name,description,price,quantity,category}
+  const json={name,description,discountPrice,quantity,category,images}
 
   const handleSubmit = () => {
     Alert.alert('submitted');
     console.log('json',json)
-    console.log(name,description,price,quantity,category)
+    console.log(name,description,discountPrice,quantity,category,images)
+    dispatch(createProduct(json))
   };
   return (
     <SafeAreaView className="h-screen w-full">
@@ -67,9 +71,9 @@ export default function CreateProductScreen() {
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="mr-4">
-            <ArrowLongLeftIcon size={30} color="black" />
+            <ArrowLeftIcon size={22} color="black" />
           </TouchableOpacity>
-          <Text className="text-black mt-1 text-center text-2xl border-b w-[90%] mx-auto">
+          <Text className="text-black mt-1 text-center text-2xl  w-[90%] mx-auto">
             Create Product
           </Text>
         </View>
@@ -114,10 +118,21 @@ export default function CreateProductScreen() {
           <View>
             <TextInput
               keyboardType="numeric"
-              placeholder="Enter product price"
+              placeholder="Enter product discountPrice"
               placeholderTextColor="black"
-              value={price}
+              value={discountPrice}
               onChangeText={handlePrice}
+              style={{color: 'green'}}
+              className="border pl-4 mt-5 rounded-[15px]"
+            />
+          </View>
+          <View>
+            <TextInput
+              keyboardType="numeric"
+              placeholder="Enter product originalPrice"
+              placeholderTextColor="black"
+              value={originalPrice}
+              onChangeText={handleoriginalPrice}
               style={{color: 'green'}}
               className="border pl-4 mt-5 rounded-[15px]"
             />

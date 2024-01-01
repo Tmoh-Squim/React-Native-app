@@ -1,5 +1,5 @@
-import {useDispatch,useSelector} from 'react-redux';
-import React, {useState,useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   View,
@@ -14,6 +14,7 @@ import {HeartIcon} from 'react-native-heroicons/solid';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {addToCart} from '../redux/cart';
+import {addToWishList, removeFromWishlist} from '../redux/wishlist';
 const {width, height} = Dimensions.get('window');
 
 export default function ProductDetails({route}) {
@@ -22,28 +23,40 @@ export default function ProductDetails({route}) {
   const [click, setClick] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  
+  const {wishlist} = useSelector(state => state.wishlist);
+
   const goBack = () => {
     navigation.goBack();
   };
   const [count, setCount] = useState(1);
 
-  const handleAddToCart = (product) => {
-    const item = {...product,cartQuantity:count}
+  const handleAddToCart = product => {
+    const item = {...product, cartQuantity: count};
     dispatch(addToCart(item));
   };
 
-  const handleIncrement = () =>{
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
 
-    setCount(count + 1)
-  }
-
-  const handleDecrement = () =>{
-    if (count > 1){
-        setCount(count - 1)
+  const handleDecrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
     }
-  }
-  
+  };
+  const handleAddToWishlist = product => {
+    dispatch(addToWishList(product));
+  };
+  const handleRemoveFromWishlist = product => {
+    dispatch(removeFromWishlist(product));
+  };
+  useEffect(() => {
+    if (wishlist && wishlist.find(i => i._id === product?._id)) {
+      setClick(true);
+    } else {
+      setClick(false);
+    }
+  }, [product, wishlist]);
 
   return (
     <SafeAreaView className="bg-white w-full h-screen pb-3">
@@ -87,7 +100,9 @@ export default function ProductDetails({route}) {
           </View>
           <View className="flex-1 flex-row mx-4 mt-2 mb-2 justify-between">
             <View className="flex-1 flex-row">
-              <TouchableOpacity className="w-[32px] bg-green-600 h-[32px] justify-center border rounded-l-[6px]" onPress={handleDecrement}>
+              <TouchableOpacity
+                className="w-[32px] bg-green-600 h-[32px] justify-center border rounded-l-[6px]"
+                onPress={handleDecrement}>
                 <Text className="text-white text-center p-0 m-0 text-4xl">
                   -
                 </Text>
@@ -95,18 +110,21 @@ export default function ProductDetails({route}) {
               <Text className="w-[32px] bg-gray-200 text-black text-center p-0 m-0 text-xl h-[32px] justify-center border">
                 {count}{' '}
               </Text>
-              <TouchableOpacity className="w-[32px] bg-green-600 h-[32px] justify-center border rounded-r-[6px]" onPress={handleIncrement}>
+              <TouchableOpacity
+                className="w-[32px] bg-green-600 h-[32px] justify-center border rounded-r-[6px]"
+                onPress={handleIncrement}>
                 <Text className="text-white text-center p-0 m-0 text-2xl">
                   +
                 </Text>
               </TouchableOpacity>
             </View>
             {click ? (
-              <TouchableOpacity onPress={() => setClick(false)}>
+              <TouchableOpacity onPress={() => handleAddToWishlist(product)}>
                 <HeartIcon size="35" color="red" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => setClick(true)}>
+              <TouchableOpacity
+                onPress={() => handleRemoveFromWishlist(product)}>
                 <HeartIcon size="35" color="#0000004b" />
               </TouchableOpacity>
             )}
@@ -125,56 +143,67 @@ export default function ProductDetails({route}) {
           </TouchableOpacity>
         </View>
         <View className="my-5 px-1">
-        {product?.images.map((item, index) => (
-              <TouchableWithoutFeedback>
-                <Image
-                  key={index}
-                  source={{uri: item}}
-                  className="w-full h-[200px] mt-2"
-                />
-              </TouchableWithoutFeedback>
-            ))}
+          {product?.images.map((item, index) => (
+            <TouchableWithoutFeedback>
+              <Image
+                key={index}
+                source={{uri: item}}
+                className="w-full h-[200px] mt-2"
+              />
+            </TouchableWithoutFeedback>
+          ))}
         </View>
-        < RelatedProducts product={product} />
+        <RelatedProducts product={product} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-const RelatedProducts =({product})=> {
-  const products = useSelector((state)=>state.products.products)
-  const navigation = useNavigation()
-  const [relatedProducts,setRelatedProducts] = useState([])
+const RelatedProducts = ({product}) => {
+  const products = useSelector(state => state.products.products);
+  const navigation = useNavigation();
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const filter = ()=>{
-    const result = products?.products.filter((item)=>item.category === product.category)
-    setRelatedProducts(result)
-  }
+  const filter = () => {
+    const result = products?.products.filter(
+      item => item.category === product.category,
+    );
+    setRelatedProducts(result);
+  };
 
   useEffect(() => {
-    filter()
-   }, [product]);
+    filter();
+  }, [product]);
   return (
     <SafeAreaView className="my-2">
-      {
-        relatedProducts.length !==0 ?(
-          <Text className="text-black text-3xl text-center my-3 font-bold">Related Products </Text>
-        ):null
-      }
+      {relatedProducts.length !== 0 ? (
+        <Text className="text-black text-3xl text-center my-3 font-bold">
+          Related Products{' '}
+        </Text>
+      ) : null}
       {relatedProducts?.length !== 0 ? (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mx-2 py-3 bg-neutral-300">
-          {relatedProducts?.slice(0,5).map((item) => (
-            <View key={item._id} style={{ marginRight: 0,padding:2 }}>
-              <TouchableWithoutFeedback onPress={()=>navigation.navigate('ProductDetails',{product:item})}>
-              <Image source={{ uri: item.images[0] }} style={{ width: 120, height: 120, borderRadius: 10 }} />
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="mx-2 py-3 bg-neutral-300">
+          {relatedProducts?.slice(0, 5).map(item => (
+            <View key={item._id} style={{marginRight: 0, padding: 2}}>
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  navigation.navigate('ProductDetails', {product: item})
+                }>
+                <Image
+                  source={{uri: item.images[0]}}
+                  style={{width: 120, height: 120, borderRadius: 10}}
+                />
               </TouchableWithoutFeedback>
             </View>
           ))}
         </ScrollView>
       ) : null}
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = {
   smallImagesContainer: {

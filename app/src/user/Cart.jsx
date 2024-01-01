@@ -6,21 +6,20 @@ import {ShoppingBagIcon, XCircleIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getTotal, removeFromCart} from '../redux/cart';
-import {AsyncStorage} from "@react-native-async-storage/async-storage"
-import {decreaseQuantity,addToCart} from "../redux/cart"
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
+import {decreaseQuantity, addToCart} from '../redux/cart';
 
 export default function CartScreen() {
   const cart = useSelector(state => state.cart.cartItem);
   const {cartTotalAmount} = useSelector(state => state.cart);
   const [count, setCount] = useState(cart.cartQuantity);
-  console.log('count',count)
+  console.log('count', count);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const handlePress = async ()=>{
-
-    navigation.navigate('delivery',{price:cartTotalAmount})
-  }
+  const handlePress = async () => {
+    navigation.navigate('delivery', {price: cartTotalAmount});
+  };
 
   useEffect(() => {
     dispatch(getTotal());
@@ -29,13 +28,12 @@ export default function CartScreen() {
   const handleRemove = item => {
     dispatch(removeFromCart(item));
   };
-  const handleDecrement = (item)=>{
-    dispatch(decreaseQuantity(item))
-
-  }
-  const handleIncrement = (item)=>{
-      dispatch(addToCart(item))
-  }
+  const handleDecrement = item => {
+    dispatch(decreaseQuantity(item));
+  };
+  const handleIncrement = item => {
+    dispatch(addToCart(item));
+  };
 
   return (
     <SafeAreaView className="h-screen">
@@ -61,13 +59,19 @@ export default function CartScreen() {
                   <ScrollView className="mx-2 mt-2">
                     <View className="flex-1 flex-row my-1 align-middle">
                       <View className="m">
-                        <TouchableOpacity className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1" onPress={()=>handleIncrement(item)}>
+                        <TouchableOpacity
+                          className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1"
+                          onPress={() => handleIncrement(item)}>
                           <Text className="text-black text-center ">+</Text>
                         </TouchableOpacity>
                         <TouchableOpacity className="w-[20px] h-[20px] rounded-full items-center bg-gray-200 mr-1 my-1">
-                          <Text className="text-black text-center">{item.cartQuantity}</Text>
+                          <Text className="text-black text-center">
+                            {item.cartQuantity}
+                          </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1" onPress={()=>handleDecrement(item)}>
+                        <TouchableOpacity
+                          className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1"
+                          onPress={() => handleDecrement(item)}>
                           <Text className="text-black text-center ">-</Text>
                         </TouchableOpacity>
                       </View>
@@ -100,7 +104,7 @@ export default function CartScreen() {
             </View>
           </View>
         ) : (
-          <View>
+          <View className="h-screen">
             <View className="flex flex-row justify-between mx-2 mt-2">
               <View className=" flex-row mx-2">
                 <ShoppingBagIcon color="black" size={30} />
@@ -127,7 +131,7 @@ export default function CartScreen() {
           <TouchableOpacity
             className="mt-2 mb-3 align-middle rounded-[10px] py-2 px-4"
             style={{backgroundColor: 'red'}}
-            onPress={()=>handlePress()}>
+            onPress={() => handlePress()}>
             <Text className="text-white font-bold text-2xl">
               Checkout Now (Ksh {cartTotalAmount})
             </Text>

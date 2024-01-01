@@ -1,5 +1,5 @@
 import {View, Text, ScrollView, TouchableOpacity,TochableWithoutFeedack} from 'react-native';
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   HeartIcon,
   ShoppingBagIcon,
@@ -7,7 +7,7 @@ import {
   ChevronRightIcon,
   UserIcon,
   EnvelopeIcon,
-  ArrowLongLeftIcon,
+  ArrowLeftIcon,
   WrenchScrewdriverIcon,
   ArrowRightCircleIcon
 } from 'react-native-heroicons/outline';
@@ -22,8 +22,12 @@ export default function UserDashboard() {
 
   const handleLogout = async() =>{
     await AsyncStorage.removeItem('token')
-    navigation.navigate('login')
   }
+  useEffect(() => {
+    handleLogout();
+    navigation.navigate('login')
+  }, []);
+  
   return (
     <SafeAreaView>
       <View
@@ -31,7 +35,7 @@ export default function UserDashboard() {
         style={{backgroundColor: '#88dae0'}}>
         <View className="mx-3  flex flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()} className="mr-4">
-            <ArrowLongLeftIcon size={30} color="black" />
+            <ArrowLeftIcon size={23} color="black" />
           </TouchableOpacity>
           <UserCircleIcon size={30} color='black' />
           <Text className="text-white text-xl mx-5">{user.name} </Text>

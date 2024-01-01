@@ -4,12 +4,33 @@ import axios from "axios"
 export const LoadUser = createAsyncThunk('getUser',async()=>{
     const token =await AsyncStorage.getItem('token')
     console.log('auth',token)
- const response = await axios.get('https://mern-web-yn5l.onrender.com/api/v2/user/getuser',{
+ const response = await axios.get('/api/v1/auth/user',{
         headers:{
             'Authorization':token
         }
     })
    return response.data
+})
+
+//all user for admin
+export const getAllusers = createAsyncThunk('all-users',async()=>{
+    const token =await AsyncStorage.getItem('token')
+    const response = await axios.get('/api/v1/auth/all-users',{
+        headers:{
+            'Authorization':token
+        }
+    })
+
+    return response.data
+})
+//delete user for admin
+export const deleteUser = createAsyncThunk('delete-user',async(id)=>{
+    const token =await AsyncStorage.getItem('token')
+     await axios.delete(`/api/v1/auth/delete-user/${id}`,{
+        headers:{
+            'Authorization':token
+        }
+    })
 })
 
 const initialState={

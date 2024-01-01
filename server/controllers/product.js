@@ -65,4 +65,21 @@ const updateProduct = asyncHandler(async (req,res,next)=>{
        
     }
 }) 
-module.exports = {getAllProducts,createProduct,updateProduct}
+const deleteProduct = asyncHandler(async(req,res,next)=>{
+    try {
+        const id = req.params.pid
+        const check = await Product.findById(id)
+        if(!check){
+            next(res.send({message:'product with this id not found'}))
+        }else{
+            await User.findByIdAndDelete(id)
+            res.status(200).send({
+                success:true,
+                message:'Product deleted successfully'
+            })
+        }
+    } catch (error) {
+        next(res.status(500).send({success:false,message:'internal server error'}))
+    }
+})
+module.exports = {getAllProducts,createProduct,updateProduct,deleteProduct}

@@ -12,8 +12,6 @@ const AppWrapper = () => {
   const cart = useSelector((state)=>state.cart)
   const user = useSelector((state)=>state.user)
 
-  console.log('user',user)
-
   useEffect(() => {
     // Dispatch getProducts only after cart state has been initialized
     store.dispatch(getProducts());
@@ -32,7 +30,7 @@ const AppWrapper = () => {
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-    ) : ( 
+     ) : ( 
         <Router />
       )} 
     </>
