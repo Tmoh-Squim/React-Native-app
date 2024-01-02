@@ -24,7 +24,7 @@ const Home = () => {
       <Slider />
       <Deals />
       <Brands />
-     {/* <ProductScreen /> */}
+      <ProductScreen /> 
     </ScrollView>
   </View>
   <Navbar />  
