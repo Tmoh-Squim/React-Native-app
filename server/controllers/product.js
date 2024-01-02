@@ -14,6 +14,7 @@ const createProduct =asyncHandler( async (req,res,next) =>{
            //    const urls = result.secure_url
            //    imageUrls.push(urls);
            //  }
+        //updated
      
              const productData = req.body;
            productData.images = imageUrls;
