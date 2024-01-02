@@ -18,6 +18,7 @@ import Login from "../auth/Login"
 import RegisterUser from "../auth/RegisterUser"
 import Orders from "../user/Orders"
 import UpdateProduct from "../components/Admin/ProductUpdate"
+import PaymentScreen from "../screens/PaymentScreen"
 import {useSelector} from "react-redux"
 const Stack = createStackNavigator();
 
@@ -51,7 +52,8 @@ const Router = () => {
           ):null
         } 
         <Stack.Screen name="create-product" component={CreateProductScreen} />
-        <Stack.Screen name="delivery" component={DeliveryScreen} />
+        <Stack.Screen name="delivery" component={user?.user ? DeliveryScreen :Login} />
+        <Stack.Screen name="payment" component={user?.user ? PaymentScreen :Login} />
         <Stack.Screen name="login" component={user?.user ? HomeScreen : Login} />
         <Stack.Screen name="register-user" component={user?.user ? HomeScreen : RegisterUser} />
         <Stack.Screen name="user-orders" component={user?.user? Orders : Login} />

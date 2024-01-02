@@ -17,15 +17,14 @@ const Home = () => {
   return (
     <SafeAreaView className="h-screen">
     <View className="mb-[60px]" >
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
     <Header />
       <SubHeader />
       <Category />
-      <Carousel />
       <Slider />
       <Deals />
       <Brands />
-      <ProductScreen /> 
+     {/* <ProductScreen /> */}
     </ScrollView>
   </View>
   <Navbar />  

@@ -1,36 +1,34 @@
 import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {Country,State,City} from "country-state-city"
-import {
-  UserIcon,
-  EnvelopeIcon,
-  DevicePhoneMobileIcon,
-  MapPinIcon,
-  ChevronLeftIcon,
-} from 'react-native-heroicons/outline';
+import {Country, State, City} from 'country-state-city';
+import {MapPinIcon, ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-import Picker from "@react-native-picker/picker"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import Picker from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Delivery({route}) {
   const navigation = useNavigation();
+  const [county, setCounty] = useState('');
+  const [district, setDistrict] = useState('');
+  const [location, setLocation] = useState('');
   const {price} = route.params;
-  const get = async ()=>{
-    try {
-      const token =await AsyncStorage.getItem('token')
-      console.log('token',token)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
-  get()
+  const handleCounty = text => {
+    setCounty(text);
+  };
+  const handleDistrict = text => {
+    setDistrict(text);
+  };
+  const handleLocation = text => {
+    setLocation(text);
+  };
 
-  console.log('price',price)
-
-  const [country,setCountry] = useState([])
-
-
+  const shippingAddress = {
+    county: county,
+    district: district,
+    exactLocation: location,
+  };
+  const [country, setCountry] = useState([]);
 
   return (
     <SafeAreaView className="w-full px-3  bg-gray-100 h-screen ">
@@ -49,7 +47,8 @@ export default function Delivery({route}) {
           <View>
             <View className="mt-6 relative">
               <TextInput
-                value={'Kiambu'}
+                value={county}
+                onChangeText={handleCounty}
                 className="border w-full rounded-[18px] pl-4 h-[45px]"
                 disabled
                 style={{color: 'black'}}
@@ -64,10 +63,10 @@ export default function Delivery({route}) {
             <View>
               <View className="mt-8 relative">
                 <TextInput
-                  value={'Gatundu'}
+                  value={district}
                   type="number"
                   className="border  w-full rounded-[18px] pl-4 h-[45px]"
-                  disabled
+                  onChangeText={handleDistrict}
                   style={{color: 'black'}}
                 />
               </View>
@@ -80,10 +79,10 @@ export default function Delivery({route}) {
             <View>
               <View className="mt-8 relative">
                 <TextInput
-                  value={'Munyuini'}
+                  value={location}
                   type="number"
                   className="border  w-full rounded-[18px] pl-4 h-[45px]"
-                  disabled
+                  onChangeText={handleLocation}
                   style={{color: 'black'}}
                 />
               </View>
@@ -104,7 +103,11 @@ export default function Delivery({route}) {
 
       <TouchableOpacity
         className="mt-10 w-[95%]  mx-auto py-3 mb-2 rounded-xl items-center absolute left-6 bottom-0"
-        style={{backgroundColor: 'red'}}>
+        style={{backgroundColor: 'red'}}
+        onPress={navigation.navigate('payment', {
+          totalPrice: price,
+          shippingAddress: shippingAddress,
+        })}>
         <Text className="text-white font-bold tracking-[1px] text-[19px]">
           Proceed To Checkout{' '}
         </Text>

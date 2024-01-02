@@ -26,13 +26,13 @@ const AppWrapper = () => {
   return (
     <>
       <StatusBar backgroundColor='#9ee4d4' barStyle='dark-content' />
-     {isLoading ? (
+   {/*  {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-     ) : ( 
+   ) : ( */}
         <Router />
-      )} 
+     {/* )} */}
     </>
   );
 };

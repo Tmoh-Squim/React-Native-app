@@ -37,8 +37,6 @@ export default function Category() {
     filtered();
   };
 
-  console.log('filtered_pro', filter);
-
   const filteredProducts =
     searchQuery !== ''
       ? products?.products && products.products.filter(product =>
