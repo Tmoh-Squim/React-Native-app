@@ -31,7 +31,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
             success:false,
             message:'Error in register controller'
         }))
-      
+console.log(error)
     }
 }
 ) 
