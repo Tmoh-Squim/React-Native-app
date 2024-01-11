@@ -27,7 +27,7 @@ export default function Register() {
 
   const handleSubmit = async () => {
     try {
-      const data = {email,phone, password};
+      const data = {name,email,phone, password};
       if (password.length < 4 || password.length === '') {
         Alert.alert('password must be at least 4 characters');
         return

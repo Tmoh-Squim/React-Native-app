@@ -23,9 +23,8 @@ export default function Logini() {
   const handleSubmit = async () => {
     try {
       const data = {phone, password};
-      console.log(phone,password)
       const response = await axios.post(
-        'http://192.168.88.19:1200/api/v1/auth/login',phone,password,
+        'https://squim-native-app.onrender.com/api/v1/auth/login',data
       );
       console.log('res', response.data);
       const {token} = response.data;

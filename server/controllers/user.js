@@ -9,13 +9,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
         console.log(req.body)
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({email})
-        if(check){
-            res.status(200).send({
-                success:false,
-                message:'Email is already registred'
-            })
-        }
+        
 
         const hashed = await hashPassword(password)
         const newUser = {name,email,phone,password:hashed}
