@@ -33,7 +33,7 @@ export default function Register() {
         return
       }
       const response = await axios.post(
-        '/api/v1/auth/register',
+        'https://squim-native-app.onrender.com/api/v1/auth/register',
         data,
       );
       console.log('res', response.data);

@@ -22,4 +22,3 @@ app.use('/api/v2/order',orderRoutes)
 app.use('/api/v2/product',productRoutes)
 app.use('/',express.static(path.join(__dirname,"uploads")))
 app.listen(port,()=>console.log(`server listening on port ${port} `))
-//hi

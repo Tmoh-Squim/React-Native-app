@@ -23,9 +23,9 @@ export default function Logini() {
   const handleSubmit = async () => {
     try {
       const data = {phone, password};
+      console.log(phone,password)
       const response = await axios.post(
-        'https://squim-native-app.onrender.com/api/v1/auth/login',
-        data,
+        'http://192.168.88.19:1200/api/v1/auth/login',phone,password,
       );
       console.log('res', response.data);
       const {token} = response.data;
@@ -35,9 +35,7 @@ export default function Logini() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    handleSubmit()
-  }, []);
+ 
   
   return (
     <SafeAreaView className="px-3 h-screen bg-neutral-200">
