@@ -3,6 +3,7 @@ import { View, Text,ScrollView,StyleSheet,FlatList,TouchableOpacity } from "reac
 import React from "react";
 import {SafeAreaView} from "react-native-safe-area-context"
 import {CurrencyDollarIcon,ListBulletIcon,ArrowsPointingOutIcon} from "react-native-heroicons/outline"
+import {LineChart} from "react-native-chart-kit"
 export default function Overview() {
     const products = useSelector((state)=>state.products.products)
     const data = [
@@ -24,6 +25,26 @@ export default function Overview() {
       <Text className="text-blue-700 font-bold mt-3 border-b w-[85%] mx-auto text-center text-2xl tracking-[2px]">Overview</Text>
 
       <View className="bg-neutral-200 p-3 mt-5 w-[75%] mx-auto shadow-lg rounded-md relative">
+      {/*  <LineChart 
+        data={{
+          lables:["jan","feb","march"],
+          datasets:[
+            {
+              data:[
+                "jan",
+                "feb"
+              ]
+            }
+          ]
+        }}
+        config={{
+          xField:"type",
+          yField:"sales",
+          color:({type})=>{
+            return "#ffd333"
+          }
+        }}
+      /> */}
         <View>
             <Text className="text-white text-2xl ml-7">
                 Shop Total Earnings
@@ -33,7 +54,7 @@ export default function Overview() {
             </Text>
         </View>
         <View className="absolute top-9 left-2">
-            <CurrencyDollarIcon size={30} color='black' />
+            <CurrencyDollarIcon size={50} color='black' />
         </View>
       </View>
       <View className="bg-neutral-200 p-3 mt-5 w-[75%] mx-auto shadow-lg rounded-md">
@@ -49,7 +70,7 @@ export default function Overview() {
             </TouchableOpacity>
         </View>
         <View className="absolute top-9 left-2">
-            <ListBulletIcon size={30} color='black' />
+            <ListBulletIcon size={50} color='black' />
         </View>
       </View>
       <View className="bg-neutral-200 p-3 mt-5 w-[75%] mx-auto shadow-lg rounded-md">
@@ -58,22 +79,24 @@ export default function Overview() {
                 Shop All Products
             </Text>
             <Text className=" text-red-400 my-2 text-2xl text-center">
-                {products.products.length}
+               {
+                products?.products  && products?.products?.length
+               }
             </Text>
             <TouchableOpacity>
                 <Text className="text-green-400">View Products</Text>
             </TouchableOpacity>
         </View>
         <View className="absolute top-9 left-2">
-            <ArrowsPointingOutIcon size={30} color='black' />
+            <ArrowsPointingOutIcon size={50} color='black' />
         </View>
       </View>
       <View className="mt-4">
         <Text className="text-black text-2xl tracking-[2px] text-center ">Latest Orders</Text>
         <View style={styles.container}>
       <View style={styles.tableHeader}>
+        <Text style={styles.headerCell} className="text-black">Id</Text>
         <Text style={styles.headerCell} className="text-black">Name</Text>
-        <Text style={styles.headerCell} className="text-black">Quantity</Text>
         <Text style={styles.headerCell} className="text-black">Price</Text>
       </View>
       <FlatList

@@ -16,15 +16,15 @@ import Slider from "../components/Slider"
 const Home = () => {
   return (
     <SafeAreaView className="h-screen">
-    <View className="mb-[60px]" >
+    <View className="mb-[50px]" >
     <ScrollView showsVerticalScrollIndicator={false}>
     <Header />
       <SubHeader />
-      <Category />
       <Slider />
+      <Category />
       <Deals />
       <Brands />
-      <ProductScreen /> 
+      <ProductScreen />
     </ScrollView>
   </View>
   <Navbar />  

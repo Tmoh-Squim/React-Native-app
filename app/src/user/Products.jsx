@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   loadMoreButton: {
     marginTop: 3,
-    marginBottom: 3,
+    marginBottom: 0  ,
     alignSelf: 'center',
     paddingLeft: 10,
     paddingRight: 10,

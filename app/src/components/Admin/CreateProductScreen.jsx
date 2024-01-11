@@ -78,7 +78,7 @@ export default function CreateProductScreen() {
           </Text>
         </View>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView className="h-screen " showsVerticalScrollIndicator={false}>
         <View className="w-[90%] mx-auto">
           <View>
             <TextInput

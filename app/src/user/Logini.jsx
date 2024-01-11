@@ -24,7 +24,7 @@ export default function Logini() {
     try {
       const data = {phone, password};
       const response = await axios.post(
-        '/ap1/v1/auth/login',
+        'https://squim-native-app.onrender.com/api/v1/auth/login',
         data,
       );
       console.log('res', response.data);
@@ -55,8 +55,8 @@ export default function Logini() {
           <TextInput
             className="text-black border px-3 rounded-xl"
             value={phone}
+            keyboardType='numeric'
             onChangeText={handlePhone}
-            keyboardType="numeric"
             placeholder="Enter your phone number"
             placeholderTextColor="green"
           />

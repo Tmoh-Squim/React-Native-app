@@ -46,14 +46,14 @@ const Router = () => {
         <Stack.Screen name="user" component={isAuthenticated ? UserScreen : Login} />
         <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
         <Stack.Screen name="wishlist" component={Wishlist} />
-       {
-          user?.user? (
-            <Stack.Screen name="admin" component={user?.user.role === "Admin" ? AdminDashboard : HomeScreen} />
-          ):null
-        } 
+    {/*   {
+          user?.user? ( */}
+            <Stack.Screen name="admin" component={AdminDashboard} />
+      {/*    ):null
+        } */}
         <Stack.Screen name="create-product" component={CreateProductScreen} />
-        <Stack.Screen name="delivery" component={user?.user ? DeliveryScreen :Login} />
-        <Stack.Screen name="payment" component={user?.user ? PaymentScreen :Login} />
+        <Stack.Screen name="delivery" component={ DeliveryScreen } />
+        <Stack.Screen name="payment" component={ PaymentScreen } />
         <Stack.Screen name="login" component={user?.user ? HomeScreen : Login} />
         <Stack.Screen name="register-user" component={user?.user ? HomeScreen : RegisterUser} />
         <Stack.Screen name="user-orders" component={user?.user? Orders : Login} />

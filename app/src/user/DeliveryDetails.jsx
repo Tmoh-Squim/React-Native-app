@@ -4,6 +4,7 @@ import {Country, State, City} from 'country-state-city';
 import {MapPinIcon, ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
+import RNPickerSelect from "react-native-picker-select"
 import Picker from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Delivery({route}) {
@@ -11,7 +12,8 @@ export default function Delivery({route}) {
   const [county, setCounty] = useState('');
   const [district, setDistrict] = useState('');
   const [location, setLocation] = useState('');
-  const {price} = route.params;
+  //const {price} = route.params;
+  const {price} = 1200
 
   const handleCounty = text => {
     setCounty(text);
@@ -28,7 +30,9 @@ export default function Delivery({route}) {
     district: district,
     exactLocation: location,
   };
-  const [country, setCountry] = useState([]);
+  const [countries, setCountries] = useState([]);
+
+  
 
   return (
     <SafeAreaView className="w-full px-3  bg-gray-100 h-screen ">
@@ -49,7 +53,7 @@ export default function Delivery({route}) {
               <TextInput
                 value={county}
                 onChangeText={handleCounty}
-                className="border w-full rounded-[18px] pl-4 h-[45px]"
+                className="border w-full rounded-[18px] tracking-[1px] pl-4 h-[45px]"
                 disabled
                 style={{color: 'black'}}
               />
@@ -65,7 +69,9 @@ export default function Delivery({route}) {
                 <TextInput
                   value={district}
                   type="number"
-                  className="border  w-full rounded-[18px] pl-4 h-[45px]"
+                  placeholder="Enter district"
+                  placeholderTextColor='black'
+                  className="border  w-full rounded-[18px] px-4 tracking-[1px] h-[45px]"
                   onChangeText={handleDistrict}
                   style={{color: 'black'}}
                 />
@@ -81,7 +87,9 @@ export default function Delivery({route}) {
                 <TextInput
                   value={location}
                   type="number"
-                  className="border  w-full rounded-[18px] pl-4 h-[45px]"
+                  placeholder="Enter exact location"
+                  placeholderTextColor="black"
+                  className="border  w-full rounded-[18px] px-4 h-[45px]"
                   onChangeText={handleLocation}
                   style={{color: 'black'}}
                 />
@@ -92,6 +100,20 @@ export default function Delivery({route}) {
                 </Text>
               </View>
             </View>
+            <RNPickerSelect
+            onValueChange={value=>console.log(value)}
+            items={[
+              {
+                lable:'Java',value:'Java'
+              },
+              {
+                lable:"JavaScript",value:"JavaScript"
+              },
+              {
+                lable:"Node Js",value:"Node Js"
+              },
+            ]}
+            />
           </View>
           <TouchableOpacity>
             <Text className="text-black tracking-wide my-2 ">

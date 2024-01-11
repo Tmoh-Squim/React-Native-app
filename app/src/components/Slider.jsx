@@ -15,22 +15,8 @@ function Slider() {
   ];
   return (
     <View>
-      <View>
-        <Text className="text-green-500 absolute text-xl z-30 top-3 right-2">
-          <Text className="w-full h-full bg-black items-center rounded-xl mx-1">
-            {date.getHours()}
-          </Text>
-          :
-          <Text className="w-full h-full bg-black items-center mx-1">
-            {date.getMinutes()}
-          </Text>
-          :
-          <Text className="w-full h-full bg-black items-center mx-1">
-            {date.getSeconds()}
-          </Text>
-        </Text>
-      </View>
-      <View className=" flex-1 items-center">
+      
+      <View className=" flex-1 items-center relative">
         <SliderBox
           images={slides}
           autoplay
@@ -39,9 +25,9 @@ function Slider() {
           inactiveDotColor="white"
           ImageComponentStyle={{
             width: '98%',
-            height: width / 2,
+            height: width / 2.5,
             borderRadius: 15,
-            marginTop: 10,
+            marginTop: 5,
           }}
         />
       </View>
