@@ -1,10 +1,14 @@
 const mongoose = require('mongoose')
 
 exports.connectDB = async ()=>{
-    await mongoose.connect('mongodb+srv://timoohwilliams885:htzEXFhsVO6LNJXe@cluster0.pstemoz.mongodb.net/')
-    .then(console.log('mongodb connected successfully'))
-    .catch((err)=>{
-        console.log(err)
-    })
+    try {
+        await mongoose.connect(process.env.MONGO_URL)
+        .then(console.log('mongodb connected successfully'))
+        .catch((err)=>{
+            console.log(err)
+        })
+    } catch (error) {
+        console.log('error',error)
+    }
+   
 }
-
