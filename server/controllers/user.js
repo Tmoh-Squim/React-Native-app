@@ -9,12 +9,18 @@ const createUser = asyncHandler(async(req,res,next)=>{
         console.log(req.body)
         const {name,email,phone,password} = req.body
 
-        
+        const check = await User.findOne({email}).timeout(10000)
+        if(check){
+            next(res.status(403).send({
+                success:false,
+                message:"Email already registerd"
+            }))
+        }
 
         const hashed = await hashPassword(password)
         const newUser = {name,email,phone,password:hashed}
 
-        const user = await User.create(newUser)
+        const user = await User.create(newUser).timeout(5000)
 
         res.status(200).send({
             success:true,
