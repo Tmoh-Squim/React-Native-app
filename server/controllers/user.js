@@ -6,13 +6,14 @@ const textflow = require('textflow.js')
 
 const createUser = asyncHandler(async(req,res,next)=>{
     try {
+        console.log(req.body)
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({phone})
+        const check = await User.findOne({email})
         if(check){
             res.status(200).send({
                 success:false,
-                message:'Email or Phone is already registred'
+                message:'Email is already registred'
             })
         }
 
