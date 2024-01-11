@@ -7,7 +7,7 @@ const cors = require('cors')
 const path = require('path')
 require('dotenv').config()
 
-const {connectDB} = require('./config/db')
+const connectDB = require('./config/db')
 const port = process.env.PORT
 //config db
 connectDB()
