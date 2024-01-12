@@ -12,6 +12,13 @@ const SubHeader = () => {
       colors={['#bbe8ef', '#bdeee9', '#c3f1e3']}
       style={styles.container}>
       <MapPinIcon size={22} color='black' />
+      {
+        user?.user && (<View>
+          <Text style={styles.deliver}>
+            Delivery to {user?.user?.name}
+          </Text>
+        </View>)
+      }
       <Text style={styles.deliver}>Deliver to Kutus - Kirinyaga 897654</Text>
     </LinearGradient>
   );

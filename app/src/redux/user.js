@@ -4,7 +4,7 @@ import axios from "axios"
 export const LoadUser = createAsyncThunk('getUser',async()=>{
     const token =await AsyncStorage.getItem('token')
     console.log('auth',token)
- const response = await axios.get('/api/v1/auth/user',{
+ const response = await axios.get('https://mern-web-yn5l.onrender.com/api/v2/user/getuser',{
         headers:{
             'Authorization':token
         }

@@ -20,11 +20,11 @@ const Home = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
     <Header />
       <SubHeader />
-      <Slider />
+      {/*<Slider /> */}
       <Category />
       <Deals />
       <Brands />
-      <ProductScreen />
+     <ProductScreen /> 
     </ScrollView>
   </View>
   <Navbar />  

@@ -10,7 +10,7 @@ import Router from './src/navigation/Router.jsx';
 const AppWrapper = () => {
   const {isLoading} = useSelector((state) => state.products);
   const cart = useSelector((state)=>state.cart)
-  const user = useSelector((state)=>state.user)
+  const {user} = useSelector((state)=>state.user)
 
   useEffect(() => {
     // Dispatch getProducts only after cart state has been initialized
@@ -21,18 +21,19 @@ const AppWrapper = () => {
   
   useEffect(() => {
     console.log('cartItems',cart.cartItem);
+    console.log('user',user)
   }, []);
 
   return (
     <>
       <StatusBar backgroundColor='#9ee4d4' barStyle='dark-content' />
-     {isLoading ? (
+  {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-   ) : (
+   ) : ( 
         <Router />
-      )}
+    )} 
     </>
   );
 };

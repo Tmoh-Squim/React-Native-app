@@ -9,7 +9,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
         console.log(req.body)
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({email}).timeout(10000)
+        const check = await User.findOne({email})
         if(check){
             next(res.status(403).send({
                 success:false,
@@ -20,7 +20,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
         const hashed = await hashPassword(password)
         const newUser = {name,email,phone,password:hashed}
 
-        const user = await User.create(newUser).timeout(5000)
+        const user = await User.create(newUser)
 
         res.status(200).send({
             success:true,

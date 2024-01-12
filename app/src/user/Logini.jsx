@@ -7,7 +7,7 @@ import {EyeSlashIcon, EyeIcon} from 'react-native-heroicons/outline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ChevronLeftIcon} from "react-native-heroicons/outline"
 export default function Logini() {
-  const [phone, setPhone] = useState('');
+  const [email, setPhone] = useState('');
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(false);
 
@@ -22,11 +22,11 @@ export default function Logini() {
 
   const handleSubmit = async () => {
     try {
-      const data = {phone, password};
+      const data = {email, password};
       const response = await axios.post(
-        'https://squim-native-app.onrender.com/api/v1/auth/login',data
+        'https://mern-web-yn5l.onrender.com/api/v2/user/login-user',data
       );
-      console.log('res', response.data);
+      console.log(response)
       const {token} = response.data;
       await AsyncStorage.setItem('token', token);
       navigation.navigate('HomeScreen')
@@ -48,13 +48,12 @@ export default function Logini() {
           </Text>
         </View>
         <View>
-            <Text className="text-black my-2">Input phone number:</Text>
+            <Text className="text-black my-2">Input email number:</Text>
           <TextInput
             className="text-black border px-3 rounded-xl"
-            value={phone}
-            keyboardType='numeric'
+            value={email}
             onChangeText={handlePhone}
-            placeholder="Enter your phone number"
+            placeholder="Enter your email number"
             placeholderTextColor="green"
           />
         </View>
