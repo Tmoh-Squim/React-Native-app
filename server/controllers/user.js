@@ -16,7 +16,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
                 message:"Email already registerd"
             }))
         }
-
+        //hi
         const hashed = await hashPassword(password)
         const newUser = {name,email,phone,password:hashed}
 
