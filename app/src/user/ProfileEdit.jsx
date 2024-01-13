@@ -41,20 +41,6 @@ export default function ProfileEdit() {
   
   const handleUpdate =async () =>{
     try {
-      const id = user?._id
-
-      const data ={
-        email:email,
-        phone:phone,
-        user:user,
-        deliveryDetails:[
-        { 
-         county:county,
-         district:district,
-         location:location
-        }
-        ]
-      }
       const deliveryDetails = [
         { 
           county:county,
@@ -63,7 +49,7 @@ export default function ProfileEdit() {
          }
       ]
      const res = await axios.put(`https://squim-native-app.onrender.com/api/v1/auth/update-user`,{user,email,phone,deliveryDetails})
-
+     console.log(res.data)
       Alert.alert(res.data.message)
     } catch (error) {
       Alert.alert("Something went wrong")

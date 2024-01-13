@@ -13,12 +13,17 @@ const SubHeader = () => {
       style={styles.container}>
       <MapPinIcon size={22} color='black' />
       {
-        user?.user ? (
+        user?.user?.deliveryDetails.length > 0 ? (
         <>
         <View>
-          <Text style={styles.deliver}>
-            Delivery to {user?.user?.name}
+          {
+            user?.user?.deliveryDetails.map((item,index)=>{
+              return (
+         <Text style={styles.deliver} key={index}>
+            Delivery to  {item.county} | {item.district}  | {item.location}
           </Text>
+             ) })
+          }
         </View>
         </>
         ):(
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   deliver: {
-    fontSize: 13,
+    fontSize: 14,
     color: '#2c4341',
     paddingHorizontal: 6,
   },
