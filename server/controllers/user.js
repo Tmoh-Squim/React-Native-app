@@ -172,6 +172,7 @@ const deleteUser = asyncHandler(async(req,res,next)=>{
         }
     } catch (error) {
         next(res.status(500).send({message:'internal server error'}))
+        console.log(error)
     }
 })
 module.exports = {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser,updateUser}

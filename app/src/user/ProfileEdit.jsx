@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert
 } from 'react-native';
 import React,{useState,useEffect} from 'react';
 import {ChevronLeftIcon,} from 'react-native-heroicons/outline';
@@ -13,6 +14,7 @@ import {Country,getCities} from "country-state-city"
 import {Picker} from "@react-native-picker/picker"
 import {UserIcon,EnvelopeIcon,DevicePhoneMobileIcon,MapPinIcon} from "react-native-heroicons/outline"
 import {useSelector} from "react-redux"
+import axios from "axios"
 export default function ProfileEdit() {
   const navigation = useNavigation();
   const user = useSelector((state)=>state.user.user.user)
@@ -49,6 +51,7 @@ export default function ProfileEdit() {
       const data ={
         email:email,
         phone:phone,
+        user:user,
         deliveryDetails:[
         { 
          county:county,
@@ -57,11 +60,12 @@ export default function ProfileEdit() {
         }
         ]
       }
-      const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{data})
+     const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{data})
 
       Alert.alert(res.data.message)
     } catch (error) {
       Alert.alert("Something went wrong")
+      console.log(error)
     }
   }
 
