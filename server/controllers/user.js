@@ -119,6 +119,7 @@ const Protected = async (req,res)=>{
   const updateUser =  asyncHandler(async(req,res,next)=>{
     try {
         const {email,phone,deliveryDetails,user} = req.body
+        console.log('user',user)
         
         const check = await User.findById(user._id)
         if(!check){
