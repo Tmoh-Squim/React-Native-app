@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 const Product = require("../models/products")
 const createOrder = asyncHandler( async (req, res,next) => {
   try {
-    console.log('body',req.body)
     const { cart, deliveryDetails, user, paymentInfo, totalPrice } = req.body;
 
     const order = await Order.create({

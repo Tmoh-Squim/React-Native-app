@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         type:Object,
         required:true
     },
-    shippingAddress:{
+    deliveryDetails:{
         type:Object,
         required:true
     },

@@ -17,7 +17,6 @@ export default function Payment() {
   const navigation = useNavigation();
   const [orderData, setOrderData] = useState();
   const [active, setActive] = useState(1);
-  const [cart, setCart] = useState();
   const {user} = useSelector(state => state.user.user);
   const orders = async () => {
     const res = await AsyncStorage.getItem('latest-order');
@@ -30,20 +29,15 @@ export default function Payment() {
     type: 'Lipa na mpesa',
     status: 'Success',
   };
-  const order = {
-    cart: orderData?.cart,
-    user: user,
-    deliveryDetails: orderData?.deliveryDetails,
-    paymentInfo: paymentInfo,
-    totalPrice: orderData?.totalPrice,
-  };
-  console.log(order)
+  const cart = orderData?.cart
+  const deliveryDetails = orderData?.deliveryDetails
+  const totalPrice = orderData?.totalPrice
   const handleMpesaPayment = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const res = await axios.post(
         'https://squim-native-app.onrender.com/api/v2/order/create-order',
-        {order},
+        {cart,user,deliveryDetails,paymentInfo,totalPrice},
         {
           headers: {
             'Authorization': token,
