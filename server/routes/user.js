@@ -1,5 +1,5 @@
 const express = require('express')
-const {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser} = require('../controllers/user')
+const {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser,updateUser} = require('../controllers/user')
 const router = express.Router()
 const {isAuthenticated,isAdmin} = require('../middlewares/auth')
 
@@ -15,4 +15,5 @@ router.get('/user',isAuthenticated,LoadUser)
 router.post('/verify',Verify)
 router.get('/all-users',isAuthenticated,isAdmin,getUsers)
 router.delete('/delete-user/:pid',isAuthenticated,isAdmin,deleteUser)
+router.put('/update-user',updateUser)
 module.exports = router

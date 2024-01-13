@@ -9,6 +9,7 @@ export default function Orders() {
     const {orders} = useSelector((state)=>state.orders.orders)
     console.log('user_orders',orders)
 
+    const id = user?.user?._id
 
     useEffect(()=>{
        dispatch(getUserOrders(user?.user?._id))

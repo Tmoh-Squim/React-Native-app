@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, TouchableOpacity,TochableWithoutFeedack} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity,TochableWithoutFeedack,Alert} from 'react-native';
 import React,{useEffect} from 'react';
 import {
   HeartIcon,
@@ -22,11 +22,9 @@ export default function UserDashboard() {
 
   const handleLogout = async() =>{
     await AsyncStorage.removeItem('token')
+    Alert.alert("Logged out  successfully")
+    navigation.navigate('HomeScreen')
   }
-  useEffect(() => {
-    handleLogout();
-    navigation.navigate('login')
-  }, []);
   
   return (
     <SafeAreaView>

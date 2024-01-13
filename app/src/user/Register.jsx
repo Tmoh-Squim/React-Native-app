@@ -37,13 +37,15 @@ export default function Register() {
         data,
       );
       console.log('res', response.data);
-      if(response.success){
+      Alert.alert(response.data.message)
+      if(response.data.success === true){
         navigation.navigate('login');
       }
       else{
         return
       }
     } catch (error) {
+      Alert.alert("Something went wrong")
       console.log(error);
     }
   };

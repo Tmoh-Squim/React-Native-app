@@ -6,7 +6,6 @@ const textflow = require('textflow.js')
 
 const createUser = asyncHandler(async(req,res,next)=>{
     try {
-        console.log(req.body)
         const {name,email,phone,password} = req.body
 
         const check = await User.findOne({email})
@@ -116,6 +115,34 @@ const Protected = async (req,res)=>{
     
     }
   }) 
+  //update user details
+  const updateUser =  asyncHandler(async(req,res,next)=>{
+    try {
+        const {email,phone,deliveryDetails,user} = req.body
+        
+        const check = await User.findById(user._id)
+        if(!check){
+            next(res.status(403).send({
+                success:false,
+                message:"User not found!"
+            }))
+        }
+        else{
+            const user = await User.findByIdAndUpdate(email,phone,deliveryDetails)
+
+            res.status(200).send({
+                success:true,
+                message:"Details updated successfully",
+                user
+            })
+        }
+    } catch (error) {
+        next(res.status(500).send({
+            message:"Error in updating details"
+        }))
+        console.log(error)
+    }
+  })
 //admin get all-users
 const getUsers = asyncHandler(async(req,res,next)=>{
     try {
@@ -147,4 +174,4 @@ const deleteUser = asyncHandler(async(req,res,next)=>{
         next(res.status(500).send({message:'internal server error'}))
     }
 })
-module.exports = {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser}
+module.exports = {createUser,Login,Protected,LoadUser,Verify,getUsers,deleteUser,updateUser}

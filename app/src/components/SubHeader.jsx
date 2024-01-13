@@ -1,4 +1,4 @@
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet,View} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {MapPinIcon} from "react-native-heroicons/outline"
@@ -13,13 +13,20 @@ const SubHeader = () => {
       style={styles.container}>
       <MapPinIcon size={22} color='black' />
       {
-        user?.user && (<View>
+        user?.user ? (
+        <>
+        <View>
           <Text style={styles.deliver}>
             Delivery to {user?.user?.name}
           </Text>
-        </View>)
+        </View>
+        </>
+        ):(
+          <>
+      <Text style={styles.deliver}>Deliver to unknown destination</Text>
+      </>
+        )
       }
-      <Text style={styles.deliver}>Deliver to Kutus - Kirinyaga 897654</Text>
     </LinearGradient>
   );
 };

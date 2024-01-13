@@ -22,7 +22,20 @@ const userSchema = mongoose.Schema({
    role:{
       type:String,
       default:'user'
+   },
+   deliveryDetails:[
+      {
+      county:{
+         type:String
+      },
+      district:{
+         type:String
+      },
+      location:{
+         type:String
+      }
    }
+   ]
 },{timestamps:true})
 
 module.exports = mongoose.model('users',userSchema)

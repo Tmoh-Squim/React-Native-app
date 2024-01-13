@@ -16,12 +16,14 @@ import {useSelector} from "react-redux"
 export default function ProfileEdit() {
   const navigation = useNavigation();
   const user = useSelector((state)=>state.user.user.user)
-  console.log(user.phoneNumber)
   const [countries,setCountries] = useState([])
   const [select,setSelect] = useState(1)
   const [name] = useState(user.name)
   const [email,setEmail] = useState(user.email)
-  const [phone,setPhone] = useState(`${user.phoneNumber}`)
+  const [phone,setPhone] = useState(`${user.phone}`)
+  const [location,setLocation] = useState('Munyuini')
+  const [district,setDistrict] = useState('Gatundu')
+  const [county,setCounty] = useState('Kiambu')
 
   const handleEmail =(text)=>{
     setEmail(text)
@@ -29,6 +31,10 @@ export default function ProfileEdit() {
   const handlePhone =(text)=>{
     setPhone(text)
   }
+
+  const handleLocation= (text) =>{setLocation(text)}
+  const handleDistrict= (text) =>{setDistrict(text)}
+  const handleCounty= (text) =>{setCounty(text)}
 
   const get = ()=>{
     const county= Country.getAllCountries()
@@ -38,8 +44,27 @@ export default function ProfileEdit() {
   useEffect(()=>{
     get()
   },[])
+  const handleUpdate =async () =>{
+    try {
+      const data ={
+        email:email,
+        phone:phone,
+        deliveryDetails:[
+        { 
+         county:county,
+         district:district,
+         location:location
+        }
+        ]
+      }
+      const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{data})
 
-  const value = 'Timothy Squim';
+      Alert.alert(res.data.message)
+    } catch (error) {
+      Alert.alert("Something went wrong")
+    }
+  }
+
   return (
     <SafeAreaView>
       <View
@@ -155,10 +180,10 @@ export default function ProfileEdit() {
           <View>
             <View className="mt-6 relative">
               <TextInput
-                value={'Kiambu'}
+                value={county}
                 type="number"
                 className="border w-full rounded-[18px] pl-4 h-[45px]"
-                disabled
+                onChangeText={handleCounty}
                 style={{color: 'black'}}
               />
                 <View className="absolute right-3 top-3">
@@ -171,10 +196,9 @@ export default function ProfileEdit() {
             <View>
               <View className="mt-8 relative">
                 <TextInput
-                  value={'Gatundu'}
-                  type="number"
+                  value={district}
                   className="border  w-full rounded-[18px] pl-4 h-[45px]"
-                  disabled
+                  onChangeText={handleDistrict}
                   style={{color: 'black'}}
                 />
               
@@ -188,10 +212,9 @@ export default function ProfileEdit() {
             <View>
               <View className="mt-8 relative">
                 <TextInput
-                  value={'Munyuini'}
-                  type="number"
+                  value={location}
                   className="border  w-full rounded-[18px] pl-4 h-[45px]"
-                  disabled
+                  onChangeText={handleLocation}
                   style={{color: 'black'}}
                 />
               </View>
@@ -205,7 +228,8 @@ export default function ProfileEdit() {
         </View>
         <TouchableOpacity
           className="mt-10 w-[90%] mx-auto py-3 mb-10 rounded-xl items-center"
-          style={{backgroundColor: 'orange'}}>
+          style={{backgroundColor: 'orange'}}
+          onPress={handleUpdate}>
           <Text className="text-white font-bold tracking-[1px] text-[19px]">
             Update{' '}
           </Text>
