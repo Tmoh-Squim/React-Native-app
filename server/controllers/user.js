@@ -120,7 +120,6 @@ const Protected = async (req,res)=>{
     try {
         const {user,email,phone,deliveryDetails} = req.body
         
-        console.log('user',user,'id',user._id)
         const check = await User.findById(user._id)
         if(!check){
             next(res.status(403).send({
@@ -128,15 +127,13 @@ const Protected = async (req,res)=>{
                 message:"User not found!"
             }))
         }
-        else{
-            const user = await User.findByIdAndUpdate(email,phone,deliveryDetails)
+            const newUser = await User.findByIdAndUpdate(user._id,{email,phone,deliveryDetails},{new:true} )
 
             res.status(200).send({
                 success:true,
                 message:"Details updated successfully",
-                user
+                newUser
             })
-        }
     } catch (error) {
         next(res.status(500).send({
             message:"Error in updating details"
