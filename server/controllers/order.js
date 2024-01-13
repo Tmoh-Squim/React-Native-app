@@ -13,8 +13,9 @@ const createOrder = asyncHandler( async (req, res,next) => {
       paymentInfo,
     });
 
-    res.status(201).json({
+    res.status(201).send({
       success: true,
+      message:"Order created successfully",
       order,
     });
   } catch (error) {
