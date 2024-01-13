@@ -118,10 +118,10 @@ const Protected = async (req,res)=>{
   //update user details
   const updateUser =  asyncHandler(async(req,res,next)=>{
     try {
-        const {email,phone,deliveryDetails,id} = req.body
-        console.log('user',id)
+        const {user,email,phone,deliveryDetails} = req.body
         
-        const check = await User.findById(id)
+        console.log('user',user,'id',user._id)
+        const check = await User.findById(user._id)
         if(!check){
             next(res.status(403).send({
                 success:false,

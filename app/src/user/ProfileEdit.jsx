@@ -38,16 +38,11 @@ export default function ProfileEdit() {
   const handleDistrict= (text) =>{setDistrict(text)}
   const handleCounty= (text) =>{setCounty(text)}
 
-  const get = ()=>{
-    const county= Country.getAllCountries()
-    setCountries(county)
-  }
-
-  useEffect(()=>{
-    get()
-  },[])
+  
   const handleUpdate =async () =>{
     try {
+      const id = user?._id
+
       const data ={
         email:email,
         phone:phone,
@@ -67,8 +62,7 @@ export default function ProfileEdit() {
           location:location
          }
       ]
-      console.log(email,phone,user,deliveryDetails)
-     const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{email,phone,id:user?.id,deliveryDetails})
+     const res = await axios.put(`https://squim-native-app.onrender.com/api/v1/auth/update-user`,{user,email,phone,deliveryDetails})
 
       Alert.alert(res.data.message)
     } catch (error) {
