@@ -60,7 +60,15 @@ export default function ProfileEdit() {
         }
         ]
       }
-     const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{data})
+      const deliveryDetails = [
+        { 
+          county:county,
+          district:district,
+          location:location
+         }
+      ]
+      console.log(email,phone,user,deliveryDetails)
+     const res = await axios.put('https://squim-native-app.onrender.com/api/v1/auth/update-user',{email,phone,id:user?.id,deliveryDetails})
 
       Alert.alert(res.data.message)
     } catch (error) {
