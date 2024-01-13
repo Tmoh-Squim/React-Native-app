@@ -4,8 +4,6 @@ import {SliderBox} from 'react-native-image-slider-box';
 
 function Slider() {
   const width = Dimensions.get('window').width;
-  const date = new Date();
-  console.log(date);
   const slides = [
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699381129/lw7gsg4ucidppbjdjolz.jpg',
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699381765/dghrf19rxcjnxiu9cjuh.jpg',

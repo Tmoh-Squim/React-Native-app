@@ -12,8 +12,6 @@ import {decreaseQuantity, addToCart} from '../redux/cart';
 export default function CartScreen() {
   const cart = useSelector(state => state.cart.cartItem);
   const {cartTotalAmount} = useSelector(state => state.cart);
-  const [count, setCount] = useState(cart.cartQuantity);
-  console.log('count', count);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -53,12 +51,12 @@ export default function CartScreen() {
                 onPress={() => navigation.goBack()}
               />
             </View>
-            <View>
+            <View className="mt-10">
               {cart?.map((item, index) => {
                 return (
                   <ScrollView className="mx-2 mt-2">
-                    <View className="flex-1 flex-row my-1 align-middle">
-                      <View className="m">
+                    <View className="flex-1 flex-row my-1 align-middle border-b border-t border-gray-300 w-full py-3">
+                      <View>
                         <TouchableOpacity
                           className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1"
                           onPress={() => handleIncrement(item)}>
@@ -77,9 +75,9 @@ export default function CartScreen() {
                       </View>
                       <Image
                         source={{uri: item.images[0]}}
-                        className="w-[80px] h-[80px]"
+                        className="w-[90px] h-[90px]"
                       />
-                      <View className="align-middle ml-2">
+                      <View className="align-middle  ml-2">
                         <Text className="text-black text-center">
                           {item.name.length < 20
                             ? item.name
@@ -93,7 +91,7 @@ export default function CartScreen() {
                         </Text>
                       </View>
                       <TouchableOpacity
-                        className="absolute right-3 top-5"
+                        className="absolute right-3 top-10"
                         onPress={() => handleRemove(item)}>
                         <Text className="text-black m-auto">Remove</Text>
                       </TouchableOpacity>

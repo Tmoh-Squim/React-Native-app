@@ -20,7 +20,6 @@ const AppWrapper = () => {
   }, [store]); // Add store as a dependency if needed
   
   useEffect(() => {
-    console.log('cartItems',cart.cartItem);
     console.log('user',user)
   }, []);
 

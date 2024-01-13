@@ -23,9 +23,9 @@ export default function ProfileEdit() {
   const [name] = useState(user.name)
   const [email,setEmail] = useState(user.email)
   const [phone,setPhone] = useState(`${user.phone}`)
-  const [location,setLocation] = useState('Munyuini')
-  const [district,setDistrict] = useState('Gatundu')
-  const [county,setCounty] = useState('Kiambu')
+  const [location,setLocation] = useState(location)
+  const [district,setDistrict] = useState(district)
+  const [county,setCounty] = useState(county)
 
   const handleEmail =(text)=>{
     setEmail(text)
@@ -41,6 +41,9 @@ export default function ProfileEdit() {
   
   const handleUpdate =async () =>{
     try {
+      if(email === '' || phone=== '' || county ==='' || district ==='' || location === '' ){
+        Alert.alert('All fields are required')
+      }
       const deliveryDetails = [
         { 
           county:county,
@@ -49,13 +52,27 @@ export default function ProfileEdit() {
          }
       ]
      const res = await axios.put(`https://squim-native-app.onrender.com/api/v1/auth/update-user`,{user,email,phone,deliveryDetails})
-     console.log(res.data)
       Alert.alert(res.data.message)
     } catch (error) {
       Alert.alert("Something went wrong")
       console.log(error)
     }
   }
+  const details = () =>{
+    user?.deliveryDetails.length > 0 && (
+      user?.deliveryDetails.map((item,index)=>{
+        return (
+          setCounty(item.county),
+          setDistrict(item.district),
+          setLocation(item.location)
+        )
+      })
+    )
+  }
+  useEffect(() => {
+    details()
+  }, []);
+  
 
   return (
     <SafeAreaView>

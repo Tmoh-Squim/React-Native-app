@@ -3,11 +3,11 @@ const asyncHandler = require('express-async-handler')
 const Product = require("../models/products")
 const createOrder = asyncHandler( async (req, res,next) => {
   try {
-    const { cart, shippingAddress, user, paymentInfo, totalPrice } = req.body;
+    const { cart, deliveryDetails, user, paymentInfo, totalPrice } = req.body;
 
     const order = await Order.create({
       cart: cart,
-      shippingAddress,
+      deliveryDetails,
       user,
       totalPrice,
       paymentInfo,
@@ -22,15 +22,14 @@ const createOrder = asyncHandler( async (req, res,next) => {
       success: false,
       message: "Error in create order controller",
     }))
-  
     console.log(error);
   }
 })
-//get all orders for a user
+//get all orders for  user
 const userOrders = asyncHandler(async (req, res,next) => {
   try {
     
-    const orders =await Order.find({ "user.id": req.params.pid }).sort({
+    const orders =await Order.find({ "user._id": req.params.pid }).sort({
       createdAt: -1,
     });
     if(!orders){

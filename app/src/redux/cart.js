@@ -36,9 +36,6 @@ const cartSlice = createSlice({
           state.cartItem.push(tempProducts)
         }
         
-
-      console.log('serial',JSON.stringify(state.cartItem))
-
       },
       decreaseQuantity(state,action){
         const itemIndex = state.cartItem.findIndex((item)=>item._id === action.payload._id)
