@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 const cloudinary = require('../utils/cloudinary')
 const createProduct =asyncHandler( async (req,res,next) =>{
     try {
-        console.log('files',req.files)
         const files = req.files;
             // const imageUrls = files.map((file) => `${file.filename}`);
             const imageUrls = [];
@@ -51,7 +50,6 @@ const getAllProducts = asyncHandler(async (req,res,next)=>{
 }) 
 const updateProduct = asyncHandler(async (req,res,next)=>{
     try {
-        console.log(req.body)
         const {name,description,stock,discountPrice,originalPrice,category} = req.body
         console.log(req.body)
         const id = req.params.id

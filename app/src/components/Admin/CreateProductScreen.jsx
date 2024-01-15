@@ -82,6 +82,9 @@ export default function CreateProductScreen() {
      images.forEach((image) => {
       formData.append("images", image);
     });
+    colors.forEach((color) => {
+      formData.append("colors", color);
+    });
  
      const res = await axios.post(
        'https://squim-native-app.onrender.com/api/v2/product/create-product',
@@ -97,8 +100,11 @@ export default function CreateProductScreen() {
      Alert.alert(res.data.message)
      
   } catch (error) {
-      Alert.alert('Something went wrong')
-      console.log(error)
+    if(error === 'AxiosError' || error ==='Network Error'){
+      Alert.alert('Network error')
+    }
+    Alert.alert('Something went wrong!')
+    console.log(error)
   }
   };
   

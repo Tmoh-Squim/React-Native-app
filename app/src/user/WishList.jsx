@@ -9,13 +9,14 @@ import {removeFromWishlist} from "../redux/wishlist"
 import { addToCart } from "../redux/cart";
 export default function WishList() {
   const {wishlist} = useSelector(state => state.wishlist);
+  console.log(wishlist)
   const [count, setCount] = useState(1);
   const dispatch = useDispatch()
   const navigation = useNavigation();
-  console.log('cart', wishlist);
 
   const handleAddToWishlist =(item)=>{
-    dispatch(addToCart(item))
+    const product = {...item,cartQuantity:1}
+    dispatch(addToCart(product))
   }
   const handleRemoveFromWishlist =(item)=>{
     dispatch(removeFromWishlist(item))
@@ -40,14 +41,17 @@ export default function WishList() {
               />
             </View>
             <View>
-              {wishlist.slice(0, 4).map((item, index) => {
+              {wishlist.map((item, index) => {
                 return (
                   <ScrollView className="mx-2 mt-2">
                     <View className="flex-1 flex-row my-1 align-middle">
-                      <Image
-                        source={item.images[0]}
+                 
+                     <Image
+                        source={{uri: item.images[0]}}
                         className="w-[80px] h-[80px]"
                       />
+                   
+                     
                       <View className="align-middle ml-2 m-auto">
                         <Text className="text-black text-center">
                           {item.name.length < 20

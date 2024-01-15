@@ -14,7 +14,7 @@ import {HeartIcon} from 'react-native-heroicons/solid';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {addToCart} from '../redux/cart';
-import {addToWishList, removeFromWishlist} from '../redux/wishlist';
+import {addToWishlist, removeFromWishlist} from '../redux/wishlist';
 const {width, height} = Dimensions.get('window');
 
 export default function ProductDetails({route}) {
@@ -24,6 +24,7 @@ export default function ProductDetails({route}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {wishlist} = useSelector(state => state.wishlist);
+  console.log('wi',wishlist)
 
   const goBack = () => {
     navigation.goBack();
@@ -44,8 +45,9 @@ export default function ProductDetails({route}) {
       setCount(count - 1);
     }
   };
-  const handleAddToWishlist = product => {
-    dispatch(addToWishList(product));
+  const handleAddToWishlist = (product) => {
+    const item = {...product}
+    dispatch(addToWishlist(item));
   };
   const handleRemoveFromWishlist = product => {
     dispatch(removeFromWishlist(product));
@@ -119,12 +121,12 @@ export default function ProductDetails({route}) {
               </TouchableOpacity>
             </View>
             {click ? (
-              <TouchableOpacity onPress={() => handleAddToWishlist(product)}>
+              <TouchableOpacity onPress={() => handleRemoveFromWishlist(product)}>
                 <HeartIcon size="35" color="red" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => handleRemoveFromWishlist(product)}>
+                onPress={() => handleAddToWishlist(product)}>
                 <HeartIcon size="35" color="#0000004b" />
               </TouchableOpacity>
             )}
