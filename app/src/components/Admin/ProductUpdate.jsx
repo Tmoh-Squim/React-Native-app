@@ -6,6 +6,8 @@ import {useNavigation} from '@react-navigation/native';
 import DocumentPicker from "react-native-document-picker"
 import {useDispatch} from "react-redux"
 import {deleteProduct,updateProduct} from "../../redux/Products"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
 export default function ProductUpdate({route}) {
   const {product} = route.params;
   const dispatch = useDispatch()
@@ -48,8 +50,15 @@ export default function ProductUpdate({route}) {
     try {
       const id = product._id
       console.log(id)
-      dispatch(deleteProduct(id))
+      const token =await AsyncStorage.getItem('token')
+      const res = await axios.delete(`https://squim-native-app.onrender.com/api/v2/product/delete-product/${id}`,{
+          headers:{
+              'Authorization':token
+          }
+      })
+      Alert.alert(res.data.message)
     } catch (error) {
+      Alert.alert('Something went wrong')
       console.log(error)
     }
   }

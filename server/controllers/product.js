@@ -76,7 +76,7 @@ const deleteProduct = asyncHandler(async(req,res,next)=>{
         if(!check){
             next(res.send({message:'product with this id not found'}))
         }else{
-            await User.findByIdAndDelete(id)
+            await Product.findByIdAndDelete(id)
             res.status(200).send({
                 success:true,
                 message:'Product deleted successfully'
