@@ -45,6 +45,8 @@ export default function Payment() {
         },
       );
       Alert.alert(res.data.message);
+      AsyncStorage.removeItem('latest-order')
+      navigation.navigate('HomeScreen')
     } catch (error) {
       Alert.alert('Something went wrong!');
       console.log(error)

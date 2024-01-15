@@ -1,9 +1,14 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 export const getUserOrders = createAsyncThunk('getUserOrders',async(id)=>{
     try {
-        const response = await axios.get(`https://mern-web-yn5l.onrender.com/api/v2/order/get-all-orders/${id}`)
-        console.log('res_order',response.data)
+        const token = await AsyncStorage.getItem('token')
+        const response = await axios.get(`https://squim-native-app.onrender.com/api/v2/order/user-order/${id}`,{
+            headers:{
+                'Authorization':token
+            }
+        })
         return response.data   
     } catch (error) {
         console.log(error)

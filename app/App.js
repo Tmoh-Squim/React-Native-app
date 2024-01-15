@@ -6,7 +6,6 @@ import {getTotal} from "./src/redux/cart"
 import { View, StatusBar, ActivityIndicator, StyleSheet } from 'react-native';
 import {LoadUser} from "./src/redux/user"
 import Router from './src/navigation/Router.jsx';
-
 const AppWrapper = () => {
   const {isLoading} = useSelector((state) => state.products);
   const cart = useSelector((state)=>state.cart)

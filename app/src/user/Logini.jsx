@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {EyeSlashIcon, EyeIcon} from 'react-native-heroicons/outline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ChevronLeftIcon} from "react-native-heroicons/outline"
+import RNRestart from 'react-native-restart';
 export default function Logini() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState();
@@ -31,6 +32,7 @@ export default function Logini() {
       await AsyncStorage.setItem('token', token);
       Alert.alert(response.data.message)
       navigation.navigate('HomeScreen')
+      RNRestart.Restart()
     } catch (error) {
       Alert.alert("Something went wrong")
       console.log(error);

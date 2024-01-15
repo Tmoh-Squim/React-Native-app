@@ -4,7 +4,6 @@ import {Country, State, City} from 'country-state-city';
 import {MapPinIcon, ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-import RNPickerSelect from "react-native-picker-select"
 import Picker from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from "react-redux"

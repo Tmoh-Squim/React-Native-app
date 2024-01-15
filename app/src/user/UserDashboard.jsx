@@ -16,14 +16,17 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import RNRestart from 'react-native-restart';
 export default function UserDashboard() {
   const user = useSelector((state)=>state.user.user.user)
   const navigation = useNavigation();
 
-  const handleLogout = async() =>{
-    await AsyncStorage.removeItem('token')
-    Alert.alert("Logged out  successfully")
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    Alert.alert("Logged out successfully");
     navigation.navigate('HomeScreen')
+    // Reload the app
+    RNRestart.Restart()
   }
   
   return (
@@ -69,7 +72,7 @@ export default function UserDashboard() {
               <PhoneIcon size={20} color="gray" />
               <View className="mx-6">
                 <Text className="text-black text-[18px]">Phone Number</Text>
-                <Text className="text-neutral-500">{user.phoneNumber}</Text>
+                <Text className="text-neutral-500">{user.phone}</Text>
               </View>
             </View>
           </View>
