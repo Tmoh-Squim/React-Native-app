@@ -73,7 +73,7 @@ export default function Overview() {
     className="mx-auto rounded-lg"
   />
         <View className="mt-5 bg-neutral-200 p-3 relative w-[75%] mx-auto shadow-lg rounded-md">
-        <View>
+        <View className="ml-4">
             <Text className="text-white text-2xl ml-7">
                 Shop Total Earnings
             </Text>
@@ -81,12 +81,12 @@ export default function Overview() {
                 Ksh 13000
             </Text>
         </View>
-        <View className="absolute top-9 left-2">
+        <View className="absolute top-8 left-2">
             <CurrencyDollarIcon size={50} color='black' />
         </View>
       </View>
       <View className="bg-neutral-200 p-3 mt-5 w-[75%] mx-auto shadow-lg rounded-md">
-        <View>
+        <View className="ml-4">
             <Text className="text-white text-2xl ml-7">
                Shop All Orders
             </Text>
@@ -97,12 +97,12 @@ export default function Overview() {
                 <Text className="text-green-400">View Orders</Text>
             </TouchableOpacity>
         </View>
-        <View className="absolute top-9 left-2">
+        <View className="absolute top-8 left-2">
             <ListBulletIcon size={50} color='black' />
         </View>
       </View>
       <View className="bg-neutral-200 p-3 mt-5 w-[75%] mx-auto shadow-lg rounded-md mb-4">
-        <View>
+        <View className="ml-4">
             <Text className="text-white text-2xl ml-7">
                 Shop All Products
             </Text>
@@ -115,7 +115,7 @@ export default function Overview() {
                 <Text className="text-green-400">View Products</Text>
             </TouchableOpacity>
         </View>
-        <View className="absolute top-9 left-2">
+        <View className="absolute top-8 left-2">
             <ArrowsPointingOutIcon size={50} color='black' />
         </View>
       </View>

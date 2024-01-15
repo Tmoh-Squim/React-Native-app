@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getProducts = createAsyncThunk('getProducts', async () => {
     try {
-        const response = await axios.get('https://mern-web-yn5l.onrender.com/api/v2/product/get-all-products');
+        const response = await axios.get('https://squim-native-app.onrender.com/api/v2/product/products');
         return response.data;
         
     } catch (error) {
@@ -29,7 +29,7 @@ export const createProduct = createAsyncThunk('create-product', (json) => async 
             "Content-Type":"multipart/form-data"
         }
     }
-   const res= await axios.post(`/api/v2/product/create-product`,json,config,{
+   const res= await axios.post(`https://squim-native-app.onrender.com/api/v2/product/create-product`,json,config,{
        headers:{
            'Authorization':token
        }

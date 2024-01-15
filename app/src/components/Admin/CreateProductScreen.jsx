@@ -6,64 +6,86 @@ import {
   TextInput,
   Alert,
   Button,
-  Image
+  Image,
 } from 'react-native';
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {Categories} from '../../data/Categories.js';
 import {Picker} from '@react-native-picker/picker';
-import DocumentPicker from "react-native-document-picker"
-import {useDispatch,useSelector} from "react-redux"
-import {createProduct} from "../../redux/Products"
+import DocumentPicker from 'react-native-document-picker';
+import {useDispatch, useSelector} from 'react-redux';
+import {createProduct} from '../../redux/Products';
 export default function CreateProductScreen() {
-  console.log(Categories);
-  const [name,setName] = useState('')
-  const [description,setDescription] = useState('')
-  const [discountPrice,setDiscountPrice] = useState('')
-  const [originalPrice,setOriginalPrice] = useState('')
-  const [quantity,setQuantity] = useState('')
-  const [category,setCategory] = useState('')
-  const [images,setImages] = useState([])
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [discountPrice, setDiscountPrice] = useState('');
+  const [originalPrice, setOriginalPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [category, setCategory] = useState('');
+  const [images, setImages] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [color, setColor] = useState('');
+
   const navigation = useNavigation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const selectImages = async ()=>{
+  const selectImages = async () => {
     try {
-      const results= await DocumentPicker.pick({
-        type:[DocumentPicker.types.images],
-        allowMultiSelection:true
-        
-      })
-      setImages(results)
+      const results = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+        allowMultiSelection: true,
+      });
+      setImages(results);
 
-      console.log('imgs',images)
-
+      console.log('imgs', images);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+  const handleName = name => {
+    setName(name);
+  };
+  const handleDescription = text => {
+    setDescription(text);
+  };
+  const handleQuantity = name => {
+    setQuantity(name);
+  };
+  const handlePrice = name => {
+    setDiscountPrice(name);
+  };
+  const handleoriginalPrice = name => {
+    setOriginalPrice(name);
+  };
 
-  const handleName=(name)=>{
-    setName(name)
-  }
-  const handleDescription=(text)=>{setDescription(text)}
-  const handleCategory=(name)=>{setCategory(name)}
-  const handleQuantity=(name)=>{setQuantity(name)}
-  const handlePrice=(name)=>{setDiscountPrice(name)}
-  const handleoriginalPrice =(name)=>{setOriginalPrice(name)}
-
-  const json={name,description,discountPrice,quantity,category,images}
+  const json = {name, description, discountPrice, stock:quantity, category, images,colors};
 
   const handleSubmit = () => {
     Alert.alert('submitted');
-    console.log('json',json)
-    console.log(name,description,discountPrice,quantity,category,images)
-    dispatch(createProduct(json))
+    console.log('json', json);
+    console.log(name, description, discountPrice, quantity, category, images,colors);
+    dispatch(createProduct(json));
   };
+  const handleColor = text => {
+    setColor(text);
+  };
+  const handleAddColor = () => {
+    if (color.trim() !== '') {
+      setColors([...colors, color]);
+      setColor('');
+    }
+    return;
+  };
+  const handleRemoveColor = index => {
+    const res = [...colors];
+    res.splice(index, 1);
+    setColors(res);
+  };
+  console.log(category)
   return (
-    <SafeAreaView className="h-screen w-full">
+    <ScrollView className="h-screen " showsVerticalScrollIndicator={false}>
       <View
         className="w-full h-[40px] justify-center"
         style={{backgroundColor: '#88dae0'}}>
@@ -78,113 +100,133 @@ export default function CreateProductScreen() {
           </Text>
         </View>
       </View>
-      <ScrollView className="h-screen " showsVerticalScrollIndicator={false}>
-        <View className="w-[90%] mx-auto">
-          <View>
-            <TextInput
-              type="text"
-              placeholder="Enter product name"
-              placeholderTextColor="black"
-              value={name}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-lg"
-              onChangeText={handleName}
-            />
-          </View>
-          <View>
-            <TextInput
-              type="text"
-              placeholder="Enter product description"
-              multiline
-              numberOfLines={10}
-              value={description}
-              placeholderTextColor="black"
-              onChangeText={handleDescription}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-[15px]"
-            />
-          </View>
-          <View>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="Enter product quantity"
-              placeholderTextColor="black"
-              onChangeText={handleQuantity}
-              value={quantity}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-[15px]"
-            />
-          </View>
-          <View>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="Enter product discountPrice"
-              placeholderTextColor="black"
-              value={discountPrice}
-              onChangeText={handlePrice}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-[15px]"
-            />
-          </View>
-          <View>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="Enter product originalPrice"
-              placeholderTextColor="black"
-              value={originalPrice}
-              onChangeText={handleoriginalPrice}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-[15px]"
-            />
-          </View>
-          <View>
-            <TextInput
-              type="text"
-              placeholder="Enter product category "
-              placeholderTextColor="black"
-              value={category}
-              onChangeText={handleCategory}
-              style={{color: 'green'}}
-              className="border pl-4 mt-5 rounded-[15px]"
-            />
-          </View>
-          <Picker>
-            {
-              Categories?.map((i)=>{
-                return (
-                  <Picker>
-                  <Picker.Item lable="Select category" value='Select category' />
-                  <Picker.Item value={i.name} lable={i.name} key={i.index} />
-                  </Picker>
-                )
-              })
-            }
+      <View className="w-[90%] mx-auto">
+        <View>
+          <TextInput
+            type="text"
+            placeholder="Enter product name"
+            placeholderTextColor="black"
+            value={name}
+            style={{color: 'green'}}
+            className="border pl-4 mt-5 rounded-lg"
+            onChangeText={handleName}
+          />
+        </View>
+        <View>
+          <TextInput
+            type="text"
+            placeholder="Enter product description"
+            multiline
+            numberOfLines={10}
+            value={description}
+            placeholderTextColor="black"
+            onChangeText={handleDescription}
+            style={{color: 'green'}}
+            className="border pl-4 mt-5 rounded-[15px]"
+          />
+        </View>
+        <View>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Enter product quantity"
+            placeholderTextColor="black"
+            onChangeText={handleQuantity}
+            value={quantity}
+            style={{color: 'green'}}
+            className="border pl-4 mt-5 rounded-[15px]"
+          />
+        </View>
+        <View>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Enter product discountPrice"
+            placeholderTextColor="black"
+            value={discountPrice}
+            onChangeText={handlePrice}
+            style={{color: 'green'}}
+            className="border pl-4 mt-5 rounded-[15px]"
+          />
+        </View>
+        <View>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Enter product originalPrice"
+            placeholderTextColor="black"
+            value={originalPrice}
+            onChangeText={handleoriginalPrice}
+            style={{color: 'green'}}
+            className="border pl-4 mt-5 rounded-[15px]"
+          />
+        </View>
+        <View className="border rounded-xl  mt-3 bg-black">
+          <Picker
+            selectedValue={category}
+            onValueChange={(item) =>
+              setCategory(item)
+            }>
+            {Categories &&
+              Categories.map((item, index) => (
+                <Picker.Item
+                  label={item.title}
+                  key={index.id}
+                  value={item.title}
+                  style={{width:'50%'}}
+                />
+              ))}
           </Picker>
-          <TouchableOpacity className="my-4 bg-blue-700 p-2 items-center rounded-xl" onPress={selectImages} >
-          <Text className="text-white">CHOOSE FILES </Text>
-          </TouchableOpacity>
-
-          <View className="flex flex-row justify-between flex-wrap">
-          {
-            images?.map((i,index)=>{
-              return (
-                <View className="p-1">
-                <Image source={i} className="w-[88px] h-[88px]" key={index}/>
-                </View>
-              )
-            })
-          }
-          </View>
-
+        </View>
+        <View className="mt-5 flex flex-row px-2 justify-between">
+          <TextInput
+            className="rounded-lg p-2 border w-[60%]"
+            onChangeText={handleColor}
+            color="black"
+            placeholder="Enter product color"
+            placeholderTextColor="black"
+          />
           <TouchableOpacity
-            className="p-3 bg-orange-600 w-[90%] mx-auto mt-10 mb-5 rounded-lg"
-            onPress={handleSubmit}>
-            <Text className="text-white text-center text-xl">
-              Create Product{' '}
-            </Text>
+            className="p-2 w-[90px] bg-black rounded-md"
+            onPress={handleAddColor}>
+            <Text className="text-white text-[20px] text-center">Add</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View className="flex flex-row flex-wrap mt-2">
+          {colors &&
+            colors.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                className="flex-1 flex-row  flex-wrap mt-2 bg-black rounded-xl p-2 mx-1"
+                onPress={() => handleRemoveColor(index)}>
+                <Text className="text-green-500 text-center text-[15px]">
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+        </View>
+
+        <TouchableOpacity
+          className="my-4 bg-blue-700 p-2 items-center rounded-xl"
+          onPress={selectImages}>
+          <Text className="text-white">CHOOSE FILES </Text>
+        </TouchableOpacity>
+
+        <View className="flex flex-row justify-between flex-wrap">
+          {images?.map((i, index) => {
+            return (
+              <View className="p-1">
+                <Image source={i} className="w-[88px] h-[88px]" key={index} />
+              </View>
+            );
+          })}
+        </View>
+
+        <TouchableOpacity
+          className="p-3 bg-orange-600 w-[90%] mx-auto mt-10 mb-5 rounded-lg"
+          onPress={handleSubmit}>
+          <Text className="text-white text-center text-xl">
+            Create Product{' '}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
