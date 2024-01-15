@@ -47,6 +47,7 @@ export default function ProductUpdate({route}) {
   const handleDeleteProduct =async(product) =>{
     try {
       const id = product._id
+      console.log(id)
       dispatch(deleteProduct(id))
     } catch (error) {
       console.log(error)
@@ -55,11 +56,10 @@ export default function ProductUpdate({route}) {
  
   
   return (
-    <SafeAreaView className="px-2 mb-6">
-      <TouchableOpacity className="mt-2" onPress={() => navigation.goBack()}>
+      <ScrollView className="mt-3 px-2">
+          <TouchableOpacity className="mt-2" onPress={() => navigation.goBack()}>
         <ChevronLeftIcon color="black" size={30} />
       </TouchableOpacity>
-      <ScrollView className="mt-3">
         <View>
           <Text className="text-black py-1 text-xl">Product name</Text>
           <TextInput
@@ -140,6 +140,5 @@ export default function ProductUpdate({route}) {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
   );
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {Alert} from "react-native"
 import axios from "axios";
-
+import AsyncStorage from "@react-native-async-storage/async-storage"
 export const getProducts = createAsyncThunk('getProducts', async () => {
     try {
         const response = await axios.get('https://squim-native-app.onrender.com/api/v2/product/products');
@@ -14,11 +14,12 @@ export const getProducts = createAsyncThunk('getProducts', async () => {
 //delete product for admin
 export const deleteProduct = createAsyncThunk('delete-product',async(id)=>{
     const token =await AsyncStorage.getItem('token')
-    const res = await axios.delete(`/api/v2/product/delete-product/${id}`,{
+    console.log(id)
+    const res = await axios.delete(`https://squim-native-app.onrender.com/api/v2/product/delete-product/${id}`,{
         headers:{
             'Authorization':token
         }
-    }).then((Alert.alert(res.message)))
+    }).then((Alert.alert(res.data.message)))
 })
 
 //create product for admin

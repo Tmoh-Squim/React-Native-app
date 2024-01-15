@@ -79,13 +79,9 @@ export default function CreateProductScreen() {
      formData.append('category', category);
      
      // Append each image file to the FormData
-     images.forEach((image, index) => {
-       formData.append(`images[${index}]`, {
-         name: image.name,
-         type: image.type,
-         uri: image.uri,
-       });
-     });
+     images.forEach((image) => {
+      formData.append("images", image);
+    });
  
      const res = await axios.post(
        'https://squim-native-app.onrender.com/api/v2/product/create-product',

@@ -84,6 +84,7 @@ const deleteProduct = asyncHandler(async(req,res,next)=>{
         }
     } catch (error) {
         next(res.status(500).send({success:false,message:'internal server error'}))
+        console.log(error)
     }
 })
 module.exports = {getAllProducts,createProduct,updateProduct,deleteProduct}
