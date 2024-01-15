@@ -1,19 +1,21 @@
 const Product = require('../models/products')
 const asyncHandler = require('express-async-handler')
-
+const cloudinary = require('../utils/cloudinary')
 const createProduct =asyncHandler( async (req,res,next) =>{
     try {
         const {name,description,discountPrice,originalPrice,stock,category} = req.body
 
         const files = req.files;
-             const imageUrls = files.map((file) => `${file.filename}`);
-         //    const imageUrls = [];
-         //    for (const file of files) {
+            // const imageUrls = files.map((file) => `${file.filename}`);
+            const imageUrls = [];
+            for (const file of files) {
                // Upload each image file to Cloudinary
-           //    const result = await cloudinary.uploader.upload(file.path);
-           //    const urls = result.secure_url
-           //    imageUrls.push(urls);
-           //  }
+              const result = await cloudinary.uploader.upload(file.path,{
+                folder:'Ecommerce'
+              });
+              const urls = result.secure_url
+              imageUrls.push(urls);
+             }
         //updated
      
              const productData = req.body;
@@ -23,11 +25,13 @@ const createProduct =asyncHandler( async (req,res,next) =>{
      
              res.status(201).json({
                success: true,
+               message:"Product created successfully",
                imageUrls,
                product,
              });
     } catch (error) {
-        next(res.status(500).send({message:'Error in create product'}))
+        next(res.status(500).send({message:'Error in creating product'}))
+        console.log(error)
     }
 })
 const getAllProducts = asyncHandler(async (req,res,next)=>{

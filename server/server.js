@@ -5,6 +5,7 @@ const orderRoutes = require('./routes/order')
 const productRoutes = require('./routes/product')
 const cors = require('cors')
 const path = require('path')
+const compression = require('compression')
 require('dotenv').config()
 
 const connectDB = require('./config/db')
@@ -13,6 +14,7 @@ const port = process.env.PORT
 connectDB()
 app.use(express.json())
 app.use(cors())
+app.use(compression())
 app.get('/',(req,res)=>{
     res.send('server run nicely')
 })
