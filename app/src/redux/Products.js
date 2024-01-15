@@ -43,18 +43,26 @@ export const createProduct = createAsyncThunk('create-product', (json) => async 
   
 })
 //create product for admin
-export const updateProduct = createAsyncThunk('update-product', (newform) => async (id)=>{
-    const token =await AsyncStorage.getItem('token')
-    const config = {
-        headers:{
-            "Content-Type":"multipart/form-data"
+export const updateProduct = createAsyncThunk('update-product', async (id,newform)=>{
+    try {
+        const token =await AsyncStorage.getItem('token')
+        console.log('pas',token)
+        const config = {
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
         }
+       const res = await axios.put(`https://squim-native-app.onrender.com/api/v2/product/update-product/${id}`,newform,config,{
+           headers:{
+               'Authorization':token
+           }
+       })
+       Alert.alert(res.data.message)     
+    } catch (error) {
+     Alert.alert('Something went wrong')   
+     console.log(error)
     }
-   const res = await axios.put(`/api/v2/product/update-product/${id}`,newform,config,{
-       headers:{
-           'Authorization':token
-       }
-   }).then((Alert.alert(res.message)))
+
 })
 
 const initialState = {

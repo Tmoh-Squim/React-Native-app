@@ -66,7 +66,7 @@ const updateProduct = asyncHandler(async (req,res,next)=>{
         next( res.status(400).send({
             message:'Error in update product controller'
         }))
-       
+        console.log(error)
     }
 }) 
 const deleteProduct = asyncHandler(async(req,res,next)=>{

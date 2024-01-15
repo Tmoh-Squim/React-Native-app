@@ -20,6 +20,9 @@ export default function ProductUpdate({route}) {
   const [originalPrice, setOriginalPrice] = useState(
     `${product.originalPrice}`,
   );
+  const [stock, setStock] = useState(
+    `${product.stock}`,
+  );
   const [category, setCategory] = useState(product.category);
   const [images, setImages] = useState(product.images);
 
@@ -28,13 +31,15 @@ export default function ProductUpdate({route}) {
   const handleDiscountPrice = (text) =>{setDiscountPrice(text)}
   const handleoriginalPrice = (text) =>{setOriginalPrice(text)}
   const handleCategory = (text) => {setCategory(text)}
+  const handleStock = (text) => {setStock(text)}
 
   const newform = {
     name:name,
     description:description,
     category:category,
     originalPrice:originalPrice,
-    discountPrice:discountPrice
+    discountPrice:discountPrice,
+    stock:stock
   }
 
   const handleProductUpdate = (product) =>{
@@ -49,7 +54,6 @@ export default function ProductUpdate({route}) {
   const handleDeleteProduct =async(product) =>{
     try {
       const id = product._id
-      console.log(id)
       const token =await AsyncStorage.getItem('token')
       const res = await axios.delete(`https://squim-native-app.onrender.com/api/v2/product/delete-product/${id}`,{
           headers:{
@@ -112,6 +116,19 @@ export default function ProductUpdate({route}) {
             value={discountPrice}
             placeholderTextColor="green"
             onChangeText={handleDiscountPrice}
+            keyboardType="numeric"
+            className="border rounded-xl px-3"
+            style={{color: 'green'}}
+          />
+        </View>
+        <View>
+          <Text className="text-black py-1 text-xl">
+            Product in Stock 
+          </Text>
+          <TextInput
+            value={stock}
+            placeholderTextColor="green"
+            onChangeText={handleStock}
             keyboardType="numeric"
             className="border rounded-xl px-3"
             style={{color: 'green'}}
