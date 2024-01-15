@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post('/create-product',upload.array('images'),isAuthenticated,createProduct)
 router.get('/products',getAllProducts)
-router.put('/update-product/:pid',isAuthenticated,isAdmin,updateProduct)
-router.delete('/delete-product/:pid',isAuthenticated,isAdmin,deleteProduct)
+router.put('/update-product/:pid',isAuthenticated,updateProduct)
+router.delete('/delete-product/:pid',isAuthenticated,deleteProduct)
 
 module.exports = router
