@@ -17,6 +17,8 @@ import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {createProduct} from '../../redux/Products';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
 export default function CreateProductScreen() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -37,7 +39,7 @@ export default function CreateProductScreen() {
         type: [DocumentPicker.types.images],
         allowMultiSelection: true,
       });
-      setImages(results);
+      setImages([...images,...results]);
 
       console.log('imgs', images);
     } catch (error) {
@@ -62,12 +64,48 @@ export default function CreateProductScreen() {
 
   const json = {name, description, discountPrice, stock:quantity, category, images,colors};
 
-  const handleSubmit = () => {
-    Alert.alert('submitted');
-    console.log('json', json);
-    console.log(name, description, discountPrice, quantity, category, images,colors);
-    dispatch(createProduct(json));
+  const handleSubmit = async () => {
+    try {
+      console.log('json', json);
+
+      const token =await AsyncStorage.getItem('token')
+     const formData = new FormData();
+    
+     formData.append('name', name);
+     formData.append('description', description);
+     formData.append('discountPrice', discountPrice);
+     formData.append('originalPrice', originalPrice); 
+     formData.append('stock', quantity);
+     formData.append('category', category);
+     
+     // Append each image file to the FormData
+     images.forEach((image, index) => {
+       formData.append(`images[${index}]`, {
+         name: image.name,
+         type: image.type,
+         uri: image.uri,
+       });
+     });
+ 
+     const res = await axios.post(
+       'https://squim-native-app.onrender.com/api/v2/product/create-product',
+       formData,
+       {
+         headers: {
+           'Authorization': token,
+           'Content-Type': 'multipart/form-data',
+           'Accept':'*/*'
+         },
+       }
+     );
+     Alert.alert(res.data.message)
+     
+  } catch (error) {
+      Alert.alert('Something went wrong')
+      console.log(error)
+  }
   };
+  
   const handleColor = text => {
     setColor(text);
   };
@@ -83,7 +121,6 @@ export default function CreateProductScreen() {
     res.splice(index, 1);
     setColors(res);
   };
-  console.log(category)
   return (
     <ScrollView className="h-screen " showsVerticalScrollIndicator={false}>
       <View

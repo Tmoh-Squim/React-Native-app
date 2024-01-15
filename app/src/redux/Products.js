@@ -23,18 +23,23 @@ export const deleteProduct = createAsyncThunk('delete-product',async(id)=>{
 
 //create product for admin
 export const createProduct = createAsyncThunk('create-product', (json) => async ()=>{
-    const token =await AsyncStorage.getItem('token')
-    const config = {
-        headers:{
-            "Content-Type":"multipart/form-data"
+    try {
+        const token =await AsyncStorage.getItem('token')
+        const config = {
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
         }
+       const res= await axios.post(`https://squim-native-app.onrender.com/api/v2/product/create-product`,json,config,{
+           headers:{
+               'Authorization':token
+           }
+       })
+       Alert.alert(res.data.message)
+    } catch (error) {
+        Alert.alert('Something went wrong')
     }
-   const res= await axios.post(`https://squim-native-app.onrender.com/api/v2/product/create-product`,json,config,{
-       headers:{
-           'Authorization':token
-       }
-   })
-   .then((Alert.alert(res.message)))
+  
 })
 //create product for admin
 export const updateProduct = createAsyncThunk('update-product', (newform) => async (id)=>{
