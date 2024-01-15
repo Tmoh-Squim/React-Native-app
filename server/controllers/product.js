@@ -56,7 +56,6 @@ const updateProduct = asyncHandler(async (req,res,next)=>{
         const id = req.params.id
 
         const product = await Product.findByIdAndUpdate(id,{name,description,stock,discountPrice,originalPrice,category},{new:true})
-        await product.save()
         res.status(200).send({
             success:true,
             message:'Product updated successfully',

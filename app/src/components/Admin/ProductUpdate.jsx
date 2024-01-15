@@ -42,13 +42,21 @@ export default function ProductUpdate({route}) {
     stock:stock
   }
 
-  const handleProductUpdate = (product) =>{
+  const handleProductUpdate =async (product) =>{
     try {
-      const id = product._id
-      dispatch(updateProduct(id,newform))
-    } catch (error) {
-      Alert.alert('Something went wrong')
-    }
+        const id = product._id
+        const token = await AsyncStorage.getItem('token')
+     const res = await axios.put(`https://squim-native-app.onrender.com/api/v2/product/update-product/${id}`,{name,description,stock,originalPrice,discountPrice,category},{
+         headers:{
+             'Authorization':token,
+             'Content-Type':"multipart/form-data"
+         }
+     })
+     Alert.alert(res.data.message)     
+  } catch (error) {
+   Alert.alert('Something went wrong')   
+   console.log(error)
+  }
   }
 
   const handleDeleteProduct =async(product) =>{

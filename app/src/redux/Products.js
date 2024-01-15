@@ -43,9 +43,9 @@ export const createProduct = createAsyncThunk('create-product', (json) => async 
   
 })
 //create product for admin
-export const updateProduct = createAsyncThunk('update-product', async (id,newform)=>{
+export const updateProduct = createAsyncThunk('update-product', async (id,newform,token)=>{
     try {
-        const token =await AsyncStorage.getItem('token')
+        
         console.log('pas',token)
         const config = {
             headers:{
