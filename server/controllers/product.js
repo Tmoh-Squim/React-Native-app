@@ -53,7 +53,7 @@ const updateProduct = asyncHandler(async (req,res,next)=>{
     try {
 
         const {name,description,stock,discountPrice,originalPrice,category} = req.body
-        const id = req.params.pid
+        const id = req.params.id
 
         const product = await Product.findByIdAndUpdate(id,{name,description,stock,discountPrice,originalPrice,category},{new:true})
         await product.save()
