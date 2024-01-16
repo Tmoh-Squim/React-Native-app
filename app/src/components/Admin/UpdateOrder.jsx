@@ -1,5 +1,5 @@
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {ShoppingBagIcon} from 'react-native-heroicons/solid';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -9,11 +9,25 @@ import {Picker} from "@react-native-picker/picker"
 export default function UpdateOrder({route}) {
   const navigation = useNavigation();
   const {order,shippingAddress,paymentInfo,status,user} = route.params;
-  console.log('oredr-d', user);
+  const [statuss,setStatus] = useState(status)
   const [data,setData] = useState(["Processing","Shipping","Transfered to delivery partner","On the way","Delivered"])
+ useEffect(() => {
+    if(statuss === "Delivered"){
+        setData(["Delivered"])
+      }
+      if(statuss === "Shipping"){
+        setData(["Shipping","Transfered to delivery partner","On the way","Delivered"])
+      }
+      if(statuss === "Transfered to delivery partner"){
+        setData(["Transfered to delivery partner","On the way","Delivered"])
+      }
+      if(statuss === "On the way"){
+        setData(["On the way","Delivered"])
+      }
+ }, [statuss]);
   return (
     <ScrollView
-      className="w-full h-screen mb-2"
+      className="w-full h-screen"
       showsVerticalScrollIndicator={false}>
       <View className="mt-2 mx-1">
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -57,15 +71,15 @@ export default function UpdateOrder({route}) {
           <Text className="text-xl text-[20px] text-black ml-3 mt-8 font-bold">Shipping Address:</Text>
           </View>
           <View>
-            <Text className="text-black text-xl mt-1.5 ml-2">County: {shippingAddress.county}</Text>
-            <Text className="text-black text-xl mt-1.5 ml-2">District: {shippingAddress.district}</Text>
-            <Text className="text-black text-xl mt-1.5 ml-2">Location: {shippingAddress.exactLocation}</Text>
+            <Text className="text-red-500 text-xl mt-1.5 ml-2"><Text className="text-black">County: </Text> {shippingAddress.county}</Text>
+            <Text className="text-red-500 text-xl mt-1.5 ml-2"><Text className="text-black">District: </Text> {shippingAddress.district}</Text>
+            <Text className="text-red-500 text-xl mt-1.5 ml-2"><Text className="text-black">Location: </Text> {shippingAddress.exactLocation}</Text>
           </View>
 
           <View>
           <Text className="text-xl text-[20px] text-black ml-3 mt-8 font-bold">Customer Info:</Text>
           </View>
-          <View>
+          <View className="border-b border-gray-400 pb-3">
             <Text className="text-black text-xl mt-1.5 ml-2">Name: {user.name}</Text>
             <Text className="text-black text-xl mt-1.5 ml-2">Email: {user.email}</Text>
             <Text className="text-black text-xl mt-1.5 ml-2">Phone: {user.phone}</Text>
@@ -84,7 +98,7 @@ export default function UpdateOrder({route}) {
                 Order Status:
             </Text>
             <View className="rounded-xl border" style={{backgroundColor:'black'}}>
-            <Picker selectedValue={status} color="white">
+            <Picker selectedValue={statuss} color="white" onValueChange={(text)=>setStatus(text)}>
                 {
                     data.map((i,index)=>(
                    <Picker.Item label={i} value={i} key={index} />  

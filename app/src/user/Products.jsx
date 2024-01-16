@@ -62,9 +62,13 @@ const Products = () => {
                   Ksh {item.originalPrice}{' '}
                 </Text>
               </View>
-              <View className="my-1.5">
-              <Ratings rating={item.ratings} />
-              </View>
+              <View>
+                <Text className="my-1 mx-1">
+                <Ratings rating={item.ratings} />
+                </Text>
+                </View>
+              
+              
             </View>
           </TouchableWithoutFeedback>
         ))}

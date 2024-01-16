@@ -61,6 +61,7 @@ const productSchema = new mongoose.Schema({
   ],
   ratings: {
     type: Number,
+    default:1,
   },
   sold_out: {
     type: Number,

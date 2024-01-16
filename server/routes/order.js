@@ -7,7 +7,7 @@ router.post('/create-order',isAuthenticated,createOrder)
 router.get('/user-order/:pid',isAuthenticated,userOrders)
 router.get('/orders',isAuthenticated,AllOrders)
 router.get('/order-details/:id',isAuthenticated,OrderDetails)
-router.put('/order-status/:pid',isAuthenticated,updateOrderStatus)
+router.put('/order-status/:id',isAuthenticated,updateOrderStatus)
 
 
 module.exports=router

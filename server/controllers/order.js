@@ -90,7 +90,7 @@ const OrderDetails = asyncHandler(async(req,res,next)=>{
 })
 const updateOrderStatus = asyncHandler(async(req,res,next)=>{
   try {
-    const order = await Order.findById(req.params.pid)
+    const order = await Order.findById(req.params.id)
     if(!order){
       next(res.status(400).send({
         success:false,
@@ -103,8 +103,8 @@ const updateOrderStatus = asyncHandler(async(req,res,next)=>{
        })
     }
     order.status = req.body.status
-    async function updateOrder(pid,cartQuantity) {
-      const product = await Product.findById(pid)
+    async function updateOrder(id,cartQuantity) {
+      const product = await Product.findById(id)
       product.stock -= cartQuantity
       product.sold_out += cartQuantity
       await product.save({validateBeforeSave:false})

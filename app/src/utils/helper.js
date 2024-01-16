@@ -1,22 +1,27 @@
-import {View} from "react-native"
-import {StartIcon} from "react-native-heroicons/solid"
+import {View,Text} from "react-native";
+import React from "react";
+import {StarIcon} from "react-native-heroicons/solid"
+const Ratings = ({ rating }) => {
+  const stars = [];
 
- const getRating = rating => {
-  const ratingStar = [];
-
-  for (let i = 0; i < 5; i++) {
-    if (i < rating) {
-      ratingStar.push(<StartIcon size="20" color='#ffa41c' />);
-    } else {
-      ratingStar.push(<StartIcon size='20' color='#0000004b'/>);
+  for (let i = 1; i <= 5; i++) {
+    if (i <= rating) {
+      stars.push(
+        <StarIcon
+          key={i}
+          size={15}
+          color="#f6b100"
+          className="mr-1 cursor-pointer"
+        />
+      );
+    } else{
+    stars.push(  <StarIcon key={i} size={15} color="#0000004b" className="mr-1" />)
+    }
+    if(rating %1 !== 0){
+      stars[Math.floor(rating)] = <StarIcon key={i} size={15} color="#f6b100" />
     }
   }
-  if (rating % 1 !== 0) {
-    ratingStar[Math.floor(rating)] = <StartIcon size='20' color='#0000004b' />;
-  }
-  return <View style={{display:'flex',flexDirection:'row'}}>{ratingStar}</View> ;
+  return <View className="flex" style={{display:'flex',flexDirection:'row'}}><Text> {stars}</Text></View>;
 };
 
-export default getRating()
-
-
+export default Ratings;
