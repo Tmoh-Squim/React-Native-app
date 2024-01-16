@@ -8,8 +8,8 @@ const { v4: uuidv4 } = require('uuid');
 const createProduct =asyncHandler( async (req,res,next) =>{
     try{
     console.log(req.files)
+    console.log('body',req.body)
         const files = req.files;
-        console.log(req.files)
         const imageUrls = [];
     
         for (const file of files) {

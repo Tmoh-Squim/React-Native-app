@@ -29,6 +29,8 @@ export default function CreateProductScreen() {
   const [images, setImages] = useState([]);
   const [colors, setColors] = useState([]);
   const [color, setColor] = useState('');
+  const [sizes, setSizes] = useState([]);
+  const [size, setSize] = useState('');
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -39,7 +41,10 @@ export default function CreateProductScreen() {
         type: [DocumentPicker.types.images],
         allowMultiSelection: true,
       });
-      setImages([...images,results]);
+
+      // Extract file paths and store in the 'images' state
+      const imagePaths = results.map((result) => result.uri);
+      setImages([...images, ...imagePaths]);
 
       console.log('imgs', images);
     } catch (error) {
@@ -68,7 +73,7 @@ export default function CreateProductScreen() {
     setOriginalPrice(name);
   };
 
-  const json = {name, description, discountPrice, stock:quantity, category, images,colors};
+  const json = {name, description, discountPrice, stock:quantity, category, images,colors,sizes};
 
   const handleSubmit = async () => {
     try {
@@ -83,6 +88,9 @@ export default function CreateProductScreen() {
      formData.append('originalPrice', originalPrice); 
      formData.append('stock', quantity);
      formData.append('category', category);
+     sizes.forEach((size) => {
+      formData.append("sizes", size);
+    });
      
      // Append each image file to the FormData
      images.forEach((image) => {
@@ -98,7 +106,7 @@ export default function CreateProductScreen() {
        {
          headers: {
            'Authorization': token,
-           'Content-Type': 'multipart/form-data',
+           'Content-Type': 'application/json',
            'Accept':'*/*'
          },
        }
@@ -116,7 +124,7 @@ export default function CreateProductScreen() {
   
   const handleColor = text => {
     setColor(text);
-  };
+  }; 
   const handleAddColor = () => {
     if (color.trim() !== '') {
       setColors([...colors, color]);
@@ -128,6 +136,18 @@ export default function CreateProductScreen() {
     const res = [...colors];
     res.splice(index, 1);
     setColors(res);
+  };
+  const handleAddSize = () => {
+    if (size.trim() !== '') {
+      setSizes([...sizes, size]);
+      setSize('');
+    }
+    return;
+  };
+  const handleRemoveSize = index => {
+    const res = [...sizes];
+    res.splice(index, 1);
+    setSizes(res);
   };
   return (
     <ScrollView className="h-screen " showsVerticalScrollIndicator={false}>
@@ -184,10 +204,10 @@ export default function CreateProductScreen() {
         <View>
           <TextInput
             keyboardType="numeric"
-            placeholder="Enter product discountPrice"
+            placeholder="Enter product originalPrice"
             placeholderTextColor="black"
-            value={discountPrice}
-            onChangeText={handlePrice}
+            value={originalPrice}
+            onChangeText={handleoriginalPrice}
             style={{color: 'green'}}
             className="border pl-4 mt-5 rounded-[15px]"
           />
@@ -195,10 +215,10 @@ export default function CreateProductScreen() {
         <View>
           <TextInput
             keyboardType="numeric"
-            placeholder="Enter product originalPrice"
+            placeholder="Enter product discountPrice"
             placeholderTextColor="black"
-            value={originalPrice}
-            onChangeText={handleoriginalPrice}
+            value={discountPrice}
+            onChangeText={handlePrice}
             style={{color: 'green'}}
             className="border pl-4 mt-5 rounded-[15px]"
           />
@@ -248,6 +268,34 @@ export default function CreateProductScreen() {
             ))}
         </View>
 
+        <View className="mt-5 flex flex-row px-2 justify-between">
+          <TextInput
+            className="rounded-lg p-2 border w-[60%]"
+            onChangeText={(text)=>setSize(text)}
+            color="black"
+            placeholder="Enter product color"
+            placeholderTextColor="black"
+          />
+          <TouchableOpacity
+            className="p-2 w-[90px] bg-black rounded-md"
+            onPress={handleAddSize}>
+            <Text className="text-white text-[20px] text-center">Add</Text>
+          </TouchableOpacity>
+        </View>
+        <View className="flex flex-row flex-wrap mt-2">
+          {sizes &&
+            sizes.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                className="flex-1 flex-row  flex-wrap mt-2 bg-black rounded-xl p-2 mx-1"
+                onPress={() => handleRemoveSize(index)}>
+                <Text className="text-green-500 text-center text-[15px]">
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+        </View>
+
         <TouchableOpacity
           className="my-4 bg-blue-700 p-2 items-center rounded-xl"
           onPress={selectImages}>
@@ -258,7 +306,7 @@ export default function CreateProductScreen() {
           {images?.map((i, index) => {
             return (
               <TouchableOpacity className="p-1" onPress={()=>handleRemoveImage(index)}>
-                <Image source={i} className="w-[88px] h-[88px]" key={index} />
+                <Image source={{uri:i}} className="w-[88px] h-[88px]" key={index} />
               </TouchableOpacity>
             );
           })}
