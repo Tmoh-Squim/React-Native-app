@@ -6,8 +6,10 @@ const fs = require('fs/promises');
 const { v4: uuidv4 } = require('uuid');
 
 const createProduct =asyncHandler( async (req,res,next) =>{
-    try {
+    try{
+    console.log(req.files)
         const files = req.files;
+        console.log(req.files)
         const imageUrls = [];
     
         for (const file of files) {
