@@ -7,8 +7,6 @@ const { v4: uuidv4 } = require('uuid');
 
 const createProduct =asyncHandler( async (req,res,next) =>{
     try{
-    console.log(req.files)
-    console.log('body',req.body)
         const files = req.files;
         const imageUrls = [];
     
@@ -16,7 +14,7 @@ const createProduct =asyncHandler( async (req,res,next) =>{
            // Resize and optimize image before uploading to Cloudinary
       const resizedImageBuffer = await sharp(file.path)
       .resize({ width: 250, height: 250, fit: 'inside' })
-      .jpeg({ quality: 80 })
+      .jpeg({ quality: 95 })
       .toBuffer();
     // Generate a unique filename
     const filename = `${uuidv4()}.jpg`;
@@ -54,7 +52,7 @@ const createProduct =asyncHandler( async (req,res,next) =>{
     });
 const getAllProducts = asyncHandler(async (req,res,next)=>{
     try {
-        const products = await Product.find({})
+        const products = await Product.find({}).sort({createdAt:-1})
 
         res.status(200).send({
             success:true,

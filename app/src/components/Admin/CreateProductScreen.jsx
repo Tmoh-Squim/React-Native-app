@@ -41,12 +41,7 @@ export default function CreateProductScreen() {
         type: [DocumentPicker.types.images],
         allowMultiSelection: true,
       });
-
-      // Extract file paths and store in the 'images' state
-      const imagePaths = results.map((result) => result.uri);
-      setImages([...images, ...imagePaths]);
-
-      console.log('imgs', images);
+      setImages([...images, ...results]);
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +101,7 @@ export default function CreateProductScreen() {
        {
          headers: {
            'Authorization': token,
-           'Content-Type': 'application/json',
+           'Content-Type': 'multipart/form-data',
            'Accept':'*/*'
          },
        }
@@ -306,7 +301,7 @@ export default function CreateProductScreen() {
           {images?.map((i, index) => {
             return (
               <TouchableOpacity className="p-1" onPress={()=>handleRemoveImage(index)}>
-                <Image source={{uri:i}} className="w-[88px] h-[88px]" key={index} />
+                <Image source={i} className="w-[88px] h-[88px]" key={index} />
               </TouchableOpacity>
             );
           })}
