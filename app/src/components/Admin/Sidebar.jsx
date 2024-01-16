@@ -22,7 +22,7 @@ export default function Sidebar() {
           <CircleStackIcon size={30} color="black" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('admin-orders')}>
         <View className="mt-10">
           <ShoppingBagIcon size={30} color="black" />
         </View>
