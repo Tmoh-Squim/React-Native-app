@@ -1,40 +1,46 @@
 const Product = require('../models/products')
 const asyncHandler = require('express-async-handler')
 const cloudinary = require('../utils/cloudinary')
+const sharp = require('sharp')
 const createProduct =asyncHandler( async (req,res,next) =>{
     try {
         const files = req.files;
-            // const imageUrls = files.map((file) => `${file.filename}`);
-            const imageUrls = [];
-            for (const file of files) {
-               // Upload each image file to Cloudinary
-              const result = await cloudinary.uploader.upload(file.path,{
-                folder:'Ecommerce'
+        const imageUrls = [];
+    
+        for (const file of files) {
+          // Resize and optimize image before uploading to Cloudinary
+          const resizedImageBuffer = await sharp(file.path)
+            .resize({ width: 100, height: 100, fit: 'inside' })
+            .jpeg({ quality: 80 }) // Adjust quality as needed
+            .toBuffer();
+    
+            const result = await cloudinary.uploader.upload(resizedImageBuffer, {
+                folder: 'Ecommerce',
               });
-              const urls = result.secure_url
-              imageUrls.push(urls);
-             }
-        //updated
-     
-             const productData = req.body;
-           productData.images = imageUrls;
-     
-             const product = await Product.create(productData); 
-     
-             res.status(201).json({
-               success: true,
-               message:"Product created successfully",
-               imageUrls,
-               product,
-             });
-    } catch (error) {
-        next(res.status(500).send({message:'Error in creating product'}))
-        console.log(error)
-    }
-})
+        
+              const imageUrl = result.secure_url;
+              imageUrls.push(imageUrl);
+            }
+    
+        const productData = req.body;
+        productData.images = imageUrls;
+    
+        const product = await Product.create(productData);
+    
+        res.status(201).json({
+          success: true,
+          message: 'Product created successfully',
+          imageUrls,
+          product,
+        });
+      } catch (error) {
+        next(res.status(500).send({ message: 'Error in creating product' }));
+        console.error(error);
+      }
+    });
 const getAllProducts = asyncHandler(async (req,res,next)=>{
     try {
-        const products = await Product.find({}).sort({createdAt:-1})
+        const products = await Product.find({})
 
         res.status(200).send({
             success:true,

@@ -14,10 +14,7 @@ const port = process.env.PORT
 connectDB()
 app.use(express.json())
 app.use(cors())
-app.use(compression({
-    level:9,
-    threshold:0,
-}))
+app.use(compression())
 app.get('/',(req,res)=>{
     res.send('server run nicely')
 })

@@ -18,7 +18,7 @@ const Products = () => {
 
   const navigation = useNavigation();
 
-  const [visibleProducts, setVisibleProducts] = useState(6); // Number of products to initially display
+  const [visibleProducts, setVisibleProducts] = useState(20); // Number of products to initially display
   const [loadingMore, setLoadingMore] = useState(false);
 
   const navigateToProductDetails = item => {
@@ -29,7 +29,7 @@ const Products = () => {
   const loadMore = () => {
     setLoadingMore(true);
     setTimeout(() => {
-      setVisibleProducts(prevVisibleProducts => prevVisibleProducts + 6);
+      setVisibleProducts(prevVisibleProducts => prevVisibleProducts + 10);
       setLoadingMore(false);
     }, 1000); // Simulating a delay for fetching more data; replace with your actual data fetching logic
   };
@@ -39,7 +39,7 @@ const Products = () => {
       <Text style={styles.title}>All Products</Text>
 
       <View style={styles.productsContainer}>
-        {products?.products.slice(0, visibleProducts).map((item, index) => (
+        {products && products?.products.slice(0, visibleProducts).map((item, index) => (
           <TouchableWithoutFeedback
             key={index}
             onPress={() => navigateToProductDetails(item)}>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#dddddd',
   },
   loadingIndicator: {
-    marginTop: 5,
+    marginTop: 2,
   },
   productsContainer: {
     flexDirection: 'row',
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   product: {
     width: '50%', // Adjust the width based on your design
     marginBottom: 10,
-    padding: 3,
+    padding: 2,
   },
   imgStyle: {
     height: 150,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   loadMoreButton: {
-    marginTop: 3,
+    marginTop: 2,
     marginBottom: 0  ,
     alignSelf: 'center',
     paddingLeft: 10,

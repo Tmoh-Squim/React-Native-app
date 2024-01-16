@@ -39,13 +39,19 @@ export default function CreateProductScreen() {
         type: [DocumentPicker.types.images],
         allowMultiSelection: true,
       });
-      setImages([...images,...results]);
+      setImages([...images,results]);
 
       console.log('imgs', images);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleRemoveImage = (index) =>{
+    const image= [...images]
+    image.splice(index,1)
+    setImages(image)
+  }
   const handleName = name => {
     setName(name);
   };
@@ -251,9 +257,9 @@ export default function CreateProductScreen() {
         <View className="flex flex-row justify-between flex-wrap">
           {images?.map((i, index) => {
             return (
-              <View className="p-1">
+              <TouchableOpacity className="p-1" onPress={()=>handleRemoveImage(index)}>
                 <Image source={i} className="w-[88px] h-[88px]" key={index} />
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
