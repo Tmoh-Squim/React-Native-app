@@ -1,23 +1,22 @@
+import {View} from "react-native"
 import {StartIcon} from "react-native-heroicons/solid"
-export const getRating = rating => {
+
+ const getRating = rating => {
   const ratingStar = [];
-  const fullStar = <StartIcon size={10} color="#ffa41c" />;
-  const halfStar = (
-    <StartIcon size={10} color="#ffa41c" />
-  );
-  const emptyStar = <StartIcon size={10} color="#ffa41c" />;
 
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
-      ratingStar.push(fullStar);
+      ratingStar.push(<StartIcon size="20" color='#ffa41c' />);
     } else {
-      ratingStar.push(emptyStar);
+      ratingStar.push(<StartIcon size='20' color='#0000004b'/>);
     }
   }
   if (rating % 1 !== 0) {
-    ratingStar[Math.floor(rating)] = halfStar;
+    ratingStar[Math.floor(rating)] = <StartIcon size='20' color='#0000004b' />;
   }
-  return ratingStar;
+  return <View style={{display:'flex',flexDirection:'row'}}>{ratingStar}</View> ;
 };
+
+export default getRating()
 
 

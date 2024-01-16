@@ -1,13 +1,14 @@
 import { View, Text,ScrollView,TouchableOpacity } from "react-native";
 import React,{useEffect} from "react";
 import {useSelector,useDispatch} from "react-redux"
-import {getAllOrders} from "../redux/order"
+import {getAllOrders} from "../../redux/order"
 import {SafeAreaView} from "react-native-safe-area-context"
 import {ArrowRightIcon,ArrowLeftIcon} from "react-native-heroicons/outline"
 import {useNavigation} from "@react-navigation/native"
 export default function Orders() {
     const dispatch = useDispatch()
-    const {allOrders} = useSelector((state)=>state.allOrders?.allOrders)
+    const {allOrders} = useSelector((state)=>state.allOrders)
+    console.log(allOrders)
     const navigation = useNavigation()
 
     useEffect(()=>{
@@ -36,7 +37,7 @@ export default function Orders() {
                       <View className="flex-1 flex-row border p-2 justify-between">
                         <Text className="text-gray-500">#{cartItem._id.slice(0,8)} |</Text>
                       <Text className="text-black ml-1">{cartItem.name.length > 15 ? cartItem.name.slice(0,22) + '...' : cartItem.name} |</Text>
-                      <TouchableOpacity onPress={()=>navigation.navigate('Order-details',{order:cartItem,shippingAddress:order?.deliveryDetails,paymentInfo:order?.paymentInfo,status:order?.status})}>
+                      <TouchableOpacity onPress={()=>navigation.navigate('admin-update-order',{order:cartItem,shippingAddress:order?.deliveryDetails,paymentInfo:order?.paymentInfo,status:order?.status,user:order?.user})}>
                       <ArrowRightIcon size={25} color='black' />
                       </TouchableOpacity>
                       </View>

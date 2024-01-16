@@ -24,7 +24,7 @@ export const getAllOrders = createAsyncThunk('getAllOrders',async(id)=>{
                 'Authorization':token
             }
         })
-        return response.data   
+        return response.data.orders
     } catch (error) {
         console.log(error)
     }

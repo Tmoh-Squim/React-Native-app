@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-
+import Ratings from "../utils/helper"
 const Products = () => {
   const {products} = useSelector(state => state.products);
   const {user} = useSelector((state)=>state.user)
@@ -39,7 +39,7 @@ const Products = () => {
       <Text style={styles.title}>All Products</Text>
 
       <View style={styles.productsContainer}>
-        {products && products?.products.slice(0, visibleProducts).map((item, index) => (
+        {products?.products && products?.products.slice(0, visibleProducts).map((item, index) => (
           <TouchableWithoutFeedback
             key={index}
             onPress={() => navigateToProductDetails(item)}>
@@ -61,6 +61,9 @@ const Products = () => {
                 <Text className="text-black line-through text-[10px]">
                   Ksh {item.originalPrice}{' '}
                 </Text>
+              </View>
+              <View className="my-1.5">
+              <Ratings rating={item.ratings} />
               </View>
             </View>
           </TouchableWithoutFeedback>
