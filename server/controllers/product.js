@@ -2,25 +2,37 @@ const Product = require('../models/products')
 const asyncHandler = require('express-async-handler')
 const cloudinary = require('../utils/cloudinary')
 const sharp = require('sharp')
+const fs = require('fs/promises');
+const { v4: uuidv4 } = require('uuid');
+
 const createProduct =asyncHandler( async (req,res,next) =>{
     try {
         const files = req.files;
         const imageUrls = [];
     
         for (const file of files) {
-          // Resize and optimize image before uploading to Cloudinary
-          const resizedImageBuffer = await sharp(file.path)
-            .resize({ width: 100, height: 100, fit: 'inside' })
-            .jpeg({ quality: 80 }) // Adjust quality as needed
-            .toBuffer();
-    
-            const result = await cloudinary.uploader.upload(resizedImageBuffer, {
-                folder: 'Ecommerce',
-              });
-        
-              const imageUrl = result.secure_url;
-              imageUrls.push(imageUrl);
-            }
+           // Resize and optimize image before uploading to Cloudinary
+      const resizedImageBuffer = await sharp(file.path)
+      .resize({ width: 250, height: 250, fit: 'inside' })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+    // Generate a unique filename
+    const filename = `${uuidv4()}.jpg`;
+
+    // Save the resized image buffer to a temporary file
+    await fs.writeFile(filename, resizedImageBuffer);
+
+    // Upload the temporary file to Cloudinary
+    const result = await cloudinary.uploader.upload(filename, {
+      folder: 'Ecommerce',
+    });
+
+    // Push the secure_url to imageUrls
+    imageUrls.push(result.secure_url);
+
+    // Remove the temporary file
+    await fs.unlink(filename);
+          }
     
         const productData = req.body;
         productData.images = imageUrls;
