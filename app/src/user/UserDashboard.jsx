@@ -152,7 +152,7 @@ export default function UserDashboard() {
                 <ChevronRightIcon size={20} color="gray" />
               </TouchableOpacity>
             </View>
-            <View className="mt-7 flex flex-row justify-between">
+            <TouchableOpacity className="mt-7 flex flex-row justify-between" onPress={()=>navigation.navigate('faq')}>
               <View className="flex flex-row">
                 <QuestionMarkCircleIcon size={22} color="gray" />
                 <Text className="text-black text-[19px] mx-6">FAQS </Text>
@@ -160,7 +160,7 @@ export default function UserDashboard() {
               <TouchableOpacity>
                 <ChevronRightIcon size={20} color="gray" />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
             <View className="mt-7 flex flex-row justify-between">
               <View className="flex flex-row">
                 <StarIcon size={22} color="gray" />

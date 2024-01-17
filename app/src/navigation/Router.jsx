@@ -23,6 +23,7 @@ import OrderDetails from "../user/orderDetails"
 import AllOrders from "../components/Admin/Orders"
 import UpdateOrder from "../components/Admin/UpdateOrder"
 import {useSelector} from "react-redux"
+import FAQ from "../user/FAQ"
 const Stack = createStackNavigator();
 
 const Router = () => {
@@ -58,6 +59,7 @@ const Router = () => {
         <Stack.Screen name="delivery" component={ user?.user ? DeliveryScreen : Login } />
         <Stack.Screen name="payment" component={ user?.user ? PaymentScreen : Login } />
         <Stack.Screen name="login" component={user?.user ? HomeScreen : Login} />
+        <Stack.Screen name="faq" component={FAQ} />
         <Stack.Screen name="register-user" component={user?.user ? HomeScreen : RegisterUser} />
         <Stack.Screen name="user-orders" component={user?.user? Orders : Login} />
         <Stack.Screen name="product-update" component={user?.user?.role === "Admin" ? UpdateProduct : HomeScreen} />

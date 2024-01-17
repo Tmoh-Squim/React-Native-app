@@ -32,6 +32,8 @@ export default function Payment() {
   const cart = orderData?.cart
   const deliveryDetails = orderData?.deliveryDetails
   const totalPrice = orderData?.totalPrice
+  const discount = orderData?.discount
+  const shipping = orderData?.shipping
   const handleMpesaPayment = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -130,12 +132,19 @@ export default function Payment() {
               Ksh {orderData?.totalPrice}
             </Text>
           </View>
+          <View className="flex justify-between flex-row mt-3">
+            <Text className="text-black font-serif text-xl">Shipping:</Text>
+            <Text className="text-black text-xl">
+              Ksh {shipping}
+            </Text>
+          </View>
           <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">
             <Text className="text-black font-serif text-xl">Discount:</Text>
             <Text className="text-black text-xl">
-              Ksh {Math.round(orderData?.totalPrice / 15)}
+              Ksh {discount}
             </Text>
           </View>
+
           <View className="mt-3 pb-3">
             <Text className="text-black text-xl text-right">
               Ksh {orderData?.totalPrice}

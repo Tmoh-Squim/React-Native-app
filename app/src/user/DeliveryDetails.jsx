@@ -1,10 +1,10 @@
 import {View, Text, TouchableOpacity, TextInput,Alert,ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Country, State, City} from 'country-state-city';
-import {MapPinIcon, ArrowLeftIcon} from 'react-native-heroicons/outline';
+import {MapPinIcon, ArrowLeftIcon,MinusIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-import Picker from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector} from "react-redux"
 export default function Delivery({route}) {
@@ -14,6 +14,8 @@ export default function Delivery({route}) {
   const [county, setCounty] = useState(county);
   const [district, setDistrict] = useState(district);
   const [location, setLocation] = useState(location);
+  const [discount,setDiscount] = useState('')
+  const [shipping,setShipping] = useState(0)
   const {price} = route.params;
 
   const handleCounty = text => {
@@ -31,7 +33,6 @@ export default function Delivery({route}) {
     district: district,
     exactLocation: location,
   };
-  const [countries, setCountries] = useState([]);
 
   const details = () =>{
     user?.deliveryDetails.length > 0 && (
@@ -44,14 +45,26 @@ export default function Delivery({route}) {
       })
     )
   }
+useEffect(() => {
+  details()
+}, []);
 
   useEffect(()=>{
-    details()
-  },[])
+    price && price >5000 && (
+      setDiscount(Math.round((price/100)*5))
+    )
+    county === "Kiambu" || county === "Baringo" || county === "Embu" ?(
+      setShipping(0)
+    ):(
+      setShipping(300)
+    )
+  },[price,county])
   const order = {
     deliveryDetails:deliveryDetails,
-    totalPrice:price,
-    cart
+    totalPrice:discount !== ''?(Math.round(((price-discount)+shipping))) :price,
+    cart,
+    discount:discount,
+    shipping:shipping
   }
   const handleSubmit = async () =>{
     if(county=== '' || district === '' || location===''){
@@ -81,19 +94,27 @@ export default function Delivery({route}) {
         <View>
           <View>
             <View className="mt-6 relative">
-              <TextInput
-                value={county}
-                onChangeText={handleCounty}
-                className="border w-full rounded-[18px] tracking-[1px] pl-4 h-[45px]"
-                placeholder="Enter your county"
-                placeholderTextColor='black'
-                style={{color: 'black'}}
-              />
-              <View className="absolute right-3 top-3">
+            <View className="border rounded-xl  mt-3 h-[45px] justify-center px-2 ">
+                <Picker
+                  selectedValue={county}
+                  onValueChange={item => setCounty(item)}>
+                  {State &&
+                    State.getStatesOfCountry('KE').map(item => (
+                      <Picker.Item
+                        value={item.name}
+                        label={item.name}
+                        key={item.isoCode}
+                        color="black"
+                        style={{width: '50%'}}
+                      />
+                    ))}
+                </Picker>
+              </View>
+              <View className="absolute right-3 top-6">
                 <MapPinIcon size={20} color="gray" />
               </View>
             </View>
-            <View className="absolute top-4 left-3 items-center bg-gray-100 px-3 ">
+            <View className="absolute top-7 left-3 items-center bg-gray-100 px-3 ">
               <Text className="text-neutral-500 tracking-[1px] ">County *</Text>
             </View>
             <View>
@@ -145,13 +166,26 @@ export default function Delivery({route}) {
             <Text className="text-black font-serif text-xl">Subtotal:</Text>
             <Text className="text-black text-xl">Ksh {price}</Text>
             </View>
+            <View className="flex justify-between flex-row mt-4">
+            <Text className="text-black font-serif text-xl">Shipping:</Text>
+            <Text className="text-black text-xl">Ksh {shipping}</Text>
+            </View>
             <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">
-            <Text className="text-black font-serif text-xl">Discount:</Text>
-            <Text className="text-black text-xl">Ksh {Math.round(price/15)}</Text>
+            <Text className="text-black font-serif text-xl justify-center items-center">Discount:</Text>
+            {
+              price && price > 5000?(
+                <Text className="text-black text-xl">Ksh {Math.round((price/100)*5)}</Text>
+              ):(
+                <Text className="text-black text-xl">
+                  <MinusIcon size={22} color='black' />
+                </Text>
+              )
+            }
+            
             </View>
             <View className="mt-3 pb-3">
               <Text className="text-black text-xl text-right">
-               Ksh {price}
+               Ksh {(price - discount)+shipping}
               </Text>
               </View>
           </View>
@@ -159,7 +193,7 @@ export default function Delivery({route}) {
       </View>
 
       <TouchableOpacity
-        className="mt-10 w-[95%]   py-3 mb-2 rounded-xl items-center  left-1  "
+        className="mt-10 w-[95%]   py-3 mb-3 rounded-xl items-center  left-1  "
         style={{backgroundColor: 'red'}}
         onPress={handleSubmit}>
         <Text className="text-white font-bold tracking-[1px] text-[19px]">

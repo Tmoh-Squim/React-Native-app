@@ -8,14 +8,13 @@ const createUser = asyncHandler(async(req,res,next)=>{
     try {
         const {name,email,phone,password} = req.body
 
-        const check = await User.findOne({email})
+        const check = await User.findOne({phone})
         if(check){
             next(res.status(403).send({
                 success:false,
-                message:"Email already registerd"
+                message:"Phone already registerd!"
             }))
-        }
-        //hi
+        }else{
         const hashed = await hashPassword(password)
         const newUser = {name,email,phone,password:hashed}
 
@@ -26,6 +25,7 @@ const createUser = asyncHandler(async(req,res,next)=>{
             message:'Account created successfully',
             user
         })
+    }
     } catch (error) {
         next(  res.status(500).send({
             success:false,
@@ -43,11 +43,17 @@ const Login = asyncHandler(async (req,res,next) =>{
         const match = await comparePassword(password,user.password)
 
         if(!match){
-            res.status(401).send({
+            next(res.status(401).send({
                 success:false,
                 message:'Wrong credentials'
-            })
-        }
+            }))
+        }else if(!user){
+        next(res.status(401).send({
+            success:false,
+            message:'Phone number not registerd!'
+        }))
+    }
+        else{
         const token =await JWT.sign({_id:user._id},process.env.JWT_SECRET,{
             expiresIn:'7d'
         })
@@ -57,6 +63,7 @@ const Login = asyncHandler(async (req,res,next) =>{
             user,
             token
         })
+        }
     } catch (error) {
         next(res.status(500).send({
             success:false,

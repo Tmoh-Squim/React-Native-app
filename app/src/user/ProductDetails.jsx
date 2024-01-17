@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   Image,
+  Alert,
   Dimensions,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -37,6 +38,7 @@ export default function ProductDetails({route}) {
   const handleAddToCart = product => {
     const item = {...product, cartQuantity: count,selectedSize:size,selectedColor:color};
     dispatch(addToCart(item));
+    Alert.alert('Product added to cart')
   };
 
   const handleIncrement = () => {
@@ -51,6 +53,7 @@ export default function ProductDetails({route}) {
   const handleAddToWishlist = product => {
     const item = {...product};
     dispatch(addToWishlist(item));
+    Alert.alert('Product added to wishlist')
   };
   const handleRemoveFromWishlist = product => {
     dispatch(removeFromWishlist(product));
@@ -182,11 +185,11 @@ export default function ProductDetails({route}) {
         </View>
 
         <View className="flex-1 flex-row justify-between mt-2 mx-4">
-          <TouchableOpacity className="px-4 py-2 align-middle justify-center bg-black rounded-[8px]">
+          <TouchableOpacity className="px-4 py-3 align-middle justify-center bg-black rounded-[8px]">
             <Text className="text-white font-bold tracking-[1px]">Buy Now</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="px-4 py-2 align-middle justify-center bg-black rounded-[8px]"
+            className="px-4 py-3 align-middle justify-center bg-black rounded-[8px]"
             onPress={() => handleAddToCart(product)}>
             <Text className="text-white font-bold tracking-[1px]">
               Add To Cart
