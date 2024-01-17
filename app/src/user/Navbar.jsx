@@ -21,7 +21,7 @@ export default function Navbar() {
     <View
       className={`${
         active === true
-          ? 'absolute bottom-0  right-0 left-0 items-center flex flex-row px-3 justify-between w-full bg-neutral-200 z-30 shadow-md h-[50px]'
+          ? 'absolute bottom-0  right-0 left-0 items-center flex flex-row px-3 py-3 justify-between w-full bg-neutral-200 z-30 shadow-md h-[50px]'
           : 'hidden'
       } `}>
       <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>

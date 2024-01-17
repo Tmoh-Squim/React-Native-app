@@ -7,6 +7,8 @@ import DocumentPicker from "react-native-document-picker"
 import {useDispatch} from "react-redux"
 import {deleteProduct,updateProduct} from "../../redux/Products"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import {Picker} from "@react-native-picker/picker"
+import {Categories} from "../../data/Categories"
 import axios from "axios"
 export default function ProductUpdate({route}) {
   const {product} = route.params;
@@ -146,14 +148,20 @@ export default function ProductUpdate({route}) {
           />
         </View>
         <View>
-          <Text className="text-black py-1 text-xl">Product Category</Text>
-          <TextInput
-            value={category}
-            placeholderTextColor="green"
-            className="border rounded-xl px-3"
-            onChangeText={handleCategory}
-            style={{color: 'green'}}
-          />
+        <Text className="text-black py-1 text-xl">Product Category</Text>
+        <View className="bg-black rounded-xl mt-3">
+          <Picker selectedValue={category} onValueChange={handleCategory}>
+          {Categories &&
+              Categories.map((item, index) => (
+                <Picker.Item
+                  label={item.title}
+                  key={index.id}
+                  value={item.title}
+                  style={{width:'50%'}}
+                />
+              ))}
+          </Picker>
+        </View>
         </View>
         <View className="flex flex-row justify-between my-2">
         {
@@ -164,14 +172,14 @@ export default function ProductUpdate({route}) {
             })
         }
         </View>
-        <TouchableOpacity className="p-3 items-center rounded-xl bg-orange-600 w-[95%] mx-auto my-7" onPress={()=>handleDeleteProduct(product)}>
+        <TouchableOpacity className="p-3 items-center rounded-xl bg-red-500 w-[95%] mx-auto my-7" onPress={()=>handleDeleteProduct(product)}>
           <Text className="text-white font-bold tracking-[1px] text-xl">
             Delete Product{' '}
           </Text>
         </TouchableOpacity>
        
 
-        <TouchableOpacity className="p-3 items-center rounded-xl bg-orange-600 w-[95%] mx-auto my-3" onPress={()=>handleProductUpdate(product)}>
+        <TouchableOpacity className="p-3 items-center rounded-xl bg-orange-500 w-[95%] mx-auto my-3" onPress={()=>handleProductUpdate(product)}>
           <Text className="text-white font-bold tracking-[1px] text-xl">
             Update Product{' '}
           </Text>

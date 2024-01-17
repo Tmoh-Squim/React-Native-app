@@ -5,10 +5,9 @@ import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 
-export default function orderDetails({route}) {
+export default function OrderDetails({route}) {
   const navigation = useNavigation();
   const {order,shippingAddress,paymentInfo,status} = route.params;
-  console.log('oredr-d', paymentInfo);
   return (
     <ScrollView
       className="w-full h-screen mb-2"

@@ -5,10 +5,10 @@ import { getProducts } from './src/redux/Products';
 import {getTotal} from "./src/redux/cart"
 import { View, StatusBar, ActivityIndicator, StyleSheet } from 'react-native';
 import {LoadUser} from "./src/redux/user"
+import {getAllOrders} from "./src/redux/order"
 import Router from './src/navigation/Router.jsx';
 const AppWrapper = () => {
   const {isLoading} = useSelector((state) => state.products);
-  const cart = useSelector((state)=>state.cart)
   const {user} = useSelector((state)=>state.user)
 
   useEffect(() => {
@@ -16,12 +16,9 @@ const AppWrapper = () => {
     store.dispatch(getProducts());
     store.dispatch(getTotal())
     store.dispatch(LoadUser())
-  }, [store]); // Add store as a dependency if needed
-  
-  useEffect(() => {
+    store.dispatch(getAllOrders());
     console.log('user',user)
-  }, []);
-
+  }, [store]); 
   return (
     <>
       <StatusBar backgroundColor='#9ee4d4' barStyle='dark-content' />

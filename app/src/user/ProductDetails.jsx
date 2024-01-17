@@ -15,16 +15,19 @@ import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {addToCart} from '../redux/cart';
 import {addToWishlist, removeFromWishlist} from '../redux/wishlist';
+import {Picker} from '@react-native-picker/picker';
+import Ratings from "../utils/helper"
 const {width, height} = Dimensions.get('window');
 
 export default function ProductDetails({route}) {
   const {product} = route.params;
   const [select, setSelect] = useState(0);
   const [click, setClick] = useState(false);
+  const [color, setColor] = useState(product?.colors? product.colors[0] : '');
+  const [size, setSize] = useState(product?.sisez? product.sizes[0] : '');
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {wishlist} = useSelector(state => state.wishlist);
-  console.log('wi',wishlist)
 
   const goBack = () => {
     navigation.goBack();
@@ -32,7 +35,7 @@ export default function ProductDetails({route}) {
   const [count, setCount] = useState(1);
 
   const handleAddToCart = product => {
-    const item = {...product, cartQuantity: count};
+    const item = {...product, cartQuantity: count,selectedSize:size,selectedColor:color};
     dispatch(addToCart(item));
   };
 
@@ -45,8 +48,8 @@ export default function ProductDetails({route}) {
       setCount(count - 1);
     }
   };
-  const handleAddToWishlist = (product) => {
-    const item = {...product}
+  const handleAddToWishlist = product => {
+    const item = {...product};
     dispatch(addToWishlist(item));
   };
   const handleRemoveFromWishlist = product => {
@@ -100,6 +103,9 @@ export default function ProductDetails({route}) {
               Ksh {product.originalPrice}{' '}
             </Text>
           </View>
+          <Text className="ml-1">
+            <Ratings rating={product.ratings} />
+          </Text>
           <View className="flex-1 flex-row mx-4 mt-2 mb-2 justify-between">
             <View className="flex-1 flex-row">
               <TouchableOpacity
@@ -121,17 +127,60 @@ export default function ProductDetails({route}) {
               </TouchableOpacity>
             </View>
             {click ? (
-              <TouchableOpacity onPress={() => handleRemoveFromWishlist(product)}>
+              <TouchableOpacity
+                onPress={() => handleRemoveFromWishlist(product)}>
                 <HeartIcon size="35" color="red" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity
-                onPress={() => handleAddToWishlist(product)}>
+              <TouchableOpacity onPress={() => handleAddToWishlist(product)}>
                 <HeartIcon size="35" color="#0000004b" />
               </TouchableOpacity>
             )}
           </View>
         </View>
+        <View className="flex flex-row justify-between mx-2">
+          {product.colors.length !== 0 && (
+            <Text className="text-black text-[20px] font-bold ">
+              Select color
+            </Text>
+          )}
+          {product.sizes.length !== 0 && (
+            <Text className="text-black text-[20px] font-bold ">
+              Select size
+            </Text>
+          )}
+        </View>
+        <View className="flex flex-row justify-between">
+          {product.colors.length !== 0 && (
+            <View className="mt-1 mx-2 bg-blue-500 rounded-xl w-[42%]">
+              <View>
+                <Picker
+                  selectedValue={color}
+                  color="white"
+                  onValueChange={color => setColor(color)}>
+                  {product.colors &&
+                    product.colors.map((i, index) => (
+                      <Picker.Item label={i} value={i} key={index} />
+                    ))}
+                </Picker>
+              </View>
+            </View>
+          )}
+          {product?.sizes.length !== 0 && (
+            <View className="mt-2 mx-2 bg-blue-500 rounded-xl w-[42%]">
+              <Picker
+                selectedValue={size}
+                color="white"
+                onValueChange={color => setSize(color)}>
+                {product?.sizes?.length > 0 &&
+                  product.sizes.map((i, index) => (
+                    <Picker.Item label={i} value={i} key={index} />
+                  ))}
+              </Picker>
+            </View>
+          )}
+        </View>
+
         <View className="flex-1 flex-row justify-between mt-2 mx-4">
           <TouchableOpacity className="px-4 py-2 align-middle justify-center bg-black rounded-[8px]">
             <Text className="text-white font-bold tracking-[1px]">Buy Now</Text>
@@ -189,16 +238,32 @@ const RelatedProducts = ({product}) => {
           showsHorizontalScrollIndicator={false}
           className="mx-2 py-3 bg-neutral-300">
           {relatedProducts?.slice(0, 5).map(item => (
-            <View key={item._id} style={{marginRight: 0, padding: 2}}>
-              <TouchableWithoutFeedback
+            <View
+              key={item._id}
+              style={{marginRight: 0, padding: 2}}
+              className="mx-2  rounded-md bg-white">
+              <View
                 onPress={() =>
                   navigation.navigate('ProductDetails', {product: item})
                 }>
                 <Image
                   source={{uri: item.images[0]}}
-                  style={{width: 120, height: 120, borderRadius: 10}}
+                  className="w-full h-[130px] rounded-lg"
                 />
-              </TouchableWithoutFeedback>
+              </View>
+              <View className="px-2">
+              <Text className="text-black text-[18px]">
+                {item.name.length > 17
+                  ? item.name.slice(0, 17) + '...'
+                  : item.name}
+              </Text>
+              <Text className="text-red-600 text-[18px]">
+              Ksh  {item.discountPrice}
+              </Text>
+              <Text className="text-red-600 text-[18px]">
+              <Ratings rating={item.ratings} />
+              </Text>
+              </View>
             </View>
           ))}
         </ScrollView>

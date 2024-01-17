@@ -92,6 +92,13 @@ export default function UpdateOrder({route}) {
             <Text className="mt-1 text-gray-600 tracking-[1px] text-[19px] ml-2">Type: {paymentInfo?.type}</Text>
             <Text className="mt-1 text-gray-600 tracking-[1px] text-[19px] ml-2">Status: {paymentInfo?.status}</Text>
           </View>
+          <View className="mt-5 border-b pb-3 border-gray-400">
+            <Text className="mt-1 text-black text-xl ml-2 font-bold tracking-wider">
+               Order Specification:
+            </Text>
+            <Text className="mt-1 text-gray-600 tracking-[1px] text-[19px] ml-2">Size: {order?.selectedSize}</Text>
+            <Text className="mt-1 text-gray-600 tracking-[1px] text-[19px] ml-2">Color: {order?.selectedColor}</Text>
+          </View>
 
           <View className="mt-2">
             <Text className="mt-1 text-black text-xl ml-2 font-bold tracking-wider">

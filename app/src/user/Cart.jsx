@@ -2,7 +2,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ProductData} from '../data/ProductData';
-import {ShoppingBagIcon, XCircleIcon} from 'react-native-heroicons/outline';
+import {ShoppingBagIcon, XCircleIcon,PlusIcon,MinusIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getTotal, removeFromCart} from '../redux/cart';
@@ -12,6 +12,7 @@ import {decreaseQuantity, addToCart} from '../redux/cart';
 export default function CartScreen() {
   const cart = useSelector(state => state.cart.cartItem);
   const {cartTotalAmount} = useSelector(state => state.cart);
+  console.log(cart)
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -55,47 +56,67 @@ export default function CartScreen() {
               {cart?.map((item, index) => {
                 return (
                   <ScrollView className="mx-2 mt-2">
-                    <View className="flex-1 flex-row my-1 align-middle border-b border-t border-gray-300 w-full py-3">
+                    <View className="flex-1 flex-row my-1 items-center border-b border-t border-gray-300 w-full py-3">
                       <View>
                         <TouchableOpacity
-                          className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1"
+                          className="w-[22px] h-[22px] rounded-full items-center justify-center bg-gray-400 mr-1 my-1"
                           onPress={() => handleIncrement(item)}>
-                          <Text className="text-black text-center ">+</Text>
+                          <Text className="text-black text-center ">
+                            <PlusIcon size={20} color="black" />
+                          </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className="w-[20px] h-[20px] rounded-full items-center bg-gray-200 mr-1 my-1">
+                        <TouchableOpacity className="w-[22px] h-[22px] rounded-full justify-center items-center bg-gray-200 mr-1 my-1">
                           <Text className="text-black text-center">
                             {item.cartQuantity}
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                          className="w-[20px] h-[20px] rounded-full items-center bg-gray-400 mr-1 my-1"
+                          className="w-[22px] h-[22px] rounded-full items-center justify-center bg-gray-400 mr-1 my-1"
                           onPress={() => handleDecrement(item)}>
-                          <Text className="text-black text-center ">-</Text>
+                          <Text className="text-black text-center ">
+                            <MinusIcon color="black" size={18} />
+                          </Text>
                         </TouchableOpacity>
                       </View>
+                      <TouchableOpacity onPress={()=>navigation.navigate('ProductDetails',{product:item})}>
                       <Image
                         source={{uri: item.images[0]}}
-                        className="w-[90px] h-[90px]"
+                        className="w-[110px] h-[86%]"
                       />
-                      <View className="align-middle  ml-2">
-                        <Text className="text-black text-center">
-                          {item.name.length < 20
-                            ? item.name
-                            : item.name.slice(0, 25)}
+                      </TouchableOpacity>
+                      <View className="align-middle items-start  ml-2 ">
+                        <Text className="text-black text-center text-[19px] mt-2">
+                          {item.name.length > 20
+                            ? item.name.slice(0,20)+'...'
+                            : item.name}
                         </Text>
                         <Text className="text-neutral-400 mt-2">
                           Ksh {item.discountPrice} * {item.cartQuantity}
                         </Text>
                         <Text className="text-red-400 mt-1">
-                          Ksh {item.discountPrice * item.cartQuantity}
+                         Total: Ksh {item.discountPrice * item.cartQuantity}
                         </Text>
+                        <Text className="text-black text-[16px]">
+                          Selected color: <Text className="text-blue-500 text-xl ml-2">
+                          {item.selectedColor}
+                        </Text> 
+                        </Text>
+                        
+                        <Text className="text-black text-[16px]">
+                          Selected size: <Text className="text-blue-500 text-xl mx-2">
+                        {item.selectedSize}
+                        </Text>
+                        </Text>
+                        <TouchableOpacity onPress={()=>handleRemove(item)} >
+                          <Text className="text-red-500 text-[16px]">
+                            Remove
+                          </Text>
+                        </TouchableOpacity>
+                       
                       </View>
-                      <TouchableOpacity
-                        className="absolute right-3 top-10"
-                        onPress={() => handleRemove(item)}>
-                        <Text className="text-black m-auto">Remove</Text>
-                      </TouchableOpacity>
+                      
                     </View>
+                   
                   </ScrollView>
                 );
               })}

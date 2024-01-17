@@ -39,7 +39,7 @@ const Products = () => {
       <Text style={styles.title}>All Products</Text>
 
       <View style={styles.productsContainer}>
-        {products?.products && products?.products.slice(0, visibleProducts).map((item, index) => (
+        {products?.products?.length !==0  && products?.products.slice(0, visibleProducts).map((item, index) => (
           <TouchableWithoutFeedback
             key={index}
             onPress={() => navigateToProductDetails(item)}>

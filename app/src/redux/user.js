@@ -11,7 +11,6 @@ export const LoadUser = createAsyncThunk('getUser',async()=>{
     })
    return response.data
 })
-
 //all user for admin
 export const getAllusers = createAsyncThunk('all-users',async()=>{
     const token =await AsyncStorage.getItem('token')
@@ -42,6 +41,14 @@ const initialState={
 const userSlice = createSlice({
     name: 'user',
     initialState,
+    reducers: {
+        LOGOUT(state){
+          state.user = {};
+          state.isAuthenticated = false;
+          state.loading = false;
+        },
+      },
+    
     extraReducers: (builder) => {
         builder
             .addCase(LoadUser.pending, (state) => {
@@ -57,9 +64,10 @@ const userSlice = createSlice({
                 console.log('failed',action.payload)
                 state.error = action.payload;
                 state.loading = false;
-            });
+            })
     },
 });
 
 
 export const { reducer: userReducer } = userSlice;
+export const {LOGOUT} = userSlice.actions

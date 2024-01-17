@@ -72,42 +72,47 @@ export default function CreateProductScreen() {
 
   const handleSubmit = async () => {
     try {
-      console.log('json', json);
-
       const token =await AsyncStorage.getItem('token')
-     const formData = new FormData();
+      const formData = new FormData();
+     
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('discountPrice', discountPrice);
+      formData.append('originalPrice', originalPrice); 
+      formData.append('stock', quantity);
+      formData.append('category', category);
+      sizes.forEach((size) => {
+       formData.append("sizes", size);
+     });
+      
+      // Append each image file to the FormData
+      images.forEach((image) => {
+       formData.append("images", image);
+     });
+     colors.forEach((color) => {
+       formData.append("colors", color);
+     });
+     if(name.length ==='' || description.length==='' || category.length===''){
+      Alert.alert('Some of the fields are mandatory')
+      return
+    }else{
+      const res = await axios.post(
+        'https://squim-native-app.onrender.com/api/v2/product/create-product',
+        formData,
+        {
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'multipart/form-data',
+            'Accept':'*/*'
+          },
+        }
+      );
+      Alert.alert(res.data.message)
+    }
+  
     
-     formData.append('name', name);
-     formData.append('description', description);
-     formData.append('discountPrice', discountPrice);
-     formData.append('originalPrice', originalPrice); 
-     formData.append('stock', quantity);
-     formData.append('category', category);
-     sizes.forEach((size) => {
-      formData.append("sizes", size);
-    });
-     
-     // Append each image file to the FormData
-     images.forEach((image) => {
-      formData.append("images", image);
-    });
-    colors.forEach((color) => {
-      formData.append("colors", color);
-    });
- 
-     const res = await axios.post(
-       'https://squim-native-app.onrender.com/api/v2/product/create-product',
-       formData,
-       {
-         headers: {
-           'Authorization': token,
-           'Content-Type': 'multipart/form-data',
-           'Accept':'*/*'
-         },
-       }
-     );
-     Alert.alert(res.data.message)
-     
+      
+  
   } catch (error) {
     if(error === 'AxiosError' || error ==='Network Error'){
       Alert.alert('Network error')
@@ -268,7 +273,7 @@ export default function CreateProductScreen() {
             className="rounded-lg p-2 border w-[60%]"
             onChangeText={(text)=>setSize(text)}
             color="black"
-            placeholder="Enter product color"
+            placeholder="Enter product size"
             placeholderTextColor="black"
           />
           <TouchableOpacity

@@ -14,6 +14,7 @@ import {
 import {useNavigation} from "@react-navigation/native"
 export default function Overview() {
     const products = useSelector((state)=>state.products.products)
+    const {allOrders} = useSelector((state)=>state.allOrders)
     const data = [
         { id: '1', name: 'Item 1', quantity: 5, price: 10 },
         { id: '2', name: 'Item 2', quantity: 3, price: 15 },
@@ -91,9 +92,9 @@ export default function Overview() {
                Shop All Orders
             </Text>
             <Text className=" text-red-400 my-2 text-2xl text-center">
-                8
+                {allOrders.length}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('admin-orders')}>
                 <Text className="text-green-400">View Orders</Text>
             </TouchableOpacity>
         </View>
