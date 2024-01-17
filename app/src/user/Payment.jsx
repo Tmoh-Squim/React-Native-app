@@ -9,9 +9,9 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ArrowLeftIcon} from 'react-native-heroicons/outline';
+import {ArrowLeftIcon, MinusIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
-import axios from "axios"
+import axios from 'axios';
 export default function Payment() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -29,29 +29,29 @@ export default function Payment() {
     type: 'Lipa na mpesa',
     status: 'Success',
   };
-  const cart = orderData?.cart
-  const deliveryDetails = orderData?.deliveryDetails
-  const totalPrice = orderData?.totalPrice
-  const discount = orderData?.discount
-  const shipping = orderData?.shipping
+  const cart = orderData?.cart;
+  const deliveryDetails = orderData?.deliveryDetails;
+  const totalPrice = orderData?.totalPrice;
+  const discount = orderData?.discount;
+  const shipping = orderData?.shipping;
   const handleMpesaPayment = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const res = await axios.post(
         'https://squim-native-app.onrender.com/api/v2/order/create-order',
-        {cart,user,deliveryDetails,paymentInfo,totalPrice},
+        {cart, user, deliveryDetails, paymentInfo, totalPrice},
         {
           headers: {
-            'Authorization': token,
+            Authorization: token,
           },
         },
       );
       Alert.alert(res.data.message);
-      AsyncStorage.removeItem('latest-order')
-      navigation.navigate('HomeScreen')
+      AsyncStorage.removeItem('latest-order');
+      navigation.navigate('HomeScreen');
     } catch (error) {
       Alert.alert('Something went wrong!');
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -134,15 +134,17 @@ export default function Payment() {
           </View>
           <View className="flex justify-between flex-row mt-3">
             <Text className="text-black font-serif text-xl">Shipping:</Text>
-            <Text className="text-black text-xl">
-              Ksh {shipping}
-            </Text>
+            <Text className="text-black text-xl">Ksh {shipping}</Text>
           </View>
           <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">
             <Text className="text-black font-serif text-xl">Discount:</Text>
-            <Text className="text-black text-xl">
-              Ksh {discount}
-            </Text>
+            {discount !== 0 ? (
+              <Text className="text-black text-xl">Ksh {discount}</Text>
+            ) : (
+              <Text className="text-black text-xl">
+                <MinusIcon size={22} color="black" />
+              </Text>
+            )}
           </View>
 
           <View className="mt-3 pb-3">

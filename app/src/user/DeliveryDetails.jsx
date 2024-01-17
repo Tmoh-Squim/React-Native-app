@@ -67,12 +67,13 @@ useEffect(() => {
     shipping:shipping
   }
   const handleSubmit = async () =>{
-    if(county=== '' || district === '' || location===''){
+    if(county.length === '' || district.length === '' || location.length===''){
       Alert.alert('Please fill in the above fields')
       return
-    }
+    }else{
     AsyncStorage.setItem('latest-order',JSON.stringify(order))
     navigation.navigate('payment')
+    }
   }
 
   
