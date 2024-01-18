@@ -66,6 +66,9 @@ const Products = () => {
                 <Text className="my-1 mx-1">
                 <Ratings rating={item.ratings} />
                 </Text>
+                <Text className="mx-1 text-green-500">
+                  ({item.sold_out}) sold
+                </Text>
                 </View>
               
               

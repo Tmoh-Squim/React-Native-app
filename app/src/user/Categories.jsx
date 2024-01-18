@@ -60,7 +60,7 @@ export default function Category() {
       <View style={Styles.searchContainer}>
         <TextInput
           placeholder="Search for products..."
-          placeholderTextColor="tomato"
+          placeholderTextColor="black"
           style={Styles.searchInput}
           value={searchQuery}
           onChangeText={handleSearch}
@@ -197,7 +197,7 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
     width: '100%',
     paddingLeft: 10,
-    color: 'tomato',
+    color: 'black',
   },
   scrollViewContent: {
     flexDirection: 'row',

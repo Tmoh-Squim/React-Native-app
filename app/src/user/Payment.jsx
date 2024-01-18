@@ -134,11 +134,19 @@ export default function Payment() {
           </View>
           <View className="flex justify-between flex-row mt-3">
             <Text className="text-black font-serif text-xl">Shipping:</Text>
-            <Text className="text-black text-xl">Ksh {shipping}</Text>
+            <Text className="text-black text-xl">
+            {shipping && shipping !== 0 ? (
+              <Text className="text-black text-xl">Ksh {shipping}</Text>
+            ) : (
+              <Text className="text-black text-xl">
+                <MinusIcon size={22} color="black" />
+              </Text>
+            )}
+            </Text>
           </View>
           <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">
             <Text className="text-black font-serif text-xl">Discount:</Text>
-            {discount !== 0 ? (
+            {discount && discount !== 0 ? (
               <Text className="text-black text-xl">Ksh {discount}</Text>
             ) : (
               <Text className="text-black text-xl">

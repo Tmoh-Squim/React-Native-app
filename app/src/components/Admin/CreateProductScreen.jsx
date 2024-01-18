@@ -16,7 +16,7 @@ import {Categories} from '../../data/Categories.js';
 import {Picker} from '@react-native-picker/picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useDispatch, useSelector} from 'react-redux';
-import {createProduct} from '../../redux/Products';
+import {createProduct,getProducts} from '../../redux/Products';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 export default function CreateProductScreen() {
@@ -108,6 +108,8 @@ export default function CreateProductScreen() {
         }
       );
       Alert.alert(res.data.message)
+      dispatch(getProducts())
+      navigation.navigate('admin')
     }
   
     

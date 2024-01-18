@@ -35,7 +35,7 @@ export default function Delivery({route}) {
   };
 
   const details = () =>{
-    user?.deliveryDetails.length > 0 && (
+    user?.deliveryDetails.length > 0 ? (
       user?.deliveryDetails.map((item,index)=>{
         return (
           setCounty(item.county),
@@ -43,6 +43,10 @@ export default function Delivery({route}) {
           setLocation(item.location)
         )
       })
+    ):(
+      setCounty(''),
+      setDistrict(''),
+      setLocation('')
     )
   }
 useEffect(() => {
@@ -53,7 +57,7 @@ useEffect(() => {
     price && price >5000 && (
       setDiscount(Math.round((price/100)*5))
     )
-    county === "Kiambu" || county === "Baringo" || county === "Embu" ?(
+    county === "Kiambu" || county === "Baringo" || county === "Embu" || county ==='' ?(
       setShipping(0)
     ):(
       setShipping(300)
@@ -67,8 +71,8 @@ useEffect(() => {
     shipping:shipping
   }
   const handleSubmit = async () =>{
-    if(county.length === '' || district.length === '' || location.length===''){
-      Alert.alert('Please fill in the above fields')
+    if(county === '' || district === '' || location===''){
+      Alert.alert('All above fields are required')
       return
     }else{
     AsyncStorage.setItem('latest-order',JSON.stringify(order))
@@ -97,9 +101,9 @@ useEffect(() => {
             <View className="mt-6 relative">
             <View className="border rounded-xl  mt-3 h-[45px] justify-center px-2 ">
                 <Picker
-                  selectedValue={county}
+                  selectedValue={county }
                   onValueChange={item => setCounty(item)}>
-                  {State &&
+                  {State && 
                     State.getStatesOfCountry('KE').map(item => (
                       <Picker.Item
                         value={item.name}
@@ -169,7 +173,15 @@ useEffect(() => {
             </View>
             <View className="flex justify-between flex-row mt-4">
             <Text className="text-black font-serif text-xl">Shipping:</Text>
-            <Text className="text-black text-xl">Ksh {shipping}</Text>
+            <Text className="text-black text-xl">
+            {shipping && shipping !== 0 ? (
+              <Text className="text-black text-xl">Ksh {shipping}</Text>
+            ) : (
+              <Text className="text-black text-xl">
+                <MinusIcon size={22} color="black" />
+              </Text>
+            )}
+            </Text>
             </View>
             <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">
             <Text className="text-black font-serif text-xl justify-center items-center">Discount:</Text>

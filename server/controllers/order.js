@@ -90,30 +90,48 @@ const OrderDetails = asyncHandler(async(req,res,next)=>{
 })
 const updateOrderStatus = asyncHandler(async(req,res,next)=>{
   try {
-    const order = await Order.findById(req.params.id)
-    if(!order){
-      next(res.status(400).send({
-        success:false,
-        message:"Order with this id can't be found"
-      }))
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return next(new ErrorHandler("Order not found with this id", 400));
     }
-    if(req.body.status === "Transferred to Delivery Partner"){
-       order.cart.forEach(async(o)=>{
-        await updateOrder(o._id,o.cartQuantity)
-       })
+    if (req.body.status === "Transferred to delivery partner") {
+      order.cart.forEach(async (o) => {
+        await updateOrder(o._id, o.cartQuantity);
+      });
     }
-    order.status = req.body.status
-    async function updateOrder(id,cartQuantity) {
-      const product = await Product.findById(id)
-      product.stock -= cartQuantity
-      product.sold_out += cartQuantity
-      await product.save({validateBeforeSave:false})
+
+    order.status = req.body.status;
+
+    if (req.body.status === "Delivered") {
+      order.deliveredAt = Date.now();
+      order.paymentInfo.status = "Succeeded";
     }
+
+    await order.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+      success: true,
+      message:"Status updated successfully",
+    });
+
+    async function updateOrder(id, cartQuantity) {
+      const product = await Product.findById(id);
+      if (!product){
+        return next(res.send({message:'Error occured'}))
+      }
+      else{
+        product.stock -= cartQuantity;
+        product.sold_out += cartQuantity;
+  
+        await product.save({ validateBeforeSave: false });
+      }
+
+    }
+
   } catch (error) {
-    next(res.status(500).send({
-      success:false,
-      message:"Error in updating order status"
-    }))
+    return next(res.status(500).send({message:"Error updating status"}));
+    console.log(error)
   }
 })
 module.exports = { createOrder, userOrders,AllOrders,OrderDetails,updateOrderStatus};

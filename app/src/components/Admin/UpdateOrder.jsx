@@ -1,11 +1,12 @@
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Image,Alert} from 'react-native';
 import React,{useState,useEffect} from 'react';
 import {ShoppingBagIcon} from 'react-native-heroicons/solid';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {Picker} from "@react-native-picker/picker"
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios"
 export default function UpdateOrder({route}) {
   const navigation = useNavigation();
   const {order,shippingAddress,paymentInfo,status,user} = route.params;
@@ -25,6 +26,27 @@ export default function UpdateOrder({route}) {
         setData(["On the way","Delivered"])
       }
  }, [statuss]);
+
+ const handleUpdateStatus =async () =>{
+  try {
+    const id = order._id
+    const token = await AsyncStorage.getItem('token')
+    const data = {
+      status:status
+    }
+    const response = await axios.put(`https://squim-native-app/api/v2/order/update-order/${id}`,data,{
+      headers:{
+        'Authorization':token
+      }
+    })
+    Alert.alert(response.data.message)
+  } catch (error) {
+    Alert.alert('Somethiing went wrong')
+    console.log(error)
+  }
+ }
+
+
   return (
     <ScrollView
       className="w-full h-screen"
@@ -117,7 +139,7 @@ export default function UpdateOrder({route}) {
           </View>
 
           <View className="mt-5 justify-between mx-2 mb-5">
-            <TouchableOpacity className="p-3 rounded-md bg-red-400 w-[130px]">
+            <TouchableOpacity className="p-3 rounded-md bg-red-400 w-[130px]" onPress={handleUpdateStatus}>
                 <Text className="text-white text-center font-bold text-[18px]">
                     Update Status
                 </Text>
