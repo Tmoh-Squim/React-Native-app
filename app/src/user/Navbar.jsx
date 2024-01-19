@@ -21,20 +21,20 @@ export default function Navbar() {
     <View
       className={`${
         active === true
-          ? 'absolute bottom-0  right-0 left-0 items-center flex flex-row px-3 py-3 justify-between w-full bg-neutral-200 z-30 shadow-md h-[50px]'
+          ? 'absolute bottom-0  right-0 left-0 items-center flex flex-row px-5  justify-between w-full bg-neutral-200 z-30 shadow-md h-[50px]'
           : 'hidden'
       } `}>
       <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-        <HomeIcon size={30} color="black" />
+        <HomeIcon size={32} color="black" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
-        <ListBulletIcon size={30} color="black" />
+        <ListBulletIcon size={32} color="black" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('wishlist')}>
         <View className="relative">
-          <HeartIcon size={30} color="black" />
+          <HeartIcon size={32} color="black" />
         </View>
-        <View className="absolute bottom-3 left-3 w-[17px] h-[17px] bg-red-600 items-center rounded-full">
+        <View className="absolute bottom-3.5 left-3.5 w-[17px] h-[17px] bg-red-600 items-center rounded-full">
           <Text className="text-white text-center">
             {wishlist?.wishlist?.length > 0 ? wishlist?.wishlist?.length : 0}
           </Text>
@@ -42,9 +42,9 @@ export default function Navbar() {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('cart')}>
         <View className="relative">
-          <ShoppingCartIcon size={30} color="black" />
+          <ShoppingCartIcon size={32} color="black" />
         </View>
-        <View className="absolute bottom-3 left-3 w-[17px] h-[17px] bg-green-600 items-center rounded-full">
+        <View className="absolute bottom-3.5 left-3.5 w-[17px] h-[17px] bg-green-600 items-center rounded-full">
           <Text className="text-white text-center">
             {cart?.cartItem?.length > 0 ? cart?.cartItem?.length : 0}
           </Text>
@@ -52,16 +52,16 @@ export default function Navbar() {
       </TouchableOpacity>
       {user?.user ? (
         <TouchableOpacity onPress={() => navigation.navigate('user')}>
-          <UserCircleIcon size={30} color="black" />
+          <UserCircleIcon size={32} color="black" />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={() => navigation.navigate('login')}>
-          <UserCircleIcon size={30} color="black" />
+          <UserCircleIcon size={32} color="black" />
         </TouchableOpacity>
       )}
       {user?.user && user?.user?.role === 'Admin' && (
         <TouchableOpacity onPress={() => navigation.navigate('admin')}>
-          <Bars3BottomLeftIcon size={30} color="black" />
+          <Bars3BottomLeftIcon size={32} color="black" />
         </TouchableOpacity>
       )}
     </View>

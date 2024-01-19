@@ -14,7 +14,7 @@ const createProduct =asyncHandler( async (req,res,next) =>{
            // Resize and optimize image before uploading to Cloudinary
       const resizedImageBuffer = await sharp(file.path)
       .resize({ width: 250, height: 250, fit: 'inside' })
-      .jpeg({ quality: 100 })
+      .jpeg({ quality: 150 })
       .toBuffer();
     // Generate a unique filename
     const filename = `${uuidv4()}.jpg`;

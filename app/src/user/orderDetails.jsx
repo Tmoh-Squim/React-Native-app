@@ -7,17 +7,17 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function OrderDetails({route}) {
   const navigation = useNavigation();
-  const {order,shippingAddress,paymentInfo,status} = route.params;
+  const {order,shippingAddress,paymentInfo,status,totalPrice} = route.params;
   return (
     <ScrollView
-      className="w-full h-screen mb-2"
+      className="w-full h-screen"
       showsVerticalScrollIndicator={false}>
       <View className="mt-2 mx-1">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeftIcon size={25} color="gray" />
         </TouchableOpacity>
       </View>
-      <SafeAreaView className="mx-1 mt-0">
+      <SafeAreaView className="mx-1 mb-3 mt-0">
         <View className="flex flex-row items-center">
           <ShoppingBagIcon size={32} color="red" />
           <Text className="text-black ml-5 text-2xl text-center">
@@ -40,14 +40,14 @@ export default function OrderDetails({route}) {
           <View className="p-1 flex-1 flex-row justify-between border-b pb-3 border-neutral-400">
             <Image
               source={{uri: order.images[0]}}
-              className="w-[100px] h-[100px] rounded-md"
+              className="w-[100px] h-[100px] rounded-sm"
             />
             <View>
             <Text className="text-black text-[15px] mt-3 mx-2">{order.name.length > 32 ? order.name.slice(0,32) : order.name}</Text>
             <Text className="text-gray-400 text-[20px] mt-3 mx-2">{order.cartQuantity} x {order.discountPrice}</Text>
             </View>
           </View>
-          <Text className="text-right text-xl text-black mt-2 mx-2">Total Price: Ksh {order.cartQuantity * order.discountPrice}</Text>
+          <Text className="text-right text-xl text-black mt-2 mx-2">Total Paid: Ksh {totalPrice }</Text>
 
           <View>
           <View>

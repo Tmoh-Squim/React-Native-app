@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Ratings from "../utils/helper"
 const Products = () => {
-  const {products} = useSelector(state => state.products);
+  const {products,isLoading} = useSelector(state => state.products);
   const {user} = useSelector((state)=>state.user)
 
   const navigation = useNavigation();
@@ -39,57 +39,75 @@ const Products = () => {
       <Text style={styles.title}>All Products</Text>
 
       <View style={styles.productsContainer}>
-        {products?.products?.length !==0  && products?.products.slice(0, visibleProducts).map((item, index) => (
-          <TouchableWithoutFeedback
-            key={index}
-            onPress={() => navigateToProductDetails(item)}>
-            <View style={styles.product}>
-              {item.images[0] ? (
-                <Image source={{uri: item.images[0]}} style={styles.imgStyle} />
-              ) : (
-                <Text>No Image Available</Text>
-              )}
-              <Text className="text-[19px] text-black">
-                {item.name.length < 20
-                  ? item.name
-                  : item.name.slice(0, 20) + '...'}
-              </Text>
-              <View className="flex-1 w-full flex-row mt-2">
-                <Text className="text-red-700 text-[18px] font-bold ml-2">
-                  Ksh {item.discountPrice}{' '}
-                </Text>
-                <Text className="text-black line-through text-[10px]">
-                  Ksh {item.originalPrice}{' '}
-                </Text>
-              </View>
-              <View>
-                <Text className="my-1 mx-1">
-                <Ratings rating={item.ratings} />
-                </Text>
-                <Text className="mx-1 text-green-500">
-                  ({item.sold_out}) sold
-                </Text>
+        {
+          products?.products?.length > 0 ?(
+            <>
+            { products?.products.slice(0, visibleProducts).map((item, index) => (
+              <TouchableWithoutFeedback
+                key={index}
+                onPress={() => navigateToProductDetails(item)}>
+                <View style={styles.product}>
+                  {item.images[0] ? (
+                    <Image source={{uri: item.images[0]}} style={styles.imgStyle} />
+                  ) : (
+                    <Text>No Image Available</Text>
+                  )}
+                  <Text className="text-[19px] text-black">
+                    {item.name.length < 20
+                      ? item.name
+                      : item.name.slice(0, 20) + '...'}
+                  </Text>
+                  <View className="flex-1 w-full flex-row mt-2">
+                    <Text className="text-red-700 text-[18px] font-bold ml-2">
+                      Ksh {item.discountPrice}{' '}
+                    </Text>
+                    <Text className="text-black line-through text-[10px]">
+                      Ksh {item.originalPrice}{' '}
+                    </Text>
+                  </View>
+                  <View className="flex flex-row">
+                    <Text className="my-1 mx-1">
+                    <Ratings rating={item.ratings} />
+                    </Text>
+                    <Text className=" text-green-500">
+                      ({item.sold_out}) sold
+                    </Text>
+                    </View>
+                  
+                  
                 </View>
-              
-              
+              </TouchableWithoutFeedback>
+            ))}
+            </>
+          ):(
+            <View className="justify-center w-full py-5 items-center">
+              <ActivityIndicator size='large' color='blue' />
             </View>
-          </TouchableWithoutFeedback>
-        ))}
+          )
+        }
+        
       </View>
 
-      {visibleProducts < products?.products.length && !loadingMore && (
-        <TouchableOpacity style={styles.loadMoreButton} onPress={loadMore}>
-          <Text style={styles.loadMoreButtonText}>Load more products</Text>
-        </TouchableOpacity>
-      )}
-
-      {loadingMore && (
-        <ActivityIndicator
-          style={styles.loadingIndicator}
-          size="large"
-          color="#0000ff"
-        />
-      )}
+      {
+        products?.products?.length > 0 ? (
+          <>
+          {visibleProducts < products?.products.length && !loadingMore && (
+            <TouchableOpacity style={styles.loadMoreButton} onPress={loadMore}>
+              <Text style={styles.loadMoreButtonText}>Load more products</Text>
+            </TouchableOpacity>
+          )}
+    
+          {loadingMore && (
+            <ActivityIndicator
+              style={styles.loadingIndicator}
+              size="large"
+              color="#0000ff"
+            />
+          )}
+          </>
+        ):null
+      }
+      
     </ScrollView>
   );
 };

@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux"
 import { View, Text,ScrollView,StyleSheet,FlatList,TouchableOpacity,Dimensions} from "react-native";
-import React from "react";
+import React,{useEffect} from "react";
 import {SafeAreaView} from "react-native-safe-area-context"
 import {CurrencyDollarIcon,ListBulletIcon,ArrowsPointingOutIcon,ChevronLeftIcon} from "react-native-heroicons/outline"
 import {
@@ -12,23 +12,18 @@ import {
   StackedBarChart
 } from "react-native-chart-kit";
 import {useNavigation} from "@react-navigation/native"
+import {useDispatch} from "react-redux"
+import {getAllOrders} from "../../redux/order"
 export default function Overview() {
     const products = useSelector((state)=>state.products.products)
     const {allOrders} = useSelector((state)=>state.allOrders)
-    const data = [
-        { id: '1', name: 'Item 1', quantity: 5, price: 10 },
-        { id: '2', name: 'Item 2', quantity: 3, price: 15 },
-        { id: '3', name: 'Item 3', quantity: 2, price: 20 },
-        // Add more data as needed
-      ];
-      const renderTableRow = ({ item }) => (
-        <View style={styles.tableRow}>
-          <Text style={styles.cell}>{item.name}</Text>
-          <Text style={styles.cell}>{item.quantity}</Text>
-          <Text style={styles.cell}>{item.price}</Text>
-        </View>
-      );
+   
       const navigation = useNavigation()
+      const dispatch = useDispatch()
+      useEffect(() => {
+        dispatch(getAllOrders())
+      }, []);
+      
   return (
     <SafeAreaView className="w-[80%] bg-white h-screen right-0 absolute mb-5">
           <TouchableOpacity className="px-4 mt-2" onPress={()=>navigation.goBack()}>
@@ -91,9 +86,14 @@ export default function Overview() {
             <Text className="text-white text-2xl ml-7">
                Shop All Orders
             </Text>
+            {
+              allOrders && allOrders.length > 0 &&(
             <Text className=" text-red-400 my-2 text-2xl text-center">
                 {allOrders.length}
             </Text>
+            )
+          }
+          
             <TouchableOpacity onPress={()=>navigation.navigate('admin-orders')}>
                 <Text className="text-green-400">View Orders</Text>
             </TouchableOpacity>

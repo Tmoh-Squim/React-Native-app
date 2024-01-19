@@ -8,7 +8,6 @@ import {useNavigation} from '@react-navigation/native';
 export default function Orders() {
   const dispatch = useDispatch();
   const {allOrders} = useSelector(state => state.allOrders);
-  console.log(allOrders);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -47,10 +46,12 @@ export default function Orders() {
                             onPress={() =>
                               navigation.navigate('admin-update-order', {
                                 order: cartItem,
+                                id:order?._id,
                                 shippingAddress: order?.deliveryDetails,
                                 paymentInfo: order?.paymentInfo,
                                 status: order?.status,
                                 user: order?.user,
+                                totalPrice:order?.totalPrice
                               })
                             }>
                             <ArrowRightIcon size={25} color="black" />

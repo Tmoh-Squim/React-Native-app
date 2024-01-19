@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {Platform} from "react-native"
 import { Provider, useSelector } from 'react-redux';
 import store from './src/redux/Store';
 import { getProducts } from './src/redux/Products';
@@ -7,6 +8,7 @@ import { View, StatusBar, ActivityIndicator, StyleSheet } from 'react-native';
 import {LoadUser} from "./src/redux/user"
 import {getAllOrders} from "./src/redux/order"
 import Router from './src/navigation/Router.jsx';
+//import SplashScreen from 'react-native-splash-screen'
 const AppWrapper = () => {
   const {isLoading} = useSelector((state) => state.products);
   const {user} = useSelector((state)=>state.user)
@@ -19,16 +21,21 @@ const AppWrapper = () => {
     store.dispatch(getAllOrders());
     console.log('user',user)
   }, [store]); 
+  {/*useEffect(() => {
+    if(Platform.OS === "android")
+    SplashScreen.hide()
+  }, []);
+*/}
   return (
     <>
       <StatusBar backgroundColor='#9ee4d4' barStyle='dark-content' />
-  {isLoading ? (
+ {/* {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-   ) : ( 
+   ) : ( */}
         <Router />
-    )} 
+  {/*  )} */}
     </>
   );
 };

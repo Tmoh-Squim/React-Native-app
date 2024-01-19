@@ -6,13 +6,11 @@ import {ShoppingBagIcon, XCircleIcon,PlusIcon,MinusIcon} from 'react-native-hero
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getTotal, removeFromCart} from '../redux/cart';
-import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import {decreaseQuantity, addToCart} from '../redux/cart';
 
 export default function CartScreen() {
   const cart = useSelector(state => state.cart.cartItem);
   const {cartTotalAmount} = useSelector(state => state.cart);
-  console.log(cart)
   const navigation = useNavigation();
   const dispatch = useDispatch();
 

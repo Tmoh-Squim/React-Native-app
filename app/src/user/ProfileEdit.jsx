@@ -113,6 +113,7 @@ export default function ProfileEdit() {
             <TextInput
               value={name}
               type="text"
+              autoCapitalize="characters"
               className="border w-full rounded-[18px] pl-4 h-[45px] capitalize"
               editable={false}
               style={{color: 'black'}}
@@ -212,7 +213,7 @@ export default function ProfileEdit() {
                         label={item.name}
                         key={item.isoCode}
                         color="black"
-                        style={{width: '50%'}}
+                        style={{width: 150}}
                       />
                     ))}
                 </Picker>

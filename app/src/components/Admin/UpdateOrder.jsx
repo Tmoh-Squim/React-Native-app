@@ -9,39 +9,39 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios"
 export default function UpdateOrder({route}) {
   const navigation = useNavigation();
-  const {order,shippingAddress,paymentInfo,status,user} = route.params;
+  const {order,shippingAddress,paymentInfo,status,user,totalPrice,id} = route.params;
   const [statuss,setStatus] = useState(status)
-  const [data,setData] = useState(["Processing","Shipping","Transfered to delivery partner","On the way","Delivered"])
+  const [data,setData] = useState(["Processing","Shipping","Transferred to delivery partner","On the way","Delivered"])
  useEffect(() => {
     if(statuss === "Delivered"){
         setData(["Delivered"])
       }
       if(statuss === "Shipping"){
-        setData(["Shipping","Transfered to delivery partner","On the way","Delivered"])
+        setData(["Shipping","Transferred to delivery partner","On the way","Delivered"])
       }
-      if(statuss === "Transfered to delivery partner"){
-        setData(["Transfered to delivery partner","On the way","Delivered"])
+      if(statuss === "Transferred to delivery partner"){
+        setData(["Transferred to delivery partner","On the way","Delivered"])
       }
       if(statuss === "On the way"){
         setData(["On the way","Delivered"])
       }
  }, [statuss]);
-
+console.log(statuss)
  const handleUpdateStatus =async () =>{
   try {
-    const id = order._id
+    console.log(id)
     const token = await AsyncStorage.getItem('token')
     const data = {
-      status:status
+      status:statuss
     }
-    const response = await axios.put(`https://squim-native-app/api/v2/order/update-order/${id}`,data,{
+    const response = await axios.put(`https://squim-native-app.onrender.com/api/v2/order/update-order/${id}`,data,{
       headers:{
         'Authorization':token
       }
     })
     Alert.alert(response.data.message)
   } catch (error) {
-    Alert.alert('Somethiing went wrong')
+    Alert.alert('Something went wrong')
     console.log(error)
   }
  }
@@ -86,7 +86,7 @@ export default function UpdateOrder({route}) {
             <Text className="text-gray-400 text-[20px] mt-3 mx-2">{order.cartQuantity} x {order.discountPrice}</Text>
             </View>
           </View>
-          <Text className="text-right text-xl text-black mt-2 mx-2">Total Price: Ksh {order.cartQuantity * order.discountPrice}</Text>
+          <Text className="text-right text-xl text-black mt-2 mx-2">Total Paid: Ksh {totalPrice}</Text>
 
           <View>
           <View>

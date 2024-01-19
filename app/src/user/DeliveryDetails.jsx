@@ -65,7 +65,7 @@ useEffect(() => {
   },[price,county])
   const order = {
     deliveryDetails:deliveryDetails,
-    totalPrice:discount !== ''?(Math.round(((price-discount)+shipping))) :price,
+    totalPrice:discount !== ''?(Math.round(((price-discount)+shipping))) :(price+shipping),
     cart,
     discount:discount,
     shipping:shipping
@@ -84,7 +84,7 @@ useEffect(() => {
 
   return (
     <ScrollView className="h-screen w-full">
-    <SafeAreaView className="w-full px-3  bg-gray-100 h-screen ">
+    <SafeAreaView className="w-full px-3 mb-3  bg-gray-100 h-screen ">
       <TouchableOpacity className="mt-3" onPress={() => navigation.goBack()}>
         <Text>
           <ArrowLeftIcon size={23} color="black" />{' '}
@@ -206,7 +206,7 @@ useEffect(() => {
       </View>
 
       <TouchableOpacity
-        className="mt-10 w-[95%]   py-3 mb-3 rounded-xl items-center  left-1  "
+        className="mt-10 w-[95%]   py-3 rounded-xl items-center  left-1  "
         style={{backgroundColor: 'red'}}
         onPress={handleSubmit}>
         <Text className="text-white font-bold tracking-[1px] text-[19px]">

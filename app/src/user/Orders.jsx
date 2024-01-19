@@ -39,7 +39,7 @@ export default function Orders() {
                       <View className="flex-1 flex-row border p-2 justify-between">
                         <Text className="text-gray-500">#{cartItem._id.slice(0,8)} |</Text>
                       <Text className="text-black ml-1">{cartItem.name.length > 15 ? cartItem.name.slice(0,22) + '...' : cartItem.name} |</Text>
-                      <TouchableOpacity onPress={()=>navigation.navigate('Order-details',{order:cartItem,shippingAddress:order?.deliveryDetails,paymentInfo:order?.paymentInfo,status:order?.status})}>
+                      <TouchableOpacity onPress={()=>navigation.navigate('Order-details',{order:cartItem,shippingAddress:order?.deliveryDetails,totalPrice:order?.totalPrice,paymentInfo:order?.paymentInfo,status:order?.status})}>
                       <ArrowRightIcon size={25} color='black' />
                       </TouchableOpacity>
                       </View>

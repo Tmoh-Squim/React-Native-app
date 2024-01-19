@@ -1,9 +1,11 @@
-import * as React from 'react';
+import  React,{useEffect,useState} from 'react';
 import {Dimensions, Text, View} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
-
+import {useDispatch,useSelector} from "react-redux"
 function Slider() {
   const width = Dimensions.get('window').width;
+  const {products} = useSelector(state => state.products);
+  const [slide,setSlide] = useState(null)
   const slides = [
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699381129/lw7gsg4ucidppbjdjolz.jpg',
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699381765/dghrf19rxcjnxiu9cjuh.jpg',
@@ -11,6 +13,13 @@ function Slider() {
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699611422/xjyjsam2d5t5vgrnx3cu.jpg',
     'https://res.cloudinary.com/dvsmxvdtr/image/upload/v1699612357/npys0xmi0isqcxlf4xco.jpg',
   ];
+  
+  useEffect(() => {
+   
+  }, []);
+
+  console.log('slide',slide)
+  
   return (
     <View>
       

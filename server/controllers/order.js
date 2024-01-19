@@ -93,7 +93,7 @@ const updateOrderStatus = asyncHandler(async(req,res,next)=>{
     const order = await Order.findById(req.params.id);
 
     if (!order) {
-      return next(new ErrorHandler("Order not found with this id", 400));
+      return next(res.send({message:"Order not found with this id"}));
     }
     if (req.body.status === "Transferred to delivery partner") {
       order.cart.forEach(async (o) => {
@@ -130,8 +130,8 @@ const updateOrderStatus = asyncHandler(async(req,res,next)=>{
     }
 
   } catch (error) {
-    return next(res.status(500).send({message:"Error updating status"}));
     console.log(error)
+    return next(res.status(500).send({message:"Error updating status"}));
   }
 })
 module.exports = { createOrder, userOrders,AllOrders,OrderDetails,updateOrderStatus};
