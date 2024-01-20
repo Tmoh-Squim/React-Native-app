@@ -12,8 +12,6 @@ import Router from './src/navigation/Router.jsx';
 //import SplashScreen from 'react-native-splash-screen'
 const AppWrapper = () => {
   const {isLoading} = useSelector((state) => state.products);
-  const {user} = useSelector((state)=>state.user)
-
   useEffect(() => {
     // Dispatch getProducts only after cart state has been initialized
     store.dispatch(getProducts());
@@ -21,7 +19,6 @@ const AppWrapper = () => {
     store.dispatch(LoadUser())
     store.dispatch(getAllEvents())
     store.dispatch(getAllOrders());
-    console.log('user',user)
   }, [store]); 
   {/*useEffect(() => {
     if(Platform.OS === "android")

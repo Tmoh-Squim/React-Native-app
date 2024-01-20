@@ -1,9 +1,56 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import {useSelector} from "react-redux"
+import {useNavigation} from "@react-navigation/native"
 import RecommendProduct from '../assets/recommend.jpg';
 
 const Deals = () => {
+  const [data,setData] = useState([])
+  const {products} = useSelector((state)=>state.products)
+  const navigation = useNavigation()
+useEffect(() => {
+  const dt = [...products? products : []]
+  const res = dt && dt.sort((a,b)=>b.sold_out - a.sold_out)
+ const first = res && res.slice(0,1)
+ setData(first)
+}, [products]);
+
   return (
+    <>
+    {
+      data && data.length !==0 ? (
+        <View>
+      {
+        data.map((item,index)=>(
+          <View style={styles.container} key={index}>
+          <Text style={styles.title}>Recommended deal for you</Text>
+          <TouchableOpacity onPress={()=>navigation.navigate('productDetails',{product:item})}>
+          <Image source={{uri:item.images[1]}} style={styles.imgStyle} />
+          <View style={styles.bottomSection}>
+            <View style={styles.row}>
+              <TouchableOpacity style={styles.offDealBtn}>
+                <Text style={styles.offDeal}>18% off</Text>
+              </TouchableOpacity>
+              <Text style={styles.deal}>Deal</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.discountPrice}>Ksh {item.discountPrice}</Text>
+              <Text style={styles.mrp}>M.R.P.</Text>
+              <Text style={styles.actualPrice}>Ksh {item.originalPrice}</Text>
+            </View>
+            <Text style={styles.productName}>
+              {item.name}
+            </Text>
+            
+            <Text style={styles.allDeals}>See all deals</Text>
+          </View>
+          </TouchableOpacity >
+        </View> 
+        ))
+      } 
+      </View>
+      ):null
+    }
     <View style={styles.container}>
       <Text style={styles.title}>Recommended deal for you</Text>
       <Image source={RecommendProduct} style={styles.imgStyle} />
@@ -25,6 +72,7 @@ const Deals = () => {
         <Text style={styles.allDeals}>See all deals</Text>
       </View>
     </View>
+    </>
   );
 };
 

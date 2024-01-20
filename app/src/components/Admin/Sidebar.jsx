@@ -47,7 +47,7 @@ export default function Sidebar() {
           <TagIcon size={30} color="black" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('admin-create-event')} >
         <View className="mt-10">
           <DocumentPlusIcon size={30} color="black" />
         </View>

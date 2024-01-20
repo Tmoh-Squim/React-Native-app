@@ -4,8 +4,7 @@ import React,{useState,useEffect} from 'react';
 import Header from '../components/Header';
 import SubHeader from '../components/SubHeader';
 import Category from '../components/Category';
-import Carousel from '../components/Carousel';
-import Services from '../components/Services';
+import Events from "./Events"
 import Deals from '../components/Deals';
 import Brands from '../components/Brands';
 import ProductScreen from '../screens/ProductScreen';
@@ -22,6 +21,7 @@ const Home = () => {
       <SubHeader />
       <Slider /> 
       <Category />
+      <Events />
       <Deals />
       <Brands />
      <ProductScreen /> 

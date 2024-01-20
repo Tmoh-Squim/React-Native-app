@@ -21,10 +21,26 @@ const EventShema=new mongoose.Schema({
         type:String,
         required:true
     },
+    stock:{
+        type:String
+    },
+    category:{
+        type:String
+    },
     ratings:{
         type:Number,
         default:5
     },
+    colors:[
+        {
+            type:String
+        }
+    ],
+    sizes:[
+        {
+            type:String
+        }
+    ],
     expirationTime:{
         type:Date,
         required:true

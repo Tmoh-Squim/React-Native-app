@@ -24,6 +24,7 @@ import AllOrders from "../components/Admin/Orders"
 import UpdateOrder from "../components/Admin/UpdateOrder"
 import {useSelector} from "react-redux"
 import FAQ from "../user/FAQ"
+import CreateEvent from "../components/Admin/CreateEvent"
 const Stack = createStackNavigator();
 
 const Router = () => {
@@ -50,11 +51,11 @@ const Router = () => {
         <Stack.Screen name="user" component={isAuthenticated ? UserScreen : Login} />
         <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
         <Stack.Screen name="wishlist" component={Wishlist} />
-    {/*   {
-          user?.user? ( */}
+       {
+          user?.user? ( 
             <Stack.Screen name="admin" component={AdminDashboard} />
-      {/*    ):null
-        } */}
+          ):null
+        } 
         <Stack.Screen name="create-product" component={CreateProductScreen} />
         <Stack.Screen name="delivery" component={ user?.user ? DeliveryScreen : Login } />
         <Stack.Screen name="payment" component={ user?.user ? PaymentScreen : Login } />
@@ -66,6 +67,7 @@ const Router = () => {
         <Stack.Screen name="Order-details" component={OrderDetails} />
         <Stack.Screen name="admin-orders" component={user?.user?.role === "Admin" ? AllOrders : HomeScreen} />
         <Stack.Screen name="admin-update-order" component={user?.user?.role === "Admin" ? UpdateOrder : HomeScreen} />
+        <Stack.Screen name="admin-create-event" component={CreateEvent} />
       </Stack.Navigator>
     </NavigationContainer>
   );
