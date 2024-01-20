@@ -8,7 +8,7 @@ const createEvent = asyncHandler(async(req,res,next)=>{
         const imageUrls = []
         for(const file of files){
             const result = await cloudinary.uploader.upload(file.path,{
-                folder:"Ecommerce"
+                folder:"Events"
             })
             imageUrls.push(result.secure_url)
         }
