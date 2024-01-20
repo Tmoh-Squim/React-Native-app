@@ -8,9 +8,12 @@ const Deals = () => {
   const [data,setData] = useState([])
   const {products} = useSelector((state)=>state.products)
   const navigation = useNavigation()
+  
 useEffect(() => {
-  const dt = [...products? products : []]
-  const res = dt && dt.sort((a,b)=>b.sold_out - a.sold_out)
+const res =  products?.products?.length > 0 ? (
+     products?.products.sort((a,b)=> b.sold_out - a.sold_out)
+    
+  ):null
  const first = res && res.slice(0,1)
  setData(first)
 }, [products]);

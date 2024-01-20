@@ -5,7 +5,6 @@ import Ratings from '../utils/helper';
 import Countdown from "react-native-countdown-component"
 export default function Events() {
   const {events} = useSelector(state => state.events);
-  console.log('events', events);
   const handleEvent = (event) =>{
 
   }
