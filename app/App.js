@@ -7,6 +7,7 @@ import {getTotal} from "./src/redux/cart"
 import { View, StatusBar, ActivityIndicator, StyleSheet } from 'react-native';
 import {LoadUser} from "./src/redux/user"
 import {getAllOrders} from "./src/redux/order"
+import {getAllEvents} from "./src/redux/events"
 import Router from './src/navigation/Router.jsx';
 //import SplashScreen from 'react-native-splash-screen'
 const AppWrapper = () => {
@@ -18,6 +19,7 @@ const AppWrapper = () => {
     store.dispatch(getProducts());
     store.dispatch(getTotal())
     store.dispatch(LoadUser())
+    store.dispatch(getAllEvents())
     store.dispatch(getAllOrders());
     console.log('user',user)
   }, [store]); 

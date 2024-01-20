@@ -71,7 +71,6 @@ const cartSlice = createSlice({
           total:0
         })
         state.cartTotalAmount = total
-        console.log(total)
       }
     },
     

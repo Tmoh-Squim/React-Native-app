@@ -13,14 +13,15 @@ import {
 } from "react-native-chart-kit";
 import {useNavigation} from "@react-navigation/native"
 import {useDispatch} from "react-redux"
-import {getAllOrders} from "../../redux/order"
+import {getAllOrders,TotalEarnigs} from "../../redux/order"
 export default function Overview() {
     const products = useSelector((state)=>state.products.products)
-    const {allOrders} = useSelector((state)=>state.allOrders)
+    const {allOrders,totalEarnig} = useSelector((state)=>state.allOrders)
    
       const navigation = useNavigation()
       const dispatch = useDispatch()
       useEffect(() => {
+        dispatch(TotalEarnigs())
         dispatch(getAllOrders())
       }, []);
       
@@ -74,7 +75,7 @@ export default function Overview() {
                 Shop Total Earnings
             </Text>
             <Text className=" text-red-400 mt-3 text-2xl">
-                Ksh 13000
+                Ksh {totalEarnig}
             </Text>
         </View>
         <View className="absolute top-8 left-2">
