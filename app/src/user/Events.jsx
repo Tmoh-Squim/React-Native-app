@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView,Image} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import Ratings from '../utils/helper';
@@ -18,24 +18,26 @@ export default function Events() {
           <View>
             {events?.events?.map((event, index) => {
               return (
-                <View className="w-[50%] relative" key={index}>
+                <>
+                <View className="absolute top-2">
+                  <Countdown until={270000} onFinish={()=>handleEvent(event)} />
+                  </View>
+                <View className="w-[50%] relative bg-white rounded-md" key={index}>
                   <Image
                     source={{uri: event.images[0]}}
-                    className="w-full h-[145px]"
+                    className="w-full h-[140px] rounded-t-lg"
                   />
-                  <View className="absolute top-3 right-3">
-                  <Countdown until={(event.expirationTime - Date.now())/1000} onFinish={()=>handleEvent(event)} />
-                  </View>
                   <View className="px-2">
-                    <Text className="text-black text-[18px]">
+                    <Text className="text-black text-[18px] my-1">
                       {event.name}{' '}
                     </Text>
-                    <Text className="text-red-500 font-semibold text-[18px]">
-                      {event.discountPrice} <Text className="text-black line-through text-[10px]">{event.originalPrice}</Text>
+                    <Text className="text-red-500  mb-1 font-semibold text-[18px]">
+                    Ksh  {event.discountPrice} <Text className="text-black line-through text-[12px]">{event.originalPrice}</Text>
                     </Text>
                     <Ratings rating={event.ratings} />
                   </View>
                 </View>
+                </>
               );
             })}
           </View>

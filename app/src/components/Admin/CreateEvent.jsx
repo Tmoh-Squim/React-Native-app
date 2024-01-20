@@ -66,7 +66,7 @@ import {
       setOriginalPrice(name);
     };
 
-    const expirationTimeInMilliseconds = parseInt(expirationTime)*60000
+    const expirationTimeInMilliseconds = parseInt(expirationTime)*60
   
     const json = {name, description, discountPrice, stock:quantity, category, images,colors,sizes};
   
@@ -80,7 +80,7 @@ import {
         formData.append('discountPrice', discountPrice);
         formData.append('originalPrice', originalPrice); 
         formData.append('stock', quantity);
-        formData.append('expirationTime',Date.now()+expirationTimeInMilliseconds);
+        formData.append('expirationTime',expirationTimeInMilliseconds);
         formData.append('category', category);
         sizes.forEach((size) => {
          formData.append("sizes", size);
@@ -109,7 +109,6 @@ import {
           }
         );
         Alert.alert(res.data.message)
-        navigation.navigate('admin')
       }
     
       
@@ -163,7 +162,7 @@ import {
               <ArrowLeftIcon size={22} color="black" />
             </TouchableOpacity>
             <Text className="text-black mt-1 text-center text-2xl  w-[90%] mx-auto">
-              Create Product
+              Create Event
             </Text>
           </View>
         </View>

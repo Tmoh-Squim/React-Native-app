@@ -42,7 +42,7 @@ const EventShema=new mongoose.Schema({
         }
     ],
     expirationTime:{
-        type:Date,
+        type:Number,
         required:true
     }
 },{timestamps:true})
