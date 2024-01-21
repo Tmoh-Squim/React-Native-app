@@ -1,5 +1,5 @@
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React,{useState} from 'react';
 import {ShoppingBagIcon} from 'react-native-heroicons/solid';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function OrderDetails({route}) {
   const navigation = useNavigation();
+  const [open,setOpen] = useState(false)
   const {order,shippingAddress,paymentInfo,status,totalPrice} = route.params;
   return (
     <ScrollView
@@ -75,11 +76,15 @@ export default function OrderDetails({route}) {
           </View>
 
           <View className="mt-5 justify-between flex flex-row mx-2">
-            <TouchableOpacity className="p-3 rounded-md bg-black w-[110px]">
+            {
+              status === "Delivered" ? (
+                <TouchableOpacity className="p-3 rounded-md bg-black w-[110px]" onPress={()=>setOpen(true)}>
                 <Text className="text-white text-center font-bold text-[16px]">
                     Give a Refund
                 </Text>
             </TouchableOpacity>
+              ):null
+            }
             <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]">
                 <Text className="text-white text-center font-bold text-[16px]">
                     Write a Review
@@ -87,6 +92,18 @@ export default function OrderDetails({route}) {
             </TouchableOpacity>
           </View>
           </View>
+
+          {
+            open === true &&(
+              <View className="absolute w-[60%] m-auto bg-white h-[60%] z-30">
+                <View className="right-3 top-3">
+                  <TouchableOpacity onPress={()=>setOpen(false)}>
+                    <XMarkIcon size={25} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
+          }
         </View>
       </SafeAreaView>
     </ScrollView>

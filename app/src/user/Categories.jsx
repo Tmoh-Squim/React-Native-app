@@ -26,7 +26,7 @@ export default function Category() {
   const [filter, setFilter] = useState([]);
 
   const filtered = () => {
-    const result = products?.products && products?.products.filter(
+    const result = products?.products?.length > 0 && products?.products.filter(
       product => product.category === category,
     );
     setFilter(result);
@@ -39,7 +39,7 @@ export default function Category() {
 
   const filteredProducts =
     searchQuery !== ''
-      ? products?.products && products.products.filter(product =>
+      ? products?.products?.length > 0 && products.products.filter(product =>
           product.name
             .toLowerCase()
             .includes(
