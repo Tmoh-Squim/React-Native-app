@@ -26,7 +26,8 @@ export default function Category() {
   const [filter, setFilter] = useState([]);
 
   const filtered = () => {
-    const result = products?.products?.length > 0 && products?.products.filter(
+    const data = products?.products.length > 0 ? products.products : []
+    const result = data && data.filter(
       product => product.category === category,
     );
     setFilter(result);
@@ -137,7 +138,7 @@ export default function Category() {
 
       {/* filter by category ie mapping*/}
       {filter.length !== 0 ? (
-        <ScrollView className=" bg-neutral-300 absolute top-0 px-1 left-0 right-0 h-screen">
+        <ScrollView className=" bg-neutral-300 absolute top-0 mx-0.5 left-0 right-0 h-screen">
           <View className="flex-1 flex-row justify-between mt-2">
             <TouchableOpacity onPress={() => setFilter([])}>
               <ChevronLeftIcon size={30} color="black" />
@@ -147,7 +148,7 @@ export default function Category() {
           <View style={Styles.scrollViewImages} className="w-full">
             {filter.length !== 0 &&
               filter?.map(product => (
-                <View className="w-[48%] bg-gray-100 mx-0.5 rounded-md">
+                <View className="w-[49%] bg-gray-100 mx-0.45 mt-2 rounded-md">
                 <TouchableWithoutFeedback
                   onPress={() =>
                     navigation.navigate('ProductDetails', {product: product})

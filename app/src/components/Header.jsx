@@ -2,6 +2,7 @@ import {View, Text, StyleSheet, TextInput,TouchableOpacity} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/outline'
+import {PhoneIcon} from "react-native-heroicons/solid"
 import {useNavigation} from "@react-navigation/native"
 
 const Header = () => {
@@ -14,18 +15,18 @@ const Header = () => {
         end={{x: 1, y: 0}}
         colors={['#88dae0', '#98e1d6', '#9ee4d4']}
         style={styles.container}>
-        <TouchableOpacity style={styles.inputBox} onPress={()=>navigation.navigate('SearchScreen')}>
-          <View style={styles.row} >
-            <TextInput
-              placeholder="Search for product..."
-              placeholderTextColor="#848484"
-              style={styles.textInput}
-            />
-          </View>
-          <TouchableOpacity onPress={()=>navigation.navigate('SearchScreen')}>
-          <MagnifyingGlassIcon size='30' strokeWidth={2} color='black' />
+          <View className="justify-between w-full px-2 flex flex-row">
+            <View>
+            <TouchableOpacity onPress={()=>navigation.navigate('SearchScreen')}>
+          <MagnifyingGlassIcon size='28' strokeWidth={2} color='black' />
          </TouchableOpacity>
-        </TouchableOpacity>
+         </View>
+         <View>
+              <TouchableOpacity  onPress={()=>navigation.navigate('faq')}>
+                <PhoneIcon size={28} color='black'  />
+              </TouchableOpacity>
+            </View>
+            </View>
         
       </LinearGradient>
     </View>

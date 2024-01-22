@@ -3,7 +3,7 @@ const {hashPassword,comparePassword} = require('../helpers/hashPassword')
 const JWT = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const textflow = require('textflow.js')
-
+const twilio = require('twilio')
 const createUser = asyncHandler(async(req,res,next)=>{
     try {
         const {name,email,phone,password} = req.body
@@ -75,18 +75,31 @@ const Login = asyncHandler(async (req,res,next) =>{
 //verification code
 
 textflow.useKey("cFhZuo71n23TstL7fGpBFPVhWP3dv5a9cUxGm9eVviydEZlYjItfA1EXkudAc6Tz")
+const accountSid = process.env.TWILIO_SID
+const authToken = process.env.TWILIO_TOKEN
+const twilioPhone = process.env.TWILIO_PHONE
+
+const client = twilio(accountSid,authToken)
 
  const Verify=async(req,res)=>{
     try {
-        console.log(req.body)
+        const {phone} = req.body
+        const resetCode = Math.floor(1000 + Math.random() * 9000).toString()
 
-        const {phone}= req.body
-        var result= await textflow.sendVerificationSMS(phone)
-
-        if(result.ok)
-           return res.status(200).send('verification code sent')
-           return res.status(400).send('error in sending the code')
+        const message = await client.messages.create({
+            body: `Your reset code is: ${resetCode}`,
+            from: twilioPhone,
+            to: phone,
+          });
+      
+          console.log(`Message SID: ${message.sid}`);
+      
+        res.status(200).send({
+            success:true,
+            message:`Reset code sent successfully: ${phone} : ${resetCode}`
+        })
     } catch (error) {
+        res.status(500).send('Error sending the code')
         console.log(error)
     }
 

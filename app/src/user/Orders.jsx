@@ -15,7 +15,7 @@ export default function Orders() {
 
     useEffect(()=>{
        dispatch(getUserOrders(id))
-    },[id,dispatch,orders])
+    },[id,dispatch,orders,user])
   return (
     <ScrollView className="w-full h-screen bg-neutral-100" showsVerticalScrollIndicator={false}>
       <View className="mt-2 px-2 flex flex-row items-center">

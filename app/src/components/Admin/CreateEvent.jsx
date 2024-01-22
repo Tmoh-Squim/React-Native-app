@@ -66,7 +66,7 @@ import {
       setOriginalPrice(name);
     };
 
-    const expirationTimeInMilliseconds = parseInt(expirationTime)*60
+    const expirationTimeInMilliseconds =Math.floor(Date.now() /1000) + parseInt(expirationTime)*60
   
     const json = {name, description, discountPrice, stock:quantity, category, images,colors,sizes};
   

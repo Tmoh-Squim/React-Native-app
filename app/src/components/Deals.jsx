@@ -9,6 +9,7 @@ const Deals = () => {
   const {products} = useSelector((state)=>state.products)
   const navigation = useNavigation()
 
+
 useEffect(() => {
 const allProductsData = products ? [...products] : [];
     const sortedData = allProductsData?.sort((a,b) => b.sold_out - a.sold_out); 

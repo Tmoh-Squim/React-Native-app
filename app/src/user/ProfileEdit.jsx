@@ -202,9 +202,10 @@ export default function ProfileEdit() {
           </Text>
           <View>
             <View className="mt-6 relative">
-              <View className="border rounded-xl  mt-3 h-[45px] justify-center px-2 ">
+              <View className="border rounded-xl bg-gray-100  mt-3 h-[45px] justify-center px-2 ">
                 <Picker
                   selectedValue={county}
+                  color='black'
                   onValueChange={item => setCounty(item)}>
                   {State &&
                     State.getStatesOfCountry('KE').map(item => (
@@ -212,14 +213,13 @@ export default function ProfileEdit() {
                         value={item.name}
                         label={item.name}
                         key={item.isoCode}
-                        color="black"
-                        style={{width: 150}}
+                        color="red"
                       />
                     ))}
                 </Picker>
               </View>
             </View>
-            <View className="absolute top-6 left-3 items-center bg-gray-100 px-3 ">
+            <View className="absolute top-8 left-3 items-center bg-gray-100 px-3 ">
               <Text className="text-neutral-500 tracking-[1px] ">County *</Text>
             </View>
             <View>

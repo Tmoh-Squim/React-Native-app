@@ -1,21 +1,37 @@
-import { View, Text,ScrollView,TochableWithoutFeedack,TouchableOpacity } from "react-native";
+import { View, Text,ScrollView,TochableWithoutFeedack,TouchableOpacity,Linking } from "react-native";
 import React,{useState} from "react";
-import {ArrowLeftIcon,ChevronDownIcon,ChevronUpIcon} from "react-native-heroicons/outline"
+import {ArrowLeftIcon,ChevronDownIcon,ChevronUpIcon,ChatBubbleOvalLeftIcon} from "react-native-heroicons/outline"
+import {PhoneIcon} from "react-native-heroicons/solid"
 import {useNavigation} from "@react-navigation/native"
 export default function FAQ() {
     const [active,setActive] = useState(false)
     const navigation = useNavigation()
   return (
-    <ScrollView className="bg-neutral-200 px-2">
+    <ScrollView className="bg-white">
       <View>
-      <View className="mx-2 mt-2  flex flex-row items-center">
+      <View className="px-2 bg-neutral-200 py-2 flex flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()} className="mr-4">
             <ArrowLeftIcon size={23} color="black" />
           </TouchableOpacity>
         </View>
-        <View className="mt-0">
-        <Text className="text-xl text-black text-center">
-            Frequent Asked Questions
+        <View className="bg-neutral-200 p-2 wfull">
+            <TouchableOpacity className="bg-green-500 justify-center items-center py-2 px-3 rounded-lg" onPress={()=>Linking.openURL('https://wa.me/+254748143442')}>
+                <Text className="text-white">
+                    Chat with our support team on Whatsapp
+                </Text>
+                <Text className="text-white text-2xl mt-1"><ChatBubbleOvalLeftIcon size={28} color='white'/> 0748143442</Text>
+            </TouchableOpacity>
+            <TouchableOpacity className=" bg-gray-600 py-2 items-center px-3 my-2.5 rounded-lg" onPress={()=>Linking.openURL('tel:+254748143442')}>
+                <Text className="text-white">
+                    Need help? Call us for assistance
+                </Text>
+                <Text className="text-white text-2xl mt-1"><PhoneIcon size={28} color='white'/> 0748143442</Text>
+            </TouchableOpacity>
+        </View>
+        <View className="px-2">
+        <View className="mt-4 px-5">
+        <Text className="text-3xl font-semibold text-black">
+            Frequently Asked Questions
         </Text>
         </View>
         <View className="mt-3">
@@ -102,10 +118,13 @@ export default function FAQ() {
                     You can contact us through phone, email or whatsapp
                 </Text>
                 <Text className="text-black text-[18px]">
-                    Phone: +254748143442
+                    Phone: <Text onPress={()=>Linking.openURL('tel:254748143442')}>+254748143442</Text>
                 </Text>
                 <Text className="text-black text-[18px]">
-                    Email: squimstech@gmail.com
+                    Whatsapp: <Text onPress={()=>Linking.openURL('https://wa.me/+254748143442')}>+254748143442</Text>
+                </Text>
+                <Text className="text-black text-[18px]">
+                    Email: <Text onPress={()=>Linking.openURL('mailto:squimstech@gmail.com')}>squimstech@gmail.com</Text>
                 </Text>
                 </View>
                 )
@@ -136,6 +155,7 @@ export default function FAQ() {
                 </View>
                 )
             }
+        </View>
         </View>
         </View>
       </View>

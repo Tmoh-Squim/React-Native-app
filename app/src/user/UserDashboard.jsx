@@ -18,6 +18,7 @@ import {useSelector,useDispatch} from "react-redux"
 import {LoadUser,LOGOUT} from "../redux/user"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import RNRestart from 'react-native-restart';
+import Toast from "react-native-toast-message"
 export default function UserDashboard() {
   const user = useSelector((state)=>state.user.user.user)
   const navigation = useNavigation();
@@ -27,7 +28,11 @@ export default function UserDashboard() {
   const handleLogout = async () => {
     try {
      await AsyncStorage.removeItem('token');
-    Alert.alert("Logged out successfully");
+     Toast.show({
+      type: 'success',
+      text1: 'Logged out successfully',
+    });
+    Alert.alert('Logged out successfully')
     dispatch(LOGOUT())
     dispatch(LoadUser())
     navigation.navigate('HomeScreen')

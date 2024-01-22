@@ -9,8 +9,9 @@ import {LoadUser} from "./src/redux/user"
 import {getAllOrders} from "./src/redux/order"
 import {getAllEvents} from "./src/redux/events"
 import Router from './src/navigation/Router.jsx';
+import Toast from "react-native-toast-message"
 //import SplashScreen from 'react-native-splash-screen'
-const AppWrapper = () => {
+const AppWrapper = (props) => {
   const {isLoading} = useSelector((state) => state.products);
   useEffect(() => {
     // Dispatch getProducts only after cart state has been initialized
@@ -27,6 +28,7 @@ const AppWrapper = () => {
 */}
   return (
     <>
+    <Toast />
       <StatusBar backgroundColor='#9ee4d4' barStyle='dark-content' />
  {/* {isLoading ? (
         <View style={styles.loadingContainer}>

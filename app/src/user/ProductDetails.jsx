@@ -18,6 +18,7 @@ import {addToCart} from '../redux/cart';
 import {addToWishlist, removeFromWishlist} from '../redux/wishlist';
 import {Picker} from '@react-native-picker/picker';
 import Ratings from "../utils/helper"
+import Toast from "react-native-toast-message"
 const {width, height} = Dimensions.get('window');
 
 export default function ProductDetails({route}) {
@@ -38,6 +39,10 @@ export default function ProductDetails({route}) {
   const handleAddToCart = product => {
     const item = {...product, cartQuantity: count,selectedSize:size,selectedColor:color};
     dispatch(addToCart(item));
+    Toast.show({
+      type: 'success',
+      text1: 'Logged out successfully',
+    });
     Alert.alert('Product added to cart')
   };
 

@@ -25,6 +25,7 @@ import UpdateOrder from "../components/Admin/UpdateOrder"
 import {useSelector} from "react-redux"
 import FAQ from "../user/FAQ"
 import CreateEvent from "../components/Admin/CreateEvent"
+import Toast from "react-native-toast-message"
 const Stack = createStackNavigator();
 
 const Router = () => {
@@ -32,6 +33,8 @@ const Router = () => {
   const {isAuthenticated} = useSelector((state)=>state.user)
   const {user} = useSelector((state)=>state.user)
   return (
+    <>
+    <Toast />
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -70,6 +73,7 @@ const Router = () => {
         <Stack.Screen name="admin-create-event" component={CreateEvent} />
       </Stack.Navigator>
     </NavigationContainer>
+    </>
   );
 };
 

@@ -1,10 +1,9 @@
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import React,{useState} from 'react';
 import {ShoppingBagIcon} from 'react-native-heroicons/solid';
-import {ArrowLeftIcon} from 'react-native-heroicons/outline';
+import {ArrowLeftIcon,XMarkIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-
 export default function OrderDetails({route}) {
   const navigation = useNavigation();
   const [open,setOpen] = useState(false)
@@ -85,26 +84,31 @@ export default function OrderDetails({route}) {
             </TouchableOpacity>
               ):null
             }
-            <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]">
+            {
+              status === "Delivered" ? (
+                <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]">
                 <Text className="text-white text-center font-bold text-[16px]">
                     Write a Review
                 </Text>
             </TouchableOpacity>
+              ):null
+            }
           </View>
           </View>
-
-          {
+        </View>
+        <View className="w-full h-screen justify-center items-center absolute">
+        {
             open === true &&(
-              <View className="absolute w-[60%] m-auto bg-white h-[60%] z-30">
-                <View className="right-3 top-3">
+              <View className="relative w-[80%] bg-white h-[70%] z-30">
+                <View className=" absolute right-3 top-3">
                   <TouchableOpacity onPress={()=>setOpen(false)}>
-                    <XMarkIcon size={25} color="black" />
+                    <XMarkIcon size={30} color="black" />
                   </TouchableOpacity>
                 </View>
               </View>
             )
           }
-        </View>
+          </View>
       </SafeAreaView>
     </ScrollView>
   );
