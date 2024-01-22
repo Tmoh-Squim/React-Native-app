@@ -15,5 +15,5 @@ router.get('/user',isAuthenticated,LoadUser)
 router.post('/verify',Verify)
 router.get('/all-users',isAuthenticated,isAdmin,getUsers)
 router.delete('/delete-user/:pid',isAuthenticated,isAdmin,deleteUser)
-router.put('/update-user',updateUser)
+router.put('/update-user',isAuthenticated,updateUser)
 module.exports = router

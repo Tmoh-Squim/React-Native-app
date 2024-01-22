@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 export const getUserOrders = createAsyncThunk('getUserOrders',async(id)=>{
     try {
         const token = await AsyncStorage.getItem('token')
-        const response = await axios.get(`https://squim-native-app.onrender.com/api/v2/order/user-order/${id}`,{
+        const response = await axios.get(`/api/v2/order/user-order/${id}`,{
             headers:{
                 'Authorization':token
             }
@@ -19,7 +19,7 @@ export const getUserOrders = createAsyncThunk('getUserOrders',async(id)=>{
 export const getAllOrders = createAsyncThunk('getAllOrders',async(id)=>{
     try {
         const token = await AsyncStorage.getItem('token')
-        const response = await axios.get(`https://squim-native-app.onrender.com/api/v2/order/orders`,{
+        const response = await axios.get(`/api/v2/order/orders`,{
             headers:{
                 'Authorization':token
             }

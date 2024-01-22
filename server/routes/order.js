@@ -5,9 +5,9 @@ const router = express.Router()
 
 router.post('/create-order',isAuthenticated,createOrder)
 router.get('/user-order/:pid',isAuthenticated,userOrders)
-router.get('/orders',isAuthenticated,AllOrders)
+router.get('/orders',isAuthenticated,isAdmin,AllOrders)
 router.get('/order-details/:id',isAuthenticated,OrderDetails)
-router.put('/update-order/:id',isAuthenticated,updateOrderStatus)
+router.put('/update-order/:id',isAuthenticated,isAdmin,updateOrderStatus)
 
 
 module.exports=router

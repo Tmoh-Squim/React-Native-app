@@ -12,6 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {Country, State} from 'country-state-city';
 import {Picker} from '@react-native-picker/picker';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import {
   UserIcon,
   EnvelopeIcon,
@@ -66,9 +67,14 @@ export default function ProfileEdit() {
           location: location,
         },
       ];
+      const token = await AsyncStorage.getItem('token')
       const res = await axios.put(
-        `https://squim-native-app.onrender.com/api/v1/auth/update-user`,
-        {user, email, phone, deliveryDetails},
+        `/api/v1/auth/update-user`,
+        {user, email, phone, deliveryDetails},{
+        headers:{
+          'Authorization':token
+        }
+        }
       );
       Alert.alert(res.data.message);
     } catch (error) {

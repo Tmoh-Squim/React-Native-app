@@ -97,7 +97,7 @@ export default function CreateProductScreen() {
       return
     }else{
       const res = await axios.post(
-        'https://squim-native-app.onrender.com/api/v2/product/create-product',
+        '/api/v2/product/create-product',
         formData,
         {
           headers: {

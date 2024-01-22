@@ -98,7 +98,7 @@ import {
         return
       }else{
         const res = await axios.post(
-          'https://squim-native-app.onrender.com/api/v2/event/create-event',
+          '/api/v2/event/create-event',
           formData,
           {
             headers: {

@@ -34,7 +34,7 @@ console.log(statuss)
     const data = {
       status:statuss
     }
-    const response = await axios.put(`https://squim-native-app.onrender.com/api/v2/order/update-order/${id}`,data,{
+    const response = await axios.put(`/api/v2/order/update-order/${id}`,data,{
       headers:{
         'Authorization':token
       }
