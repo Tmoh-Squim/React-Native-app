@@ -108,6 +108,11 @@ const rateProduct = asyncHandler(async(req,res,next)=>{
     try {
         const {rating,productId} = req.body
         const product = await Product.findById(productId)
+        if(!product){
+            res.send({
+                message:'Product not found!'
+            })
+        }
         const rate = product.ratings += rating;
         const newProduct = await Product.findByIdAndUpdate(productId,{ratings:rate},{new:true})
 

@@ -1,13 +1,33 @@
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Image,Alert} from 'react-native';
 import React,{useState} from 'react';
-import {ShoppingBagIcon} from 'react-native-heroicons/solid';
+import {ShoppingBagIcon,StartIcon} from 'react-native-heroicons/solid';
 import {ArrowLeftIcon,XMarkIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
 export default function OrderDetails({route}) {
   const navigation = useNavigation();
   const [open,setOpen] = useState(false)
+  const [rating,setRating] = useState(false)
+  const [rate,setRate] = useState(1)
   const {order,shippingAddress,paymentInfo,status,totalPrice} = route.params;
+
+  const HandleRating = async()=>{
+    try {
+      const token = await AsyncStorage.getItem('token')
+      const res = await axios.put(`https://squim-native-app.onrender.com`,{productId:order?._id,rating:rate},{
+        headers:{
+          'Authorization':token
+        }
+      })
+      Alert.alert(res.data.message)
+    } catch (error) {
+      Alert.alert('Somthing went wrong')
+      console.log(error);
+      
+    }
+  }
   return (
     <ScrollView
       className="w-full h-screen"
@@ -86,7 +106,7 @@ export default function OrderDetails({route}) {
             }
             {
               status === "Delivered" ? (
-                <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]">
+                <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]" onPress={()=>setRating(true)}>
                 <Text className="text-white text-center font-bold text-[16px]">
                     Give a Rating
                 </Text>
@@ -96,6 +116,7 @@ export default function OrderDetails({route}) {
           </View>
           </View>
         </View>
+        {/**give refund popup */}
         <View className="w-full h-screen justify-center items-center absolute">
         {
             open === true &&(
@@ -109,6 +130,52 @@ export default function OrderDetails({route}) {
             )
           }
           </View>
+
+          {/**rating section popup */}
+          <View className="w-full h-screen justify-center items-center absolute">
+        {
+            rating === true &&(
+              <View className="relative w-[80%] bg-white h-[70%] z-30">
+                <View className=" absolute right-3 top-3">
+                  <TouchableOpacity onPress={()=>setRating(false)}>
+                    <XMarkIcon size={30} color="black" />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                {
+                  [1,2,3,4,5].map((i)=>(
+                    rate >= i ? (
+                      <StartIcon
+                      key={i}
+                      onPress={()=>setRate(i)}
+                      className="mr-1 cursor-pointer"
+                      color="rgb(246,186,0)"
+                      size={25}
+                       />
+
+                    ):(
+                      <StartIcon
+                      key={i}
+                      onPress={()=>setRate(i)}
+                      color='#0000004b'
+                      className="mr-1 cursor-pointer"
+                      size={25}
+                       />
+                    )
+                  ))
+                }
+                </View>
+
+                <TouchableOpacity className="bg-red-500 p-2 rounded-lg" onPress={HandleRating}>
+                  <Text className="text-xl text-white font-semibold">
+                    Submit
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )
+          }
+          </View>
+
       </SafeAreaView>
     </ScrollView>
   );
