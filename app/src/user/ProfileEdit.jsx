@@ -69,7 +69,7 @@ export default function ProfileEdit() {
       ];
       const token = await AsyncStorage.getItem('token')
       const res = await axios.put(
-        `/api/v1/auth/update-user`,
+        `https://squim-native-app.onrender.com/api/v1/auth/update-user`,
         {user, email, phone, deliveryDetails},{
         headers:{
           'Authorization':token
@@ -208,18 +208,18 @@ export default function ProfileEdit() {
           </Text>
           <View>
             <View className="mt-6 relative">
-              <View className="border rounded-xl bg-gray-100  mt-3 h-[45px] justify-center px-2 ">
+            <View className="border rounded-xl  mt-3 h-[45px] justify-center px-2 ">
                 <Picker
-                  selectedValue={county}
-                  color='black'
+                  selectedValue={county }
                   onValueChange={item => setCounty(item)}>
-                  {State &&
+                  {State && 
                     State.getStatesOfCountry('KE').map(item => (
                       <Picker.Item
                         value={item.name}
                         label={item.name}
                         key={item.isoCode}
-                        color="red"
+                        color="black"
+                        style={{width: '50%'}}
                       />
                     ))}
                 </Picker>

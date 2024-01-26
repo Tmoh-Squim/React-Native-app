@@ -51,7 +51,7 @@ export default function ProductUpdate({route}) {
       }
         const id = product._id
         const token = await AsyncStorage.getItem('token')
-     const res = await axios.put(`/api/v2/product/update-product/${id}`,json,{
+     const res = await axios.put(`https://squim-native-app.onrender.com/api/v2/product/update-product/${id}`,json,{
          headers:{
              'Authorization':token,
              'Content-Type':"application/json"
@@ -68,7 +68,7 @@ export default function ProductUpdate({route}) {
     try {
       const id = product._id
       const token =await AsyncStorage.getItem('token')
-      const res = await axios.delete(`/api/v2/product/delete-product/${id}`,{
+      const res = await axios.delete(`https://squim-native-app.onrender.com/api/v2/product/delete-product/${id}`,{
           headers:{
               'Authorization':token
           }
@@ -83,9 +83,12 @@ export default function ProductUpdate({route}) {
   
   return (
       <ScrollView className="mt-3 px-2">
-          <TouchableOpacity className="mt-2" onPress={() => navigation.goBack()}>
+        <View className="flex flex-row justify-center items-center">
+          <TouchableOpacity className="mt-2 mx-2" onPress={() => navigation.goBack()}>
         <ChevronLeftIcon color="black" size={30} />
       </TouchableOpacity>
+      <Text className="text-black text-xl ml-5"> Edit Product</Text>
+      </View>
         <View>
           <Text className="text-black py-1 text-xl">Product name</Text>
           <TextInput

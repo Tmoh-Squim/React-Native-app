@@ -29,7 +29,13 @@ export default function CartScreen() {
     dispatch(decreaseQuantity(item));
   };
   const handleIncrement = item => {
+    const checkStock = item.stock
+    if (item.cartQuantity > checkStock){
+      Alert.alert('Stock limited!')
+      return
+    }else{
     dispatch(addToCart(item));
+    }
   };
 
   return (

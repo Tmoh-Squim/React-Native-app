@@ -34,7 +34,7 @@ console.log(statuss)
     const data = {
       status:statuss
     }
-    const response = await axios.put(`/api/v2/order/update-order/${id}`,data,{
+    const response = await axios.put(`https://squim-native-app.onrender.com/api/v2/order/update-order/${id}`,data,{
       headers:{
         'Authorization':token
       }
@@ -76,13 +76,13 @@ console.log(statuss)
         </View>
 
         <View className="mt-3">
-          <View className="p-1 flex-1 flex-row justify-between border-b pb-3 border-neutral-400">
+          <View className="p-1 flex-1 flex-row flex-wrap justify-between border-b pb-3 border-neutral-400">
             <Image
               source={{uri: order.images[0]}}
               className="w-[100px] h-[100px] rounded-md"
             />
             <View>
-            <Text className="text-black text-[15px] mt-3 mx-2">{order.name.length > 32 ? order.name.slice(0,32) : order.name}</Text>
+            <Text className="text-black text-[15px] mt-3 mx-2">{ order.name}</Text>
             <Text className="text-gray-400 text-[20px] mt-3 mx-2">{order.cartQuantity} x {order.discountPrice}</Text>
             </View>
           </View>

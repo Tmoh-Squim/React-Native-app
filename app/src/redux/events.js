@@ -2,7 +2,7 @@ import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 import axios from "axios"
 export const getAllEvents = createAsyncThunk('events',async(req,res)=>{
     try {
-        const response = await axios.get('/api/v2/event/events')
+        const response = await axios.get('https://squim-native-app.onrender.com/api/v2/event/events')
 
         return response.data
     } catch (error) {

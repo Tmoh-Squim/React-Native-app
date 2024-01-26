@@ -3,14 +3,6 @@ import { View, Text,ScrollView,StyleSheet,FlatList,TouchableOpacity,Dimensions} 
 import React,{useEffect} from "react";
 import {SafeAreaView} from "react-native-safe-area-context"
 import {CurrencyDollarIcon,ListBulletIcon,ArrowsPointingOutIcon,ChevronLeftIcon} from "react-native-heroicons/outline"
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
 import {useNavigation} from "@react-navigation/native"
 import {useDispatch} from "react-redux"
 import {getAllOrders,TotalEarnigs} from "../../redux/order"
@@ -30,45 +22,9 @@ export default function Overview() {
           <TouchableOpacity className="px-4 mt-2" onPress={()=>navigation.goBack()}>
           <ChevronLeftIcon size={30} color='black' />
           </TouchableOpacity>
-      <Text className="text-blue-700 font-bold border-b w-[85%] mx-auto text-center text-2xl tracking-[2px]">Overview</Text>
+      <Text className="text-blue-700 font-bold w-[85%] mx-auto text-center text-2xl tracking-[2px]">Overview</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-      <LineChart
-    data={{
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-      datasets: [
-        {
-          data: [
-           1,2,3,4,5,6
-          ]
-        }
-      ]
-    }}
-    width={Dimensions.get("window").width/1.3}
-    height={200}
-    yAxisLabel="sales"
-    yAxisSuffix=""
-    yAxisInterval={1} // optional, defaults to 1
-    chartConfig={{
-      backgroundColor: "gray",
-      
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
-        borderRadius: 16,
-      },
-      propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-      }
-    }}
-    bezier
-    style={{
-      marginVertical: 8,
-      borderRadius: 16
-    }}
-    className="mx-auto rounded-lg"
-  />
+  
         <View className="mt-5 bg-neutral-200 p-3 relative w-[75%] mx-auto shadow-lg rounded-md">
         <View className="ml-4">
             <Text className="text-white text-2xl ml-7">

@@ -37,7 +37,7 @@ export default function Logini() {
     try {
       const data = {phone, password};
       const response = await axios.post(
-        '/api/v1/auth/login',data
+        'https://squim-native-app.onrender.com/api/v1/auth/login',data
       );
       const {token} = response.data;
       await AsyncStorage.setItem('token', token);

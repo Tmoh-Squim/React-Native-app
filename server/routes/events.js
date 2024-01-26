@@ -1,6 +1,6 @@
 const express = require('express')
 const {createEvent,getEvents,deleteEvent} = require("../controllers/events")
-const {isAuthenticated} = require("../middlewares/auth")
+const {isAuthenticated,isAdmin} = require("../middlewares/auth")
 const {upload} = require("../utils/multer")
 const router = express()
 

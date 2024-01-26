@@ -37,13 +37,16 @@ export default function ProductDetails({route}) {
   const [count, setCount] = useState(1);
 
   const handleAddToCart = product => {
+    const checkStock = product.stock
+
+    if(count > checkStock){
+      Alert.alert('Stock limited!')
+      return
+    }else{
     const item = {...product, cartQuantity: count,selectedSize:size,selectedColor:color};
     dispatch(addToCart(item));
-    Toast.show({
-      type: 'success',
-      text1: 'Logged out successfully',
-    });
     Alert.alert('Product added to cart')
+  }
   };
 
   const handleIncrement = () => {
@@ -242,14 +245,14 @@ const RelatedProducts = ({product}) => {
       ) : null}
       {relatedProducts?.length !== 0 ? (
         <ScrollView
-          horizontal
+          horizontal={true}
           showsHorizontalScrollIndicator={false}
-          className="mx-2 py-3 bg-neutral-300">
+          className=" py-2 bg-neutral-200">
           {relatedProducts?.slice(0, 5).map(item => (
             <View
               key={item._id}
-              style={{marginRight: 0, padding: 2}}
-              className="mx-2  rounded-md bg-white">
+              style={{marginRight: 0, padding: 2,width:width/2.2}}
+              className=" ml-2  rounded-md bg-white">
               <View
                 onPress={() =>
                   navigation.navigate('ProductDetails', {product: item})

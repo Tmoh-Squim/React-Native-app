@@ -2,85 +2,94 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React,{useState,useEffect} from 'react';
 import {useSelector} from "react-redux"
 import {useNavigation} from "@react-navigation/native"
-import RecommendProduct from '../assets/recommend.jpg';
+import Ratings from "../utils/helper"
+import {useDispatch} from "react-redux"
+import {addToCart} from "../redux/cart"
 
 const Deals = () => {
   const [data,setData] = useState([])
+  const [product,setProduct] = useState([])
   const {products} = useSelector((state)=>state.products)
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
-
+  
 useEffect(() => {
-const allProductsData = products ? [...products] : [];
-    const sortedData = allProductsData?.sort((a,b) => b.sold_out - a.sold_out); 
-    const firstFive = sortedData && sortedData.slice(0, 5);
-    setData(firstFive);
+   products?.products?.length >0 ? (
+    setProduct(products.products)
+  ):(
+    setProduct([])
+  )
+
 }, [products]);
+useEffect(() => {
+  product?.length >0 ? (
+    setData([...product].sort((a,b)=>b.sold_out - a.sold_out).slice(0,2))
+  ):(
+    setData([])
+  )
+}, [product]);
+const handleBuyNow = (item) =>{
+  const product = {...item,cartQuantity:1}
+  dispatch(addToCart(product))
+  navigation.navigate('delivery',{price:item.discountPrice})
+}
 
   return (
     <>
     {
       data && data.length !==0 ? (
-        <View>
+        <>
+        <Text style={styles.title} className="mt-3">Recommended deal for you</Text>
       {
         data.map((item,index)=>(
-          <View style={styles.container} key={index}>
-          <Text style={styles.title}>Recommended deal for you</Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('productDetails',{product:item})}>
-          <Image source={{uri:item.images[1]}} style={styles.imgStyle} />
+          <View style={styles.container} key={index} >
+            <TouchableOpacity onPress={()=>navigation.navigate('ProductDetails',{product:item})}>
+            <Image source={{uri:item.images[0]}} style={styles.imgStyle} />
+            </TouchableOpacity>
           <View style={styles.bottomSection}>
             <View style={styles.row}>
-              <TouchableOpacity style={styles.offDealBtn}>
-                <Text style={styles.offDeal}>18% off</Text>
-              </TouchableOpacity>
+              <View style={styles.offDealBtn}>
+                <Text style={styles.offDeal}>{Math.round((item.originalPrice-item.discountPrice)*5/100)} % off</Text>
+              </View>
               <Text style={styles.deal}>Deal</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.discountPrice}>Ksh {item.discountPrice}</Text>
-              <Text style={styles.mrp}>M.R.P.</Text>
-              <Text style={styles.actualPrice}>Ksh {item.originalPrice}</Text>
+              <Text className="text-red-500 my-1 text-[20px] font-semibold">Ksh {item.discountPrice}</Text>
+              <Text style={styles.mrp} className="text-black">M.R.P.</Text>
+              <Text style={styles.actualPrice} className="text-black">Ksh {item.originalPrice}</Text>
+            </View>
+            <View className="flex flex-row"> 
+              <Ratings rating={item.ratings} />
+              <Text className="text-green-500 mx-1">
+                ({item.sold_out}) sold
+              </Text>
             </View>
             <Text style={styles.productName}>
               {item.name}
             </Text>
+
+            <TouchableOpacity className="bg-black p-3 my-1 w-[35%] rounded-lg" onPress={()=>handleBuyNow(item)}>
+              <Text className="text-white text-[18px] font-semibold">
+                Buy Now
+              </Text>
+            </TouchableOpacity>
             
             <Text style={styles.allDeals}>See all deals</Text>
           </View>
-          </TouchableOpacity >
-        </View> 
+          </View >
         ))
       } 
-      </View>
+      </>
       ):null
     }
-    <View style={styles.container}>
-      <Text style={styles.title}>Recommended deal for you</Text>
-      <Image source={RecommendProduct} style={styles.imgStyle} />
-      <View style={styles.bottomSection}>
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.offDealBtn}>
-            <Text style={styles.offDeal}>18% off</Text>
-          </TouchableOpacity>
-          <Text style={styles.deal}>Deal</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.discountPrice}>Ksh 1,549.00</Text>
-          <Text style={styles.mrp}>M.R.P.</Text>
-          <Text style={styles.actualPrice}>Ksh 1895.00</Text>
-        </View>
-        <Text style={styles.productName}>
-          Nykaa Face Wash Gentle Skin Cleanser for all skin type
-        </Text>
-        <Text style={styles.allDeals}>See all deals</Text>
-      </View>
-    </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 3,
   },
   title: {
     fontSize: 18,

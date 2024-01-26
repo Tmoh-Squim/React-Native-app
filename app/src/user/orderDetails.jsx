@@ -88,7 +88,7 @@ export default function OrderDetails({route}) {
               status === "Delivered" ? (
                 <TouchableOpacity className="p-3 rounded-md bg-black w-[130px]">
                 <Text className="text-white text-center font-bold text-[16px]">
-                    Write a Review
+                    Give a Rating
                 </Text>
             </TouchableOpacity>
               ):null

@@ -52,14 +52,9 @@ export default function Sidebar() {
           <DocumentPlusIcon size={30} color="black" />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('admin-order-refund')}>
         <View className="mt-10">
           <ReceiptRefundIcon size={30} color="black" />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <View className="mt-10">
-          <Cog8ToothIcon size={30} color="black" />
         </View>
       </TouchableOpacity>
     </ScrollView>

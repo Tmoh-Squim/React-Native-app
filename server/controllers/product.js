@@ -104,4 +104,20 @@ const deleteProduct = asyncHandler(async(req,res,next)=>{
         console.log(error)
     }
 })
-module.exports = {getAllProducts,createProduct,updateProduct,deleteProduct}
+const rateProduct = asyncHandler(async(req,res,next)=>{
+    try {
+        const {rating,productId} = req.body
+        const product = await Product.findById(productId)
+        const rate = product.ratings += rating;
+        const newProduct = await Product.findByIdAndUpdate(productId,{ratings:rate},{new:true})
+
+        res.status(200).send({
+            success:true,
+            message:'product rating created successfully',
+            newProduct
+        })
+    } catch (error) {
+        next(res.status(500).send({message:'Error posting the rating'}))
+    }
+})
+module.exports = {getAllProducts,createProduct,updateProduct,deleteProduct,rateProduct}

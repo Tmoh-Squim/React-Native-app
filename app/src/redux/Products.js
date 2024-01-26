@@ -4,7 +4,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 export const getProducts = createAsyncThunk('getProducts', async () => {
     try {
-        const response = await axios.get('/api/v2/product/products');
+        const response = await axios.get('https://squim-native-app.onrender.com/api/v2/product/products');
         return response.data;
         
     } catch (error) {
@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk('getProducts', async () => {
 export const deleteProduct = createAsyncThunk('delete-product',async(id)=>{
     const token =await AsyncStorage.getItem('token')
     console.log(id)
-    const res = await axios.delete(`/api/v2/product/delete-product/${id}`,{
+    const res = await axios.delete(`https://squim-native-app.onrender.com/api/v2/product/delete-product/${id}`,{
         headers:{
             'Authorization':token
         }
@@ -52,7 +52,7 @@ export const updateProduct = createAsyncThunk('update-product', async (id,newfor
                 "Content-Type":"multipart/form-data"
             }
         }
-       const res = await axios.put(`/api/v2/product/update-product/${id}`,newform,config,{
+       const res = await axios.put(`https://squim-native-app.onrender.com/api/v2/product/update-product/${id}`,newform,config,{
            headers:{
                'Authorization':token
            }

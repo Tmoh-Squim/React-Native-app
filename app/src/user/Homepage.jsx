@@ -22,7 +22,7 @@ const Home = () => {
       <Slider /> 
       <Category />
       <Events />
-     {/* <Deals /> */}
+      <Deals /> 
       <Brands />
      <ProductScreen /> 
     </ScrollView>
