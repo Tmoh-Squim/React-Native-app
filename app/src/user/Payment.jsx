@@ -81,7 +81,15 @@ export default function Payment() {
             </View>
             {active === 1 && (
               <View className=" border-b pb-2 border-gray-300 my-2">
-                <TouchableOpacity className="bg-red-500 p-3 rounded-lg w-[45%]">
+                <TouchableOpacity
+                  className="bg-red-500 p-3 rounded-lg w-[45%]"
+                  onPress={() =>
+                    navigation.navigate('Card-payment', {
+                      amount: orderData?.totalPrice,
+                      email: user?.email,
+                      phone:user?.phone
+                    })
+                  }>
                   <Text className="text-white text-xl font-bold">Pay Now</Text>
                 </TouchableOpacity>
               </View>
@@ -135,13 +143,13 @@ export default function Payment() {
           <View className="flex justify-between flex-row mt-3">
             <Text className="text-black font-serif text-xl">Shipping:</Text>
             <Text className="text-black text-xl">
-            {shipping && shipping !== 0 ? (
-              <Text className="text-black text-xl">Ksh {shipping}</Text>
-            ) : (
-              <Text className="text-black text-xl">
-                <MinusIcon size={22} color="black" />
-              </Text>
-            )}
+              {shipping && shipping !== 0 ? (
+                <Text className="text-black text-xl">Ksh {shipping}</Text>
+              ) : (
+                <Text className="text-black text-xl">
+                  <MinusIcon size={22} color="black" />
+                </Text>
+              )}
             </Text>
           </View>
           <View className="flex justify-between flex-row mt-3 border-b pb-3 border-gray-400">

@@ -106,7 +106,7 @@ const deleteProduct = asyncHandler(async(req,res,next)=>{
 })
 const rateProduct = asyncHandler(async(req,res,next)=>{
     try {
-        const {rating,productId} = req.body
+        const {rating,productId,user} = req.body
         const product = await Product.findById(productId)
         if(!product){
             res.send({

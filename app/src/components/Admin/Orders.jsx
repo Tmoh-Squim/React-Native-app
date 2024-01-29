@@ -27,9 +27,10 @@ export default function Orders() {
         {allOrders && allOrders.length > 0 ? (
           <View>
             {allOrders?.map(order => {
+             
               return (
                 <View key={order._id}>
-                  {order?.cart.map((cartItem, index) => {
+                  {order.status !== "Processing Refund" && order?.cart.map((cartItem, index) => {
                     return (
                       <View key={index} className="w-full">
                         <View className="flex-1 flex-row border p-2 justify-between">
@@ -46,12 +47,12 @@ export default function Orders() {
                             onPress={() =>
                               navigation.navigate('admin-update-order', {
                                 order: cartItem,
-                                id:order?._id,
+                                id: order?._id,
                                 shippingAddress: order?.deliveryDetails,
                                 paymentInfo: order?.paymentInfo,
                                 status: order?.status,
                                 user: order?.user,
-                                totalPrice:order?.totalPrice
+                                totalPrice: order?.totalPrice,
                               })
                             }>
                             <ArrowRightIcon size={25} color="black" />
