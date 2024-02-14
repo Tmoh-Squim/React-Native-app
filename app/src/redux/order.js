@@ -15,7 +15,7 @@ export const getUserOrders = createAsyncThunk('getUserOrders',async(id)=>{
     }
     
 })
-//admin all orders
+//admin all order
 export const getAllOrders = createAsyncThunk('getAllOrders',async(id)=>{
     try {
         const token = await AsyncStorage.getItem('token')

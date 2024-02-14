@@ -28,7 +28,6 @@ import CreateEvent from '../components/Admin/CreateEvent';
 import RefundendOrders from '../components/Admin/RefundendOrders';
 import RefundendOrderDetails from '../components/Admin/RefundendOrderDetails';
 import EventUpdateScreen from '../components/Admin/EventUpdateScreen';
-import PaymentPopUp from "../user/PaymentPopUp"
 import Toast from 'react-native-toast-message';
 const Stack = createStackNavigator();
 
@@ -120,7 +119,6 @@ const Router = () => {
             }
           />
           <Stack.Screen name="admin-create-event" component={CreateEvent} />
-          <Stack.Screen name="Card-payment" component={PaymentPopUp} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

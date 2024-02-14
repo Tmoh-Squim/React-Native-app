@@ -83,7 +83,7 @@ export default function ProductUpdate({route}) {
   
   return (
       <ScrollView className="mt-3 px-2">
-        <View className="flex flex-row justify-center items-center">
+        <View className="flex flex-row justify-between items-center">
           <TouchableOpacity className="mt-2 mx-2" onPress={() => navigation.goBack()}>
         <ChevronLeftIcon color="black" size={30} />
       </TouchableOpacity>
