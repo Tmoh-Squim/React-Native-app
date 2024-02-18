@@ -21,7 +21,7 @@ export default function Orders() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeftIcon size={25} color="black" />
         </TouchableOpacity>
-        <Text className="text-gray-600 ml-8 text-xl ">All Orders</Text>
+        <Text className="text-gray-600 ml-8 text-xl ">Admin All Orders</Text>
       </View>
       <SafeAreaView className="mx-1 mt-3">
         {allOrders && allOrders.length > 0 ? (

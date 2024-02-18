@@ -36,13 +36,12 @@ export default function Register() {
         'https://squim-native-app.onrender.com/api/v1/auth/register',
         data,
       );
-      console.log('res', response.data);
-      Alert.alert(response.data.message)
       if(response.data.success === true){
+        Alert.alert(response.data.message)
         navigation.navigate('login');
       }
       else{
-        return
+        return Alert.alert(response.data.message)
       }
     } catch (error) {
       Alert.alert("Something went wrong")

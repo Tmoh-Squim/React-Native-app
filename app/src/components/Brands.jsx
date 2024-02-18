@@ -11,30 +11,16 @@ const Brands = () => {
       <View style={styles.innerContainer}>
         <Text style={styles.title}>Brands of the day</Text>
         <View style={styles.row}>
-          <View style={styles.brands}>
-            <Image source={Brand1} style={styles.imgStyle} />
+        <View style={styles.brands}>
+            <Image source={Brand4} style={styles.imgStyle} />
             <Text style={styles.brandTitle}>
-              Min. 20% off | CaratLane Diamond Neklace
+              Sony 60W Blutooth SoundBar Speaker Audio Engine
             </Text>
           </View>
           <View style={styles.brands}>
             <Image source={Brand2} style={styles.imgStyle} />
             <Text style={styles.brandTitle}>
               Min. 40% off | Fossil, Titan Smart Watch & More
-            </Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.brands}>
-            <Image source={Brand3} style={styles.imgStyle} />
-            <Text style={styles.brandTitle}>
-              Heels - Upto 50% OFF on Heeled Sandals, High Heel{' '}
-            </Text>
-          </View>
-          <View style={styles.brands}>
-            <Image source={Brand4} style={styles.imgStyle} />
-            <Text style={styles.brandTitle}>
-              Sony 60W Blutooth SoundBar Speaker Audio Engine
             </Text>
           </View>
         </View>

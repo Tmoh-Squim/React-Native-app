@@ -41,9 +41,13 @@ export default function Logini() {
       );
       const {token} = response.data;
       await AsyncStorage.setItem('token', token);
+     if(response.data.success === true){
       Alert.alert(response.data.message)
       navigation.navigate('HomeScreen')
       dispatch(LoadUser())
+     }else{
+      return Alert.alert(response.data.message)
+     }
     } catch (error) {
       Alert.alert("Something went wrong")
       console.log(error);
