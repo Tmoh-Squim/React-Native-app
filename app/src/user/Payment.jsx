@@ -64,7 +64,7 @@ export default function Payment() {
         </TouchableOpacity>
         <View className="bg-neutral-50 mt-3 w-full p-3">
           <View>
-            <View className="flex flex-row justify-between px-2 py-7 mt-8 border-b  border-t border-gray-300">
+            <View className="flex flex-row justify-between px-2 py-7 mt-8 border-b  border-t border-gray-300" onPress={() => setActive(1)}>
               <TouchableOpacity
                 className="border-2 border-black w-[20px] h-[20px] rounded-full items-center justify-center"
                 onPress={() => setActive(1)}>
@@ -97,7 +97,7 @@ export default function Payment() {
           </View>
 
           <View>
-            <View className="flex flex-row justify-between py-7 px-2 mt-10 mb-5 border-b border-t border-gray-300">
+            <View className="flex flex-row justify-between py-7 px-2 mt-10 mb-5 border-b border-t border-gray-300" onPress={() => setActive(2)}>
               <TouchableOpacity
                 className="border-2 border-black w-[20px] h-[20px] rounded-full items-center justify-center"
                 onPress={() => setActive(2)}>

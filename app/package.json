@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "wsa": "react-native run-wsa",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
-    "proxy": "https://squim-native-app.onrender.com/api"
+    "test": "jest"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "@reduxjs/toolkit": "^2.0.1",
+    "@stripe/stripe-react-native": "^0.37.0",
     "axios": "^1.6.2",
     "country-state-city": "^3.2.1",
     "dotenv": "^16.3.1",
